@@ -609,8 +609,8 @@ function compareCountries() {
       }
 
       // Visa texten med animering
-      typeText(document.getElementById('result-left'), resultTextLeft);
-      typeText(document.getElementById('result-right'), resultTextRight);
+      document.getElementById('result-left').innerHTML = resultTextLeft;
+      document.getElementById('result-right').innerHTML = resultTextRight;
       typeText(document.getElementById('winner'), `${winnerText}`);
 
       // Dropdown-meny för förklaring
