@@ -474,9 +474,9 @@ function translateCountry(input) {
 }
 
 function typeText(element, text) {
-    element.innerHTML = ''; // Clear previous text
+    element.innerHTML = ''; // Rensa tidigare text
     let i = 0;
-    const speed = 25; // Animation speed (milliseconds)
+    const speed = 25; // Hastighet för animationen (millisekunder)
 
     function type() {
         if (i < text.length) {
@@ -489,11 +489,15 @@ function typeText(element, text) {
     type();
 }
 
+function formatNumber(num) {
+  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); // Lägger till tusentalsavgränsare
+}
+
 function calculateMilitaryScore(military, population) {
-  const militaryStrengthWeight = 5;  // Very important
-  const warplanesWeight = 4;         // Very important
-  const tanksWeight = 3;             // Important
-  const populationWeight = 2;        // Important
+  const militaryStrengthWeight = 5;  // Mycket viktigt
+  const warplanesWeight = 4;         // Mycket viktigt
+  const tanksWeight = 3;             // Viktigt
+  const populationWeight = 2;        // Viktigt
 
   return (military.military_strength * militaryStrengthWeight) + 
          (military.warplanes * warplanesWeight) + 
@@ -501,11 +505,11 @@ function calculateMilitaryScore(military, population) {
          (population * populationWeight); 
 }
 
-// Dynamic explanation based on which category had the greatest impact
+// Dynamisk förklaring baserat på vilken kategori som har störst inverkan
 function generateExplanation(c1Military, c2Military, c1Name, c2Name) {
   let explanation = '';
 
-  // Compare category by category and generate the explanation
+  // Jämför kategori för kategori och generera förklaring
   if (c1Military.military_strength > c2Military.military_strength) {
     explanation += `${c1Name} vann tack vare sin överlägsna militärstyrka. `;
   } else if (c1Military.military_strength < c2Military.military_strength) {
@@ -556,28 +560,28 @@ function compareCountries() {
       const c2Military = militaryData[c2.name.common];
 
       if (c1Military && c2Military) {
-        // Organize information into rows for each country
-        resultTextLeft += `<div>Befolkning: ${c1.population.toLocaleString()}</div>`;
-        resultTextLeft += `<div>Militärstyrka: ${c1Military.military_strength.toLocaleString()}</div>`;
-        resultTextLeft += `<div>Krigsplan: ${c1Military.warplanes.toLocaleString()}</div>`;
-        resultTextLeft += `<div>Stridsvagnar: ${c1Military.tanks.toLocaleString()}</div>`;
+        // Organisera informationen i kategorier för varje land
+        resultTextLeft += `Befolkning: ${formatNumber(c1.population)}\n`;
+        resultTextLeft += `Militärstyrka: ${formatNumber(c1Military.military_strength)}\n`;
+        resultTextLeft += `Krigsplan: ${formatNumber(c1Military.warplanes)}\n`;
+        resultTextLeft += `Stridsvagnar: ${formatNumber(c1Military.tanks)}\n`;
 
-        resultTextRight += `<div>Befolkning: ${c2.population.toLocaleString()}</div>`;
-        resultTextRight += `<div>Militärstyrka: ${c2Military.military_strength.toLocaleString()}</div>`;
-        resultTextRight += `<div>Krigsplan: ${c2Military.warplanes.toLocaleString()}</div>`;
-        resultTextRight += `<div>Stridsvagnar: ${c2Military.tanks.toLocaleString()}</div>`;
+        resultTextRight += `Befolkning: ${formatNumber(c2.population)}\n`;
+        resultTextRight += `Militärstyrka: ${formatNumber(c2Military.military_strength)}\n`;
+        resultTextRight += `Krigsplan: ${formatNumber(c2Military.warplanes)}\n`;
+        resultTextRight += `Stridsvagnar: ${formatNumber(c2Military.tanks)}\n`;
 
-        // Calculate scores with weighted system
+        // Beräkna poäng med viktighetsbaserat system
         let c1Score = calculateMilitaryScore(c1Military, c1.population);
         let c2Score = calculateMilitaryScore(c2Military, c2.population);
 
         let c1Chance = (c1Score / (c1Score + c2Score)) * 100;
         let c2Chance = 100 - c1Chance;
 
-        resultTextLeft += `<div>Chans att vinna: ${c1Chance.toFixed(2)}%</div>`;
-        resultTextRight += `<div>Chans att vinna: ${c2Chance.toFixed(2)}%</div>`;
+        resultTextLeft += `Chans att vinna: ${c1Chance.toFixed(2)}%\n`;
+        resultTextRight += `Chans att vinna: ${c2Chance.toFixed(2)}%\n`;
 
-        // Dynamically generated explanation
+        // Dynamiskt genererad förklaring
         let winnerText = '';
         let explanation = '';
         if (c1Score > c2Score) {
@@ -591,21 +595,21 @@ function compareCountries() {
           explanation = 'Båda länderna har likvärdiga styrkor och resurser.';
         }
 
-        // Animate text display
+        // Visa texten med animering
         document.getElementById('result-left').classList.add('show');
         document.getElementById('result-right').classList.add('show');
         document.getElementById('winner').classList.add('show');
 
-        // Type text animation
+        // Animera texten
         typeText(document.getElementById('result-left'), resultTextLeft);
         typeText(document.getElementById('result-right'), resultTextRight);
         typeText(document.getElementById('winner'), `${winnerText}`);
 
-        // Dropdown for explanation
+        // Lägg till dropdown-meny för förklaringen
         const explanationElement = document.getElementById('explanation');
         explanationElement.innerHTML = `<button id="explain-toggle">Varför vann?</button><div id="explanation-content" style="display:none;">${explanation}</div>`;
         
-        // Toggle for explanation dropdown
+        // Klickhändelse för att visa/dölja förklaringen
         document.getElementById('explain-toggle').addEventListener('click', function() {
           const content = document.getElementById('explanation-content');
           content.style.display = content.style.display === 'none' ? 'block' : 'none';
@@ -615,7 +619,7 @@ function compareCountries() {
     .catch(error => console.log('Error fetching population data:', error));
 }
 
-// Event listeners for button click and Enter key
+// Lägg till händelselyssnare för knapptryckning och Enter-tangent
 document.getElementById('compareButton').addEventListener('click', compareCountries);
 document.getElementById('country1').addEventListener('keydown', function(event) {
   if (event.key === 'Enter') {
