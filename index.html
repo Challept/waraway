@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,12 +9,23 @@
 </head>
 <body>
     <h1 id="title">Who Will Win the War?</h1>
-    <input type="text" id="country1" placeholder="Enter first country">
-    <input type="text" id="country2" placeholder="Enter second country">
-    <button id="compareButton">Compare</button>
+    
+    <!-- Layout för vänster och höger sida -->
+    <div class="container">
+        <div class="left">
+            <input type="text" id="country1" placeholder="Enter first country">
+            <div id="result-left"></div> <!-- Här visas resultatet för vänster sida -->
+        </div>
+        <div class="right">
+            <input type="text" id="country2" placeholder="Enter second country">
+            <div id="result-right"></div> <!-- Här visas resultatet för höger sida -->
+        </div>
+    </div>
 
-    <!-- Resultat-diven -->
-    <div id="result"></div>
+    <!-- Vinnare i mitten -->
+    <div id="winner"></div>
+
+    <button id="compareButton">Compare</button>
 
     <script src="app.js"></script>
 </body>
