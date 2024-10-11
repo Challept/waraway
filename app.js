@@ -618,9 +618,9 @@ function compareCountries() {
       document.getElementById('winner').classList.add('show');
 
       // Animera texten
-      typeText(document.getElementById('result-left'), resultTextLeft);
-      typeText(document.getElementById('result-right'), resultTextRight);
-      typeText(document.getElementById('winner'), `${winnerText}`);
+      document.getElementById('result-left').innerHTML = resultTextLeft;
+      document.getElementById('result-right').innerHTML = resultTextRight;
+      document.getElementById('winner').innerHTML = `${winnerText}`;
 
       // Lägg till dropdown-meny för förklaringen
       const explanationElement = document.getElementById('explanation');
