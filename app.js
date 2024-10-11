@@ -542,7 +542,7 @@ function compareCountries() {
   fetch('https://restcountries.com/v3.1/all?fields=name,population')
     .then(response => response.json())
     .then(data => {
-      console.log('Fetched data:', data); // Lägg till debug-utskrift
+      console.log('Fetched data:', data); // Debug-utskrift
 
       // Hitta ländernas data
       const c1 = data.find(country => country.name.common.toLowerCase() === country1Internal.toLowerCase());
@@ -553,7 +553,7 @@ function compareCountries() {
         return;
       }
 
-      console.log('Found countries:', c1, c2); // Lägg till debug-utskrift
+      console.log('Found countries:', c1, c2); // Debug-utskrift
 
       // Resultattext för vänster och höger sida
       let resultTextLeft = `${country1Input}\nBefolkning: ${c1.population}\n`;
