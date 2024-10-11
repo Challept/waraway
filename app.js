@@ -474,9 +474,9 @@ function translateCountry(input) {
 }
 
 function typeText(element, text) {
-    element.innerHTML = ''; // Rensa tidigare text
+    element.innerHTML = ''; 
     let i = 0;
-    const speed = 25; // Snabbare skrivanimation
+    const speed = 25; 
 
     function type() {
         if (i < text.length) {
@@ -491,9 +491,9 @@ function typeText(element, text) {
 
 function calculateMilitaryScore(military) {
   return military.military_strength + 
-         (military.warplanes * 10) + // Krigsplan är viktiga
-         (military.tanks * 15) + // Stridsvagnar väger tungt
-         (military.naval_strength * 20); // Flottstyrka räknas mycket
+         (military.warplanes * 10) + 
+         (military.tanks * 15) + 
+         (military.naval_strength * 20); 
 }
 
 function compareCountries() {
@@ -540,13 +540,13 @@ function compareCountries() {
         let explanation = '';
         if (c1Score > c2Score) {
           winnerText = `Vinnare: ${country1Input}`;
-          explanation = `${country1Input} vinner på grund av starkare militärstyrka och fler militära fordon som krigsplan och flottstyrka.`;
+          explanation = `${country1Input} vann på grund av högre militärstyrka, inklusive fler krigsplan, stridsvagnar och flottstyrka.`;
         } else if (c2Score > c1Score) {
           winnerText = `Vinnare: ${country2Input}`;
-          explanation = `${country2Input} vinner på grund av starkare militärstyrka och fler militära fordon som krigsplan och stridsvagnar.`;
+          explanation = `${country2Input} vann tack vare större antal militära fordon och bättre övergripande kapacitet i strid.`;
         } else {
           winnerText = `Resultat: Oavgjort`;
-          explanation = `Det är oavgjort eftersom båda länderna har jämförbar militärstyrka och fordon.`;
+          explanation = `Båda länderna har liknande styrkor och resurser, vilket resulterar i ett oavgjort resultat.`;
         }
 
         // Visa texten med animering
