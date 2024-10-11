@@ -3,11 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>War Comparison</title>
+    <title>Who Will Win the War?</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <h1 id="title">Who Will Win the War?</h1>
+
+    <div id="form-container">
+        <input type="text" id="country1" placeholder="Enter first country" class="input-field">
+        <input type="text" id="country2" placeholder="Enter second country" class="input-field">
+        <button id="compareButton">Compare</button>
+    </div>
 
     <div id="container">
         <div id="left-side">
@@ -16,7 +22,6 @@
         </div>
 
         <div id="middle-section">
-            <button id="compareButton">Compare</button>
             <p id="winner-text"></p>
         </div>
 
@@ -29,3 +34,4 @@
     <script src="app.js"></script>
 </body>
 </html>
+
