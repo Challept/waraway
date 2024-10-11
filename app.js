@@ -1,4 +1,3 @@
-
 const militaryData = {
   "Afghanistan": {
     "military_strength": 150000,
@@ -541,17 +540,24 @@ function compareCountries() {
   let country1Internal = translateCountry(country1Input);
   let country2Internal = translateCountry(country2Input);
 
+  console.log(`Comparing ${country1Input} (${country1Internal}) and ${country2Input} (${country2Internal})`);
+
   fetch('https://restcountries.com/v3.1/all?fields=name,population')
     .then(response => response.json())
     .then(data => {
+      console.log('Fetched data:', data); // Logga API-data
+
       // Hitta ländernas data
       const c1 = data.find(country => country.name.common.toLowerCase() === country1Internal.toLowerCase());
       const c2 = data.find(country => country.name.common.toLowerCase() === country2Internal.toLowerCase());
 
       if (!c1 || !c2) {
         document.getElementById('result').innerHTML = `Land hittades inte. Menade du: ${!c1 ? country1Input : country2Input}?`;
+        console.log(`Country data not found for: ${!c1 ? country1Internal : country2Internal}`);
         return;
       }
+
+      console.log('Found countries:', c1, c2); // Logga hittade länder
 
       // Förbered resultattexten
       let resultText = `${country1Input} vs. ${country2Input}\n`;
@@ -579,13 +585,18 @@ function compareCountries() {
         } else {
           resultText += `Resultat: Oavgjort`;
         }
+      } else {
+        console.log('Military data not found for one or both countries');
+        resultText += 'Ingen militärdata tillgänglig för jämförelse.\n';
       }
 
       // Animera resultattexten med skrivmaskinseffekt
       const resultElement = document.getElementById('result');
       typeText(resultElement, resultText);
     })
-    .catch(error => console.log('Error fetching population data:', error));
+    .catch(error => {
+      console.log('Error fetching population data:', error);
+    });
 }
 
 // Lägg till händelselyssnare för knapptryckning och Enter-tangent
@@ -602,4 +613,3 @@ document.getElementById('country2').addEventListener('keydown', function(event) 
     compareCountries();
   }
 });
-
