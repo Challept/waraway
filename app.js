@@ -521,13 +521,19 @@ function compareCountries() {
   let country1Input = document.getElementById('country1').value;
   let country2Input = document.getElementById('country2').value;
 
+  console.log(`Comparing ${country1Input} and ${country2Input}`); // Felsökning
+
   // Använd translateCountry för att få rätt namn
   let country1Internal = translateCountry(country1Input);
   let country2Internal = translateCountry(country2Input);
 
+  console.log(`Translated to ${country1Internal} and ${country2Internal}`); // Felsökning
+
   fetch('https://restcountries.com/v3.1/all?fields=name,population')
     .then(response => response.json())
     .then(data => {
+      console.log('Data fetched from API', data); // Felsökning
+
       // Hitta ländernas data
       const c1 = data.find(country => country.name.common.toLowerCase() === country1Internal.toLowerCase());
       const c2 = data.find(country => country.name.common.toLowerCase() === country2Internal.toLowerCase());
@@ -541,6 +547,8 @@ function compareCountries() {
         <h3>${country1Input} vs. ${country2Input}</h3>
         <p><strong>Befolkning:</strong> ${c1.population} vs. ${c2.population}</p>
       `;
+
+      console.log('Result text:', resultText); // Felsökning
 
       const c1Military = militaryData[c1.name.common];
       const c2Military = militaryData[c2.name.common];
@@ -587,6 +595,8 @@ function compareCountries() {
           resultText += `<p><strong>Resultat:</strong> Det är oavgjort!</p>`;
         }
 
+        console.log('Final result:', resultText); // Felsökning
+
         document.getElementById('result').innerHTML = resultText;
       });
     })
@@ -607,3 +617,4 @@ document.getElementById('country2').addEventListener('keydown', function(event) 
     compareCountries();
   }
 });
+
