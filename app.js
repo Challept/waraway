@@ -17,6 +17,29 @@ const militaryData = {
   }
 };
 
+function fetchMilitaryDataFromWikipedia(country) {
+    const apiUrl = `https://en.wikipedia.org/w/api.php?action=query&prop=extracts&exintro&titles=Military_of_${country}&format=json&origin=*`;
+
+    return fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            const pages = data.query.pages;
+            const pageId = Object.keys(pages)[0];
+            const extract = pages[pageId].extract;
+
+            if (extract) {
+                // You can try to parse the military personnel or related info from the extract string
+                return extract;
+            } else {
+                return "No military data found.";
+            }
+        })
+        .catch(error => {
+            console.log('Error fetching Wikipedia military data:', error);
+            return "No military data found.";
+        });
+}
+
 function compareCountries() {
   const country1 = document.getElementById('country1').value;
   const country2 = document.getElementById('country2').value;
@@ -32,31 +55,41 @@ function compareCountries() {
         return;
       }
 
-      const c1Military = militaryData[c1.name.common];
-      const c2Military = militaryData[c2.name.common];
-
       let resultText = `
         <h3>${c1.name.common} vs. ${c2.name.common}</h3>
         <p><strong>Population:</strong> ${c1.population} vs. ${c2.population}</p>
       `;
 
-      if (c1Military && c2Military) {
-        resultText += `
-          <p><strong>Military Strength:</strong> ${c1Military.military_strength} vs. ${c2Military.military_strength}</p>
-          <p><strong>Available for War:</strong> ${c1Military.available_for_war} vs. ${c2Military.available_for_war}</p>
-        `;
+      const c1Military = militaryData[c1.name.common];
+      const c2Military = militaryData[c2.name.common];
 
-        // Logic to determine winner
-        if (c1Military.military_strength > c2Military.military_strength) {
-          resultText += `<p><strong>Winner:</strong> ${c1.name.common}</p>`;
-        } else {
-          resultText += `<p><strong>Winner:</strong> ${c2.name.common}</p>`;
-        }
+      const militaryPromises = [];
+
+      if (c1Military) {
+        resultText += `
+          <p><strong>${c1.name.common} Military Strength:</strong> ${c1Military.military_strength}</p>
+          <p><strong>Available for War:</strong> ${c1Military.available_for_war}</p>
+        `;
       } else {
-        resultText += `<p>No military data available for comparison.</p>`;
+        militaryPromises.push(fetchMilitaryDataFromWikipedia(c1.name.common).then(militaryExtract => {
+          resultText += `<p><strong>${c1.name.common} Military Data:</strong> ${militaryExtract}</p>`;
+        }));
       }
 
-      document.getElementById('result').innerHTML = resultText;
+      if (c2Military) {
+        resultText += `
+          <p><strong>${c2.name.common} Military Strength:</strong> ${c2Military.military_strength}</p>
+          <p><strong>Available for War:</strong> ${c2Military.available_for_war}</p>
+        `;
+      } else {
+        militaryPromises.push(fetchMilitaryDataFromWikipedia(c2.name.common).then(militaryExtract => {
+          resultText += `<p><strong>${c2.name.common} Military Data:</strong> ${militaryExtract}</p>`;
+        }));
+      }
+
+      Promise.all(militaryPromises).then(() => {
+        document.getElementById('result').innerHTML = resultText;
+      });
     })
-    .catch(error => console.log('Error:', error));
+    .catch(error => console.log('Error fetching population data:', error));
 }
