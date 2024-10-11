@@ -553,6 +553,15 @@ function compareCountries() {
         return;
       }
 
+      // Kontrollera att militärdata för varje land finns i militaryData
+      const c1Military = militaryData[c1.name.common];
+      const c2Military = militaryData[c2.name.common];
+
+      if (!c1Military || !c2Military) {
+        document.getElementById('result-left').innerHTML = `Militärdata hittades inte för ${!c1Military ? country1Input : country2Input}.`;
+        return;
+      }
+
       // Organisera informationen i kategorier för varje land
       let resultTextLeft = `<ul>`;
       let resultTextRight = `<ul>`;
