@@ -5,17 +5,18 @@ body {
     background-color: #f4f4f4;
 }
 
-input {
-    padding: 10px;
-    margin: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    transition: border-color 0.3s;
+#container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 30px;
 }
 
-input:focus {
-    border-color: #007BFF;
+#left-side, #right-side {
+    width: 30%;
+}
+
+#middle-section {
+    width: 30%;
 }
 
 button {
@@ -34,37 +35,33 @@ button:hover {
     transform: scale(1.05);
 }
 
-.container {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-    text-align: left;
+#country1-name, #country2-name {
+    font-size: 24px;
+    font-weight: bold;
 }
 
-.country {
-    width: 30%;
+#country1-chance, #country2-chance {
     font-size: 18px;
-    padding: 10px;
+    color: green;
 }
 
-.result {
-    width: 30%;
-    text-align: center;
+#winner-text {
+    font-size: 22px;
+    font-weight: bold;
+    color: red;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
 }
 
-.typing {
-    border-right: 0.15em solid black;
-    white-space: nowrap;
-    overflow: hidden;
-    animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+#middle-section p.animated {
+    animation: typeEffect 5s steps(60, end) forwards;
 }
 
-@keyframes typing {
-    from { width: 0 }
-    to { width: 100% }
-}
-
-@keyframes blink-caret {
-    from, to { border-color: transparent }
-    50% { border-color: black }
+@keyframes typeEffect {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
 }
