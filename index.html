@@ -8,22 +8,18 @@
 </head>
 <body>
     <h1 id="title">Who Will Win the War?</h1>
+    
+    <!-- Inputfält -->
     <input type="text" id="country1" placeholder="Enter first country">
     <input type="text" id="country2" placeholder="Enter second country">
     <button id="compareButton" onclick="compareCountries()">Compare</button>
 
-    <div id="result"></div>
-
-    <!-- New Section: "Who We Are" -->
-    <section id="about">
-        <h2>Who We Are</h2>
-        <p>
-            Welcome to <strong>WarCompare</strong>, a tool created by enthusiasts who love analyzing data and learning about global military strength. We aim to provide accurate comparisons of countries' populations and military capacities to answer the timeless question: "Who would win the war?" 
-        </p>
-        <p>
-            Please note that this is a simulation, and there are no right or wrong answers. This is purely for educational and entertainment purposes.
-        </p>
-    </section>
+    <!-- Resultatområden -->
+    <div class="container">
+        <div id="leftCountry" class="country"></div>
+        <div id="middleResult" class="result"></div>
+        <div id="rightCountry" class="country"></div>
+    </div>
 
     <script src="app.js"></script>
 </body>
