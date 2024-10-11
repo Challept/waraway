@@ -1,3 +1,4 @@
+
 const militaryData = {
   "Afghanistan": {
     "military_strength": 150000,
@@ -451,6 +452,17 @@ const militaryData = {
 };
 
 // Translations from Swedish to English
+const countryTranslations = {
+  "sverige": "Sweden",
+  "tyskland": "Germany",
+  "ryssland": "Russia",
+  "usa": "USA",
+  "förenade staterna": "USA",
+  "deutschland": "Germany",
+  "finland": "Finland",
+  // Add more translations as needed
+};
+
 function levenshteinDistance(s1, s2) {
   const len1 = s1.length;
   const len2 = s2.length;
