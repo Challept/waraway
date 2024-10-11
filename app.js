@@ -452,6 +452,7 @@ const militaryData = {
 };
 
 // Translations from Swedish to English
+// Placera countryTranslations här för att säkerställa att den är tillgänglig globalt
 const countryTranslations = {
   "sverige": "Sweden",
   "tyskland": "Germany",
@@ -459,8 +460,8 @@ const countryTranslations = {
   "usa": "USA",
   "förenade staterna": "USA",
   "deutschland": "Germany",
-  "finland": "Finland",
-  // Add more translations as needed
+  "finland": "Finland"
+  // Lägg till fler översättningar vid behov
 };
 
 function levenshteinDistance(s1, s2) {
@@ -505,12 +506,13 @@ function findClosestCountry(input, countryList) {
 
 function translateCountry(input) {
   const lowerCaseInput = input.toLowerCase();
-  // If the exact translation exists, return the English version for internal comparison
+  
+  // Om översättning finns, returnera det engelska namnet
   if (countryTranslations[lowerCaseInput]) {
     return countryTranslations[lowerCaseInput];
   }
 
-  // Otherwise, find the closest matching country in militaryData or translations
+  // Annars hitta den närmaste matchningen
   const allCountries = Object.keys(militaryData).concat(Object.values(countryTranslations));
   return findClosestCountry(input, allCountries);
 }
@@ -519,27 +521,25 @@ function compareCountries() {
   let country1Input = document.getElementById('country1').value;
   let country2Input = document.getElementById('country2').value;
 
-  // Translate internally to English for comparison, but preserve the user's input for display
+  // Använd translateCountry för att få rätt namn
   let country1Internal = translateCountry(country1Input);
   let country2Internal = translateCountry(country2Input);
 
   fetch('https://restcountries.com/v3.1/all?fields=name,population')
     .then(response => response.json())
     .then(data => {
-      // Find country data using the internal (English) name
+      // Hitta ländernas data
       const c1 = data.find(country => country.name.common.toLowerCase() === country1Internal.toLowerCase());
       const c2 = data.find(country => country.name.common.toLowerCase() === country2Internal.toLowerCase());
 
-      // Handle error if one of the countries is not found
       if (!c1 || !c2) {
-        document.getElementById('result').innerHTML = `Country not found. Did you mean: ${!c1 ? country1Input : country2Input}?`;
+        document.getElementById('result').innerHTML = `Land hittades inte. Menade du: ${!c1 ? country1Input : country2Input}?`;
         return;
       }
 
-      // Display the results using the user's original input (country1Input and country2Input)
       let resultText = `
         <h3>${country1Input} vs. ${country2Input}</h3>
-        <p><strong>Population:</strong> ${c1.population} vs. ${c2.population}</p>
+        <p><strong>Befolkning:</strong> ${c1.population} vs. ${c2.population}</p>
       `;
 
       const c1Military = militaryData[c1.name.common];
@@ -549,54 +549,51 @@ function compareCountries() {
 
       if (c1Military) {
         resultText += `
-          <p><strong>${country1Input} Military Strength:</strong> ${c1Military.military_strength}</p>
-          <p><strong>Available for War:</strong> ${c1Military.available_for_war}</p>
-          <p><strong>Warplanes:</strong> ${c1Military.warplanes}</p>
-          <p><strong>Tanks:</strong> ${c1Military.tanks}</p>
-          <p><strong>Naval Strength:</strong> ${c1Military.naval_strength}</p>
+          <p><strong>${country1Input} Militärstyrka:</strong> ${c1Military.military_strength}</p>
+          <p><strong>Tillgängliga för krig:</strong> ${c1Military.available_for_war}</p>
+          <p><strong>Krigsplan:</strong> ${c1Military.warplanes}</p>
+          <p><strong>Stridsvagnar:</strong> ${c1Military.tanks}</p>
+          <p><strong>Sjöstridsstyrka:</strong> ${c1Military.naval_strength}</p>
         `;
       } else {
         militaryPromises.push(fetchMilitaryDataFromWikipedia(c1.name.common).then(militaryExtract => {
-          resultText += `<p><strong>${country1Input} Military Data:</strong> ${militaryExtract}</p>`;
+          resultText += `<p><strong>${country1Input} Militärdata:</strong> ${militaryExtract}</p>`;
         }));
       }
 
       if (c2Military) {
         resultText += `
-          <p><strong>${country2Input} Military Strength:</strong> ${c2Military.military_strength}</p>
-          <p><strong>Available for War:</strong> ${c2Military.available_for_war}</p>
-          <p><strong>Warplanes:</strong> ${c2Military.warplanes}</p>
-          <p><strong>Tanks:</strong> ${c2Military.tanks}</p>
-          <p><strong>Naval Strength:</strong> ${c2Military.naval_strength}</p>
+          <p><strong>${country2Input} Militärstyrka:</strong> ${c2Military.military_strength}</p>
+          <p><strong>Tillgängliga för krig:</strong> ${c2Military.available_for_war}</p>
+          <p><strong>Krigsplan:</strong> ${c2Military.warplanes}</p>
+          <p><strong>Stridsvagnar:</strong> ${c2Military.tanks}</p>
+          <p><strong>Sjöstridsstyrka:</strong> ${c2Military.naval_strength}</p>
         `;
       } else {
         militaryPromises.push(fetchMilitaryDataFromWikipedia(c2.name.common).then(militaryExtract => {
-          resultText += `<p><strong>${country2Input} Military Data:</strong> ${militaryExtract}</p>`;
+          resultText += `<p><strong>${country2Input} Militärdata:</strong> ${militaryExtract}</p>`;
         }));
       }
 
       Promise.all(militaryPromises).then(() => {
-        // Calculate scores to determine the winner
         let c1Score = (c1Military?.military_strength || 0) + c1.population;
         let c2Score = (c2Military?.military_strength || 0) + c2.population;
 
         if (c1Score > c2Score) {
-          resultText += `<p><strong>Winner:</strong> ${country1Input} (Based on military strength, vehicles, and population)</p>`;
+          resultText += `<p><strong>Vinnare:</strong> ${country1Input} (Baserat på militärstyrka och befolkning)</p>`;
         } else if (c2Score > c1Score) {
-          resultText += `<p><strong>Winner:</strong> ${country2Input} (Based on military strength, vehicles, and population)</p>`;
+          resultText += `<p><strong>Vinnare:</strong> ${country2Input} (Baserat på militärstyrka och befolkning)</p>`;
         } else {
-          resultText += `<p><strong>Result:</strong> It's a tie!</p>`;
+          resultText += `<p><strong>Resultat:</strong> Det är oavgjort!</p>`;
         }
 
         document.getElementById('result').innerHTML = resultText;
-        showElementWithAnimation('result');
-        showElementWithAnimation('about');
       });
     })
     .catch(error => console.log('Error fetching population data:', error));
 }
 
-// Add the "Enter" key functionality for inputs and button click event
+// Lägg till knappklick och "Enter"-funktionalitet för att trigga jämförelsen
 document.getElementById('compareButton').addEventListener('click', compareCountries);
 document.getElementById('country1').addEventListener('keydown', function(event) {
   if (event.key === 'Enter') {
@@ -610,8 +607,3 @@ document.getElementById('country2').addEventListener('keydown', function(event) 
     compareCountries();
   }
 });
-
-// Function to trigger animations
-function showElementWithAnimation(id) {
-  document.getElementById(id).classList.add('show');
-}
