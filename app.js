@@ -24,7 +24,6 @@ const countryTranslations = {
   "usa": "USA",
   "united states": "USA",
   "deutschland": "Germany"
-  // Add more Swedish-English translations here
 };
 
 function levenshteinDistance(s1, s2) {
@@ -144,7 +143,28 @@ function compareCountries() {
         }
 
         document.getElementById('result').innerHTML = resultText;
+        showElementWithAnimation('result');
+        showElementWithAnimation('about');
       });
     })
     .catch(error => console.log('Error fetching population data:', error));
+}
+
+// Add the "Enter" key functionality for inputs
+document.getElementById('country1').addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        compareCountries();
+    }
+});
+document.getElementById('country2').addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        compareCountries();
+    }
+});
+
+// Function to trigger animations
+function showElementWithAnimation(id) {
+    document.getElementById(id).classList.add('show');
 }
