@@ -509,27 +509,26 @@ function calculateMilitaryScore(military, population) {
 function generateExplanation(c1Military, c2Military, c1Name, c2Name) {
   let explanation = '';
 
-  // Jämför kategori för kategori och generera förklaring
   if (c1Military.military_strength > c2Military.military_strength) {
-    explanation += `${c1Name} vann tack vare sin överlägsna militärstyrka. `;
+    explanation += `${c1Name} won due to superior military strength. `;
   } else if (c1Military.military_strength < c2Military.military_strength) {
-    explanation += `${c2Name} vann tack vare sin överlägsna militärstyrka. `;
+    explanation += `${c2Name} won due to superior military strength. `;
   }
 
   if (c1Military.warplanes > c2Military.warplanes) {
-    explanation += `${c1Name} hade fler krigsplan, vilket gav dem en fördel i luften. `;
+    explanation += `${c1Name} had more warplanes, giving them an aerial advantage. `;
   } else if (c1Military.warplanes < c2Military.warplanes) {
-    explanation += `${c2Name} hade fler krigsplan, vilket gav dem överlägsen luftstyrka. `;
+    explanation += `${c2Name} had more warplanes, giving them aerial superiority. `;
   }
 
   if (c1Military.tanks > c2Military.tanks) {
-    explanation += `${c1Name} hade fler stridsvagnar, vilket gav dem markfördel. `;
+    explanation += `${c1Name} had more tanks, giving them an advantage on the ground. `;
   } else if (c1Military.tanks < c2Military.tanks) {
-    explanation += `${c2Name} hade fler stridsvagnar, vilket gav dem övertag på marken. `;
+    explanation += `${c2Name} had more tanks, giving them a ground advantage. `;
   }
 
   if (explanation === '') {
-    explanation = 'Båda länderna har likvärdiga militära resurser och styrkor.';
+    explanation = 'Both countries have similar military resources and strength.';
   }
 
   return explanation;
@@ -539,10 +538,11 @@ function compareCountries() {
   let country1Input = document.getElementById('country1').value;
   let country2Input = document.getElementById('country2').value;
 
+  // Översätt länder till interna engelska namn
   let country1Internal = translateCountry(country1Input);
   let country2Internal = translateCountry(country2Input);
 
-  console.log(`Comparing ${country1Internal} and ${country2Internal}`); // Lägg till logg för att kontrollera land
+  console.log(`Comparing ${country1Internal} and ${country2Internal}`);
 
   fetch('https://restcountries.com/v3.1/all?fields=name,population')
     .then(response => response.json())
@@ -551,82 +551,72 @@ function compareCountries() {
       const c2 = data.find(country => country.name.common.toLowerCase() === country2Internal.toLowerCase());
 
       if (!c1 || !c2) {
-        document.getElementById('result-left').innerHTML = `Land hittades inte. Menade du: ${!c1 ? country1Input : country2Input}?`;
+        document.getElementById('result-left').innerHTML = `Country not found. Did you mean: ${!c1 ? country1Input : country2Input}?`;
         return;
       }
 
-      // Kontrollera att militärdata för varje land finns i militaryData
+      // Kontrollera att militärdata finns för båda länderna
       const c1Military = militaryData[c1.name.common];
       const c2Military = militaryData[c2.name.common];
 
-      // Lägg till felsökningsloggar för att kontrollera om militärdata hämtas korrekt
-      console.log(`Fetched military data for ${country1Input}:`, c1Military);
-      console.log(`Fetched military data for ${country2Input}:`, c2Military);
-
       if (!c1Military || !c2Military) {
-        document.getElementById('result-left').innerHTML = `Militärdata hittades inte för ${!c1Military ? country1Input : country2Input}.`;
+        document.getElementById('result-left').innerHTML = `Military data not found for ${!c1Military ? country1Input : country2Input}.`;
         return;
       }
 
-      // Organisera informationen i kategorier för varje land
-      let resultTextLeft = `<ul>`;
-      let resultTextRight = `<ul>`;
+      // Visa data för varje land i listformat
+      let resultTextLeft = `
+        <ul>
+          <li><strong>Population:</strong> ${formatNumber(c1.population)}</li>
+          <li><strong>Military Strength:</strong> ${formatNumber(c1Military.military_strength)}</li>
+          <li><strong>Warplanes:</strong> ${formatNumber(c1Military.warplanes)}</li>
+          <li><strong>Tanks:</strong> ${formatNumber(c1Military.tanks)}</li>
+        </ul>`;
+      
+      let resultTextRight = `
+        <ul>
+          <li><strong>Population:</strong> ${formatNumber(c2.population)}</li>
+          <li><strong>Military Strength:</strong> ${formatNumber(c2Military.military_strength)}</li>
+          <li><strong>Warplanes:</strong> ${formatNumber(c2Military.warplanes)}</li>
+          <li><strong>Tanks:</strong> ${formatNumber(c2Military.tanks)}</li>
+        </ul>`;
 
-      resultTextLeft += `<li><strong>Befolkning:</strong> ${formatNumber(c1.population)}</li>`;
-      resultTextLeft += `<li><strong>Militärstyrka:</strong> ${formatNumber(c1Military.military_strength)}</li>`;
-      resultTextLeft += `<li><strong>Krigsplan:</strong> ${formatNumber(c1Military.warplanes)}</li>`;
-      resultTextLeft += `<li><strong>Stridsvagnar:</strong> ${formatNumber(c1Military.tanks)}</li>`;
-      resultTextLeft += `</ul>`;
-
-      resultTextRight += `<ul>`;
-      resultTextRight += `<li><strong>Befolkning:</strong> ${formatNumber(c2.population)}</li>`;
-      resultTextRight += `<li><strong>Militärstyrka:</strong> ${formatNumber(c2Military.military_strength)}</li>`;
-      resultTextRight += `<li><strong>Krigsplan:</strong> ${formatNumber(c2Military.warplanes)}</li>`;
-      resultTextRight += `<li><strong>Stridsvagnar:</strong> ${formatNumber(c2Military.tanks)}</li>`;
-      resultTextRight += `</ul>`;
-
-      // Beräkna poäng med viktighetsbaserat system
+      // Beräkna vinstchans
       let c1Score = calculateMilitaryScore(c1Military, c1.population);
       let c2Score = calculateMilitaryScore(c2Military, c2.population);
 
       let c1Chance = (c1Score / (c1Score + c2Score)) * 100;
       let c2Chance = 100 - c1Chance;
 
-      // Lägg till chans att vinna centralt under listraderna
+      // Visa vinstchans centralt
       document.getElementById('win-chances').innerHTML = `
-        <strong>${country1Input} chans att vinna:</strong> ${c1Chance.toFixed(2)}%<br>
-        <strong>${country2Input} chans att vinna:</strong> ${c2Chance.toFixed(2)}%<br>
+        <strong>${country1Internal} win chance:</strong> ${c1Chance.toFixed(2)}%<br>
+        <strong>${country2Internal} win chance:</strong> ${c2Chance.toFixed(2)}%<br>
       `;
 
       // Dynamiskt genererad förklaring
       let winnerText = '';
       let explanation = '';
       if (c1Score > c2Score) {
-        winnerText = `Vinnare: ${country1Input}`;
-        explanation = generateExplanation(c1Military, c2Military, country1Input, country2Input);
+        winnerText = `Winner: ${country1Internal}`;
+        explanation = generateExplanation(c1Military, c2Military, country1Internal, country2Internal);
       } else if (c2Score > c1Score) {
-        winnerText = `Vinnare: ${country2Input}`;
-        explanation = generateExplanation(c2Military, c1Military, country2Input, country1Input);
+        winnerText = `Winner: ${country2Internal}`;
+        explanation = generateExplanation(c2Military, c1Military, country2Internal, country1Internal);
       } else {
-        winnerText = `Resultat: Oavgjort`;
-        explanation = 'Båda länderna har likvärdiga styrkor och resurser.';
+        winnerText = `Result: Draw`;
+        explanation = 'Both countries have equivalent strength and resources.';
       }
 
       // Visa texten med animering
-      document.getElementById('result-left').classList.add('show');
-      document.getElementById('result-right').classList.add('show');
-      document.getElementById('winner').classList.add('show');
+      typeText(document.getElementById('result-left'), resultTextLeft);
+      typeText(document.getElementById('result-right'), resultTextRight);
+      typeText(document.getElementById('winner'), `${winnerText}`);
 
-      // Animera texten
-      document.getElementById('result-left').innerHTML = resultTextLeft;
-      document.getElementById('result-right').innerHTML = resultTextRight;
-      document.getElementById('winner').innerHTML = `${winnerText}`;
-
-      // Lägg till dropdown-meny för förklaringen
+      // Dropdown-meny för förklaring
       const explanationElement = document.getElementById('explanation');
-      explanationElement.innerHTML = `<button id="explain-toggle">Varför vann?</button><div id="explanation-content" style="display:none;">${explanation}</div>`;
+      explanationElement.innerHTML = `<button id="explain-toggle">Why did they win?</button><div id="explanation-content" style="display:none;">${explanation}</div>`;
       
-      // Klickhändelse för att visa/dölja förklaringen
       document.getElementById('explain-toggle').addEventListener('click', function() {
         const content = document.getElementById('explanation-content');
         content.style.display = content.style.display === 'none' ? 'block' : 'none';
