@@ -454,6 +454,7 @@ const militaryData = {
 // Placera countryTranslations här för att säkerställa att den är tillgänglig globalt
 const countryTranslations = {
   "sverige": "Sweden",
+  "norge": "Norway",
   "tyskland": "Germany",
   "ryssland": "Russia",
   "usa": "USA",
@@ -462,55 +463,12 @@ const countryTranslations = {
   "finland": "Finland"
 };
 
-function levenshteinDistance(s1, s2) {
-  const len1 = s1.length;
-  const len2 = s2.length;
-  const dp = Array(len2 + 1).fill(null).map(() => Array(len1 + 1).fill(null));
-
-  for (let i = 0; i <= len1; i++) {
-    dp[0][i] = i;
-  }
-  for (let j = 0; j <= len2; j++) {
-    dp[j][0] = j;
-  }
-
-  for (let j = 1; j <= len2; j++) {
-    for (let i = 1; i <= len1; i++) {
-      const indicator = s1[i - 1] === s2[j - 1] ? 0 : 1;
-      dp[j][i] = Math.min(
-        dp[j][i - 1] + 1, // deletion
-        dp[j - 1][i] + 1, // insertion
-        dp[j - 1][i - 1] + indicator // substitution
-      );
-    }
-  }
-  return dp[len2][len1];
-}
-
-function findClosestCountry(input, countryList) {
-  let closestCountry = countryList[0];
-  let minDistance = levenshteinDistance(input.toLowerCase(), countryList[0].toLowerCase());
-
-  for (let i = 1; i < countryList.length; i++) {
-    const distance = levenshteinDistance(input.toLowerCase(), countryList[i].toLowerCase());
-    if (distance < minDistance) {
-      closestCountry = countryList[i];
-      minDistance = distance;
-    }
-  }
-
-  return closestCountry;
-}
-
 function translateCountry(input) {
   const lowerCaseInput = input.toLowerCase();
-  
-  // Om översättning finns, returnera det engelska namnet
   if (countryTranslations[lowerCaseInput]) {
     return countryTranslations[lowerCaseInput];
   }
 
-  // Annars hitta den närmaste matchningen
   const allCountries = Object.keys(militaryData).concat(Object.values(countryTranslations));
   return findClosestCountry(input, allCountries);
 }
@@ -518,7 +476,7 @@ function translateCountry(input) {
 function typeText(element, text) {
     element.innerHTML = ''; // Rensa tidigare text
     let i = 0;
-    const speed = 25; // Dubbelt så snabb animation
+    const speed = 25; // Snabbare skrivanimation
 
     function type() {
         if (i < text.length) {
@@ -531,20 +489,23 @@ function typeText(element, text) {
     type();
 }
 
+function calculateMilitaryScore(military) {
+  return military.military_strength + 
+         (military.warplanes * 10) + // Krigsplan är viktiga
+         (military.tanks * 15) + // Stridsvagnar väger tungt
+         (military.naval_strength * 20); // Flottstyrka räknas mycket
+}
+
 function compareCountries() {
   let country1Input = document.getElementById('country1').value;
   let country2Input = document.getElementById('country2').value;
 
-  // Översätt länder till interna namn
   let country1Internal = translateCountry(country1Input);
   let country2Internal = translateCountry(country2Input);
 
   fetch('https://restcountries.com/v3.1/all?fields=name,population')
     .then(response => response.json())
     .then(data => {
-      console.log('Fetched data:', data); // Debug-utskrift
-
-      // Hitta ländernas data
       const c1 = data.find(country => country.name.common.toLowerCase() === country1Internal.toLowerCase());
       const c2 = data.find(country => country.name.common.toLowerCase() === country2Internal.toLowerCase());
 
@@ -553,9 +514,6 @@ function compareCountries() {
         return;
       }
 
-      console.log('Found countries:', c1, c2); // Debug-utskrift
-
-      // Resultattext för vänster och höger sida
       let resultTextLeft = `${country1Input}\nBefolkning: ${c1.population}\n`;
       let resultTextRight = `${country2Input}\nBefolkning: ${c2.population}\n`;
 
@@ -563,28 +521,35 @@ function compareCountries() {
       const c2Military = militaryData[c2.name.common];
 
       if (c1Military && c2Military) {
-        resultTextLeft += `Militärstyrka: ${c1Military.military_strength}\n`;
-        resultTextRight += `Militärstyrka: ${c2Military.military_strength}\n`;
+        // Lägg till militära fordon i texten
+        resultTextLeft += `Militärstyrka: ${c1Military.military_strength}\nKrigsplan: ${c1Military.warplanes}\nStridsvagnar: ${c1Military.tanks}\nFlottstyrka: ${c1Military.naval_strength}\n`;
+        resultTextRight += `Militärstyrka: ${c2Military.military_strength}\nKrigsplan: ${c2Military.warplanes}\nStridsvagnar: ${c2Military.tanks}\nFlottstyrka: ${c2Military.naval_strength}\n`;
 
-        // Beräkna poäng och vinnare
-        let c1Score = c1Military.military_strength + c1.population;
-        let c2Score = c2Military.military_strength + c2.population;
+        // Beräkna poäng
+        let c1Score = calculateMilitaryScore(c1Military) + c1.population;
+        let c2Score = calculateMilitaryScore(c2Military) + c2.population;
+
         let c1Chance = (c1Score / (c1Score + c2Score)) * 100;
         let c2Chance = 100 - c1Chance;
 
         resultTextLeft += `Chans att vinna: ${c1Chance.toFixed(2)}%\n`;
         resultTextRight += `Chans att vinna: ${c2Chance.toFixed(2)}%\n`;
 
+        // Förklaring av varför ett land vann
         let winnerText = '';
+        let explanation = '';
         if (c1Score > c2Score) {
           winnerText = `Vinnare: ${country1Input}`;
+          explanation = `${country1Input} vinner på grund av starkare militärstyrka och fler militära fordon som krigsplan och flottstyrka.`;
         } else if (c2Score > c1Score) {
           winnerText = `Vinnare: ${country2Input}`;
+          explanation = `${country2Input} vinner på grund av starkare militärstyrka och fler militära fordon som krigsplan och stridsvagnar.`;
         } else {
           winnerText = `Resultat: Oavgjort`;
+          explanation = `Det är oavgjort eftersom båda länderna har jämförbar militärstyrka och fordon.`;
         }
 
-        // Visa texten
+        // Visa texten med animering
         document.getElementById('result-left').classList.add('show');
         document.getElementById('result-right').classList.add('show');
         document.getElementById('winner').classList.add('show');
@@ -592,7 +557,7 @@ function compareCountries() {
         // Animera texten
         typeText(document.getElementById('result-left'), resultTextLeft);
         typeText(document.getElementById('result-right'), resultTextRight);
-        typeText(document.getElementById('winner'), winnerText);
+        typeText(document.getElementById('winner'), `${winnerText}\n${explanation}`);
       }
     })
     .catch(error => console.log('Error fetching population data:', error));
