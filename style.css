@@ -65,21 +65,3 @@ button:hover {
 #winner.show {
     opacity: 1;
 }
-
-#explanation {
-    text-align: center;
-    margin-top: 20px;
-}
-
-#explanation button {
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    margin-top: 10px;
-}
-
-#explanation-content {
-    margin-top: 10px;
-    text-align: center;
-    font-size: 16px;
-}
