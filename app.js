@@ -584,6 +584,11 @@ function compareCountries() {
           winnerText = `Resultat: Oavgjort`;
         }
 
+        // Visa texten
+        document.getElementById('result-left').classList.add('show');
+        document.getElementById('result-right').classList.add('show');
+        document.getElementById('winner').classList.add('show');
+
         // Animera texten
         typeText(document.getElementById('result-left'), resultTextLeft);
         typeText(document.getElementById('result-right'), resultTextRight);
