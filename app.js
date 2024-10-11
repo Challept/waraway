@@ -542,6 +542,8 @@ function compareCountries() {
   let country1Internal = translateCountry(country1Input);
   let country2Internal = translateCountry(country2Input);
 
+  console.log(`Comparing ${country1Internal} and ${country2Internal}`); // Lägg till logg för att kontrollera land
+
   fetch('https://restcountries.com/v3.1/all?fields=name,population')
     .then(response => response.json())
     .then(data => {
@@ -556,6 +558,10 @@ function compareCountries() {
       // Kontrollera att militärdata för varje land finns i militaryData
       const c1Military = militaryData[c1.name.common];
       const c2Military = militaryData[c2.name.common];
+
+      // Lägg till felsökningsloggar för att kontrollera om militärdata hämtas korrekt
+      console.log(`Fetched military data for ${country1Input}:`, c1Military);
+      console.log(`Fetched military data for ${country2Input}:`, c2Military);
 
       if (!c1Military || !c2Military) {
         document.getElementById('result-left').innerHTML = `Militärdata hittades inte för ${!c1Military ? country1Input : country2Input}.`;
