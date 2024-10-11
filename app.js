@@ -68,12 +68,9 @@ function findClosestCountry(input, countryList) {
 
 function translateCountry(input) {
   const lowerCaseInput = input.toLowerCase();
-  // If exact translation exists, use it
   if (countryTranslations[lowerCaseInput]) {
     return countryTranslations[lowerCaseInput];
   }
-
-  // Otherwise, find the closest matching country in militaryData or translations
   const allCountries = Object.keys(militaryData).concat(Object.values(countryTranslations));
   return findClosestCountry(input, allCountries);
 }
@@ -82,7 +79,6 @@ function compareCountries() {
   let country1 = document.getElementById('country1').value;
   let country2 = document.getElementById('country2').value;
 
-  // Translate to English if input is in Swedish, handle typos
   country1 = translateCountry(country1);
   country2 = translateCountry(country2);
 
@@ -130,7 +126,6 @@ function compareCountries() {
       }
 
       Promise.all(militaryPromises).then(() => {
-        // Determine the winner based on military strength and population
         let c1Score = (c1Military?.military_strength || 0) + c1.population;
         let c2Score = (c2Military?.military_strength || 0) + c2.population;
 
@@ -150,7 +145,9 @@ function compareCountries() {
     .catch(error => console.log('Error fetching population data:', error));
 }
 
-// Add the "Enter" key functionality for inputs
+// Add event listeners for the button and the "Enter" key
+document.getElementById('compareButton').addEventListener('click', compareCountries);
+
 document.getElementById('country1').addEventListener('keydown', function(event) {
     if (event.key === 'Enter') {
         event.preventDefault();
