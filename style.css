@@ -34,50 +34,37 @@ button:hover {
     transform: scale(1.05);
 }
 
-#result {
+.container {
+    display: flex;
+    justify-content: space-between;
     margin-top: 20px;
+    text-align: left;
+}
+
+.country {
+    width: 30%;
     font-size: 18px;
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
+    padding: 10px;
 }
 
-#result.show {
-    opacity: 1;
+.result {
+    width: 30%;
+    text-align: center;
 }
 
-#about {
-    margin-top: 40px;
-    padding: 20px;
-    background-color: #eaeaea;
-    border-radius: 8px;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 1s, transform 1s;
+.typing {
+    border-right: 0.15em solid black;
+    white-space: nowrap;
+    overflow: hidden;
+    animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
 }
 
-#about.show {
-    opacity: 1;
-    transform: translateY(0);
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
 }
 
-h1 {
-    font-size: 36px;
-    margin-bottom: 20px;
-    opacity: 0;
-    animation: fadeInTitle 1s forwards;
-}
-
-@keyframes fadeInTitle {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-h2 {
-    font-size: 28px;
-    margin-bottom: 10px;
-}
-
-p {
-    font-size: 18px;
-    line-height: 1.5;
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: black }
 }
