@@ -433,6 +433,13 @@ const militaryData = {
     "tanks": 6209,
     "naval_strength": 490
   },
+  "USA": {
+    "military_strength": 1400000,
+    "available_for_war": 11800000,
+    "warplanes": 13247,
+    "tanks": 6209,
+    "naval_strength": 490
+  },
   "Vietnam": {
     "military_strength": 482000,
     "available_for_war": 49000000,
@@ -455,6 +462,7 @@ const countryTranslations = {
   // Add more translations as needed
 };
 
+// Calculate Levenshtein Distance for typo correction
 function levenshteinDistance(s1, s2) {
   const len1 = s1.length;
   const len2 = s2.length;
@@ -497,98 +505,90 @@ function findClosestCountry(input, countryList) {
 
 function translateCountry(input) {
   const lowerCaseInput = input.toLowerCase();
-  // If the exact translation exists, return the English version for internal comparison
   if (countryTranslations[lowerCaseInput]) {
     return countryTranslations[lowerCaseInput];
   }
 
-  // Otherwise, find the closest matching country in militaryData or translations
   const allCountries = Object.keys(militaryData).concat(Object.values(countryTranslations));
   return findClosestCountry(input, allCountries);
+}
+
+function calculateChance(c1Score, c2Score) {
+  const totalScore = c1Score + c2Score;
+  const c1Chance = (c1Score / totalScore) * 100;
+  const c2Chance = (c2Score / totalScore) * 100;
+  return { c1Chance: c1Chance.toFixed(2), c2Chance: c2Chance.toFixed(2) };
 }
 
 function compareCountries() {
   let country1Input = document.getElementById('country1').value;
   let country2Input = document.getElementById('country2').value;
 
-  // Translate internally to English for comparison, but preserve the user's input for display
   let country1Internal = translateCountry(country1Input);
   let country2Internal = translateCountry(country2Input);
 
   fetch('https://restcountries.com/v3.1/all?fields=name,population')
     .then(response => response.json())
     .then(data => {
-      // Find country data using the internal (English) name
       const c1 = data.find(country => country.name.common.toLowerCase() === country1Internal.toLowerCase());
       const c2 = data.find(country => country.name.common.toLowerCase() === country2Internal.toLowerCase());
 
-      // Handle error if one of the countries is not found
       if (!c1 || !c2) {
         document.getElementById('result').innerHTML = `Country not found. Did you mean: ${!c1 ? country1Input : country2Input}?`;
         return;
       }
 
-      // Display the results using the user's original input (country1Input and country2Input)
+      const c1Military = militaryData[c1.name.common];
+      const c2Military = militaryData[c2.name.common];
+
       let resultText = `
         <h3>${country1Input} vs. ${country2Input}</h3>
         <p><strong>Population:</strong> ${c1.population} vs. ${c2.population}</p>
       `;
 
-      const c1Military = militaryData[c1.name.common];
-      const c2Military = militaryData[c2.name.common];
-
-      const militaryPromises = [];
-
-      if (c1Military) {
+      if (c1Military && c2Military) {
         resultText += `
-          <p><strong>${country1Input} Military Strength:</strong> ${c1Military.military_strength}</p>
-          <p><strong>Available for War:</strong> ${c1Military.available_for_war}</p>
-          <p><strong>Warplanes:</strong> ${c1Military.warplanes}</p>
-          <p><strong>Tanks:</strong> ${c1Military.tanks}</p>
-          <p><strong>Naval Strength:</strong> ${c1Military.naval_strength}</p>
+          <div><h4>${country1Input} Military Data</h4>
+            <p><strong>Military Strength:</strong> ${c1Military.military_strength}</p>
+            <p><strong>Available for War:</strong> ${c1Military.available_for_war}</p>
+            <p><strong>Warplanes:</strong> ${c1Military.warplanes}</p>
+            <p><strong>Tanks:</strong> ${c1Military.tanks}</p>
+            <p><strong>Naval Strength:</strong> ${c1Military.naval_strength}</p>
+          </div>
+          <div><h4>${country2Input} Military Data</h4>
+            <p><strong>Military Strength:</strong> ${c2Military.military_strength}</p>
+            <p><strong>Available for War:</strong> ${c2Military.available_for_war}</p>
+            <p><strong>Warplanes:</strong> ${c2Military.warplanes}</p>
+            <p><strong>Tanks:</strong> ${c2Military.tanks}</p>
+            <p><strong>Naval Strength:</strong> ${c2Military.naval_strength}</p>
+          </div>
         `;
-      } else {
-        militaryPromises.push(fetchMilitaryDataFromWikipedia(c1.name.common).then(militaryExtract => {
-          resultText += `<p><strong>${country1Input} Military Data:</strong> ${militaryExtract}</p>`;
-        }));
-      }
 
-      if (c2Military) {
-        resultText += `
-          <p><strong>${country2Input} Military Strength:</strong> ${c2Military.military_strength}</p>
-          <p><strong>Available for War:</strong> ${c2Military.available_for_war}</p>
-          <p><strong>Warplanes:</strong> ${c2Military.warplanes}</p>
-          <p><strong>Tanks:</strong> ${c2Military.tanks}</p>
-          <p><strong>Naval Strength:</strong> ${c2Military.naval_strength}</p>
-        `;
-      } else {
-        militaryPromises.push(fetchMilitaryDataFromWikipedia(c2.name.common).then(militaryExtract => {
-          resultText += `<p><strong>${country2Input} Military Data:</strong> ${militaryExtract}</p>`;
-        }));
-      }
+        let c1Score = (c1Military.military_strength || 0) + (c1Military.warplanes || 0) + (c1Military.tanks || 0) + (c1Military.naval_strength || 0) + c1.population;
+        let c2Score = (c2Military.military_strength || 0) + (c2Military.warplanes || 0) + (c2Military.tanks || 0) + (c2Military.naval_strength || 0) + c2.population;
 
-      Promise.all(militaryPromises).then(() => {
-        // Calculate scores to determine the winner
-        let c1Score = (c1Military?.military_strength || 0) + c1.population;
-        let c2Score = (c2Military?.military_strength || 0) + c2.population;
+        const { c1Chance, c2Chance } = calculateChance(c1Score, c2Score);
 
         if (c1Score > c2Score) {
-          resultText += `<p><strong>Winner:</strong> ${country1Input} (Based on military strength, vehicles, and population)</p>`;
+          resultText += `<p><strong>Winner:</strong> ${country1Input} (${c1Chance}% chance of winning)</p>`;
         } else if (c2Score > c1Score) {
-          resultText += `<p><strong>Winner:</strong> ${country2Input} (Based on military strength, vehicles, and population)</p>`;
+          resultText += `<p><strong>Winner:</strong> ${country2Input} (${c2Chance}% chance of winning)</p>`;
         } else {
           resultText += `<p><strong>Result:</strong> It's a tie!</p>`;
         }
 
-        document.getElementById('result').innerHTML = resultText;
-        showElementWithAnimation('result');
-        showElementWithAnimation('about');
-      });
+        resultText += `<p><strong>${country1Input} Chance of Winning:</strong> ${c1Chance}%</p>`;
+        resultText += `<p><strong>${country2Input} Chance of Winning:</strong> ${c2Chance}%</p>`;
+      } else {
+        resultText += `<p>No complete military data available for comparison.</p>`;
+      }
+
+      document.getElementById('result').innerHTML = resultText;
     })
     .catch(error => console.log('Error fetching population data:', error));
 }
 
-// Add the "Enter" key functionality for inputs and button click event
+// Add event listeners for the button click and enter key functionality
 document.getElementById('compareButton').addEventListener('click', compareCountries);
 document.getElementById('country1').addEventListener('keydown', function(event) {
   if (event.key === 'Enter') {
@@ -602,8 +602,3 @@ document.getElementById('country2').addEventListener('keydown', function(event) 
     compareCountries();
   }
 });
-
-// Function to trigger animations
-function showElementWithAnimation(id) {
-  document.getElementById(id).classList.add('show');
-}
