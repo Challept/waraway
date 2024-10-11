@@ -489,10 +489,46 @@ function typeText(element, text) {
     type();
 }
 
-function calculateMilitaryScore(military) {
-  return military.military_strength + 
-         (military.warplanes * 10) + 
-         (military.tanks * 15); 
+function calculateMilitaryScore(military, population) {
+  const militaryStrengthWeight = 5;  // Mycket viktigt
+  const warplanesWeight = 4;         // Mycket viktigt
+  const tanksWeight = 3;             // Viktigt
+  const populationWeight = 2;        // Viktigt
+
+  return (military.military_strength * militaryStrengthWeight) + 
+         (military.warplanes * warplanesWeight) + 
+         (military.tanks * tanksWeight) + 
+         (population * populationWeight); 
+}
+
+// Dynamisk förklaring baserat på vilken kategori som har störst inverkan
+function generateExplanation(c1Military, c2Military, c1Name, c2Name) {
+  let explanation = '';
+
+  // Jämför kategori för kategori och generera förklaring
+  if (c1Military.military_strength > c2Military.military_strength) {
+    explanation += `${c1Name} vann tack vare sin överlägsna militärstyrka. `;
+  } else if (c1Military.military_strength < c2Military.military_strength) {
+    explanation += `${c2Name} vann tack vare sin överlägsna militärstyrka. `;
+  }
+
+  if (c1Military.warplanes > c2Military.warplanes) {
+    explanation += `${c1Name} hade fler krigsplan, vilket gav dem en fördel i luften. `;
+  } else if (c1Military.warplanes < c2Military.warplanes) {
+    explanation += `${c2Name} hade fler krigsplan, vilket gav dem överlägsen luftstyrka. `;
+  }
+
+  if (c1Military.tanks > c2Military.tanks) {
+    explanation += `${c1Name} hade fler stridsvagnar, vilket gav dem markfördel. `;
+  } else if (c1Military.tanks < c2Military.tanks) {
+    explanation += `${c2Name} hade fler stridsvagnar, vilket gav dem övertag på marken. `;
+  }
+
+  if (explanation === '') {
+    explanation = 'Båda länderna har likvärdiga militära resurser och styrkor.';
+  }
+
+  return explanation;
 }
 
 function compareCountries() {
@@ -531,9 +567,9 @@ function compareCountries() {
         resultTextRight += `Krigsplan: ${c2Military.warplanes}\n`;
         resultTextRight += `Stridsvagnar: ${c2Military.tanks}\n`;
 
-        // Beräkna poäng
-        let c1Score = calculateMilitaryScore(c1Military) + c1.population;
-        let c2Score = calculateMilitaryScore(c2Military) + c2.population;
+        // Beräkna poäng med viktighetsbaserat system
+        let c1Score = calculateMilitaryScore(c1Military, c1.population);
+        let c2Score = calculateMilitaryScore(c2Military, c2.population);
 
         let c1Chance = (c1Score / (c1Score + c2Score)) * 100;
         let c2Chance = 100 - c1Chance;
@@ -541,18 +577,18 @@ function compareCountries() {
         resultTextLeft += `Chans att vinna: ${c1Chance.toFixed(2)}%\n`;
         resultTextRight += `Chans att vinna: ${c2Chance.toFixed(2)}%\n`;
 
-        // Förklaring av varför ett land vann
+        // Dynamiskt genererad förklaring
         let winnerText = '';
         let explanation = '';
         if (c1Score > c2Score) {
           winnerText = `Vinnare: ${country1Input}`;
-          explanation = `${country1Input} vann på grund av överlägsen militärstyrka och fler stridsvagnar och krigsplan.`;
+          explanation = generateExplanation(c1Military, c2Military, country1Input, country2Input);
         } else if (c2Score > c1Score) {
           winnerText = `Vinnare: ${country2Input}`;
-          explanation = `${country2Input} vann tack vare fler militära fordon och övergripande stridskapacitet.`;
+          explanation = generateExplanation(c2Military, c1Military, country2Input, country1Input);
         } else {
           winnerText = `Resultat: Oavgjort`;
-          explanation = `Båda länderna har likvärdiga styrkor och resurser.`;
+          explanation = 'Båda länderna har likvärdiga styrkor och resurser.';
         }
 
         // Visa texten med animering
@@ -567,7 +603,7 @@ function compareCountries() {
 
         // Lägg till dropdown-meny för förklaringen
         const explanationElement = document.getElementById('explanation');
-        explanationElement.innerHTML = `<button id="explain-toggle">Varför vann ${winnerText}?</button><div id="explanation-content" style="display:none;">${explanation}</div>`;
+        explanationElement.innerHTML = `<button id="explain-toggle">Varför vann?</button><div id="explanation-content" style="display:none;">${explanation}</div>`;
         
         // Klickhändelse för att visa/dölja förklaringen
         document.getElementById('explain-toggle').addEventListener('click', function() {
