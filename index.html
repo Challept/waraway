@@ -3,22 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Who Will Win the War?</title>
+    <title>War Comparison</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <h1 id="title">Who Will Win the War?</h1>
-    
-    <!-- Inputfält -->
-    <input type="text" id="country1" placeholder="Enter first country">
-    <input type="text" id="country2" placeholder="Enter second country">
-    <button id="compareButton" onclick="compareCountries()">Compare</button>
 
-    <!-- Resultatområden -->
-    <div class="container">
-        <div id="leftCountry" class="country"></div>
-        <div id="middleResult" class="result"></div>
-        <div id="rightCountry" class="country"></div>
+    <div id="container">
+        <div id="left-side">
+            <h2 id="country1-name"></h2>
+            <p id="country1-chance"></p>
+        </div>
+
+        <div id="middle-section">
+            <button id="compareButton">Compare</button>
+            <p id="winner-text"></p>
+        </div>
+
+        <div id="right-side">
+            <h2 id="country2-name"></h2>
+            <p id="country2-chance"></p>
+        </div>
     </div>
 
     <script src="app.js"></script>
