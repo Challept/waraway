@@ -17,13 +17,16 @@ const militaryData = {
   }
 };
 
+// Translations from Swedish to English
 const countryTranslations = {
   "sverige": "Sweden",
   "tyskland": "Germany",
   "ryssland": "Russia",
   "usa": "USA",
-  "united states": "USA",
-  "deutschland": "Germany"
+  "förenade staterna": "USA",
+  "deutschland": "Germany",
+  "finland": "Finland",
+  // Add more translations as needed
 };
 
 function levenshteinDistance(s1, s2) {
@@ -68,33 +71,40 @@ function findClosestCountry(input, countryList) {
 
 function translateCountry(input) {
   const lowerCaseInput = input.toLowerCase();
+  // If the exact translation exists, return the English version for internal comparison
   if (countryTranslations[lowerCaseInput]) {
     return countryTranslations[lowerCaseInput];
   }
+
+  // Otherwise, find the closest matching country in militaryData or translations
   const allCountries = Object.keys(militaryData).concat(Object.values(countryTranslations));
   return findClosestCountry(input, allCountries);
 }
 
 function compareCountries() {
-  let country1 = document.getElementById('country1').value;
-  let country2 = document.getElementById('country2').value;
+  let country1Input = document.getElementById('country1').value;
+  let country2Input = document.getElementById('country2').value;
 
-  country1 = translateCountry(country1);
-  country2 = translateCountry(country2);
+  // Translate internally to English for comparison, but preserve the user's input for display
+  let country1Internal = translateCountry(country1Input);
+  let country2Internal = translateCountry(country2Input);
 
   fetch('https://restcountries.com/v3.1/all?fields=name,population')
     .then(response => response.json())
     .then(data => {
-      const c1 = data.find(country => country.name.common.toLowerCase() === country1.toLowerCase());
-      const c2 = data.find(country => country.name.common.toLowerCase() === country2.toLowerCase());
+      // Find country data using the internal (English) name
+      const c1 = data.find(country => country.name.common.toLowerCase() === country1Internal.toLowerCase());
+      const c2 = data.find(country => country.name.common.toLowerCase() === country2Internal.toLowerCase());
 
+      // Handle error if one of the countries is not found
       if (!c1 || !c2) {
-        document.getElementById('result').innerHTML = `Country not found. Did you mean: ${!c1 ? country1 : country2}?`;
+        document.getElementById('result').innerHTML = `Country not found. Did you mean: ${!c1 ? country1Input : country2Input}?`;
         return;
       }
 
+      // Display the results using the user's original input (country1Input and country2Input)
       let resultText = `
-        <h3>${c1.name.common} vs. ${c2.name.common}</h3>
+        <h3>${country1Input} vs. ${country2Input}</h3>
         <p><strong>Population:</strong> ${c1.population} vs. ${c2.population}</p>
       `;
 
@@ -105,34 +115,35 @@ function compareCountries() {
 
       if (c1Military) {
         resultText += `
-          <p><strong>${c1.name.common} Military Strength:</strong> ${c1Military.military_strength}</p>
+          <p><strong>${country1Input} Military Strength:</strong> ${c1Military.military_strength}</p>
           <p><strong>Available for War:</strong> ${c1Military.available_for_war}</p>
         `;
       } else {
         militaryPromises.push(fetchMilitaryDataFromWikipedia(c1.name.common).then(militaryExtract => {
-          resultText += `<p><strong>${c1.name.common} Military Data:</strong> ${militaryExtract}</p>`;
+          resultText += `<p><strong>${country1Input} Military Data:</strong> ${militaryExtract}</p>`;
         }));
       }
 
       if (c2Military) {
         resultText += `
-          <p><strong>${c2.name.common} Military Strength:</strong> ${c2Military.military_strength}</p>
+          <p><strong>${country2Input} Military Strength:</strong> ${c2Military.military_strength}</p>
           <p><strong>Available for War:</strong> ${c2Military.available_for_war}</p>
         `;
       } else {
         militaryPromises.push(fetchMilitaryDataFromWikipedia(c2.name.common).then(militaryExtract => {
-          resultText += `<p><strong>${c2.name.common} Military Data:</strong> ${militaryExtract}</p>`;
+          resultText += `<p><strong>${country2Input} Military Data:</strong> ${militaryExtract}</p>`;
         }));
       }
 
       Promise.all(militaryPromises).then(() => {
+        // Calculate scores to determine the winner
         let c1Score = (c1Military?.military_strength || 0) + c1.population;
         let c2Score = (c2Military?.military_strength || 0) + c2.population;
 
         if (c1Score > c2Score) {
-          resultText += `<p><strong>Winner:</strong> ${c1.name.common} (Based on military strength and population)</p>`;
+          resultText += `<p><strong>Winner:</strong> ${country1Input} (Based on military strength and population)</p>`;
         } else if (c2Score > c1Score) {
-          resultText += `<p><strong>Winner:</strong> ${c2.name.common} (Based on military strength and population)</p>`;
+          resultText += `<p><strong>Winner:</strong> ${country2Input} (Based on military strength and population)</p>`;
         } else {
           resultText += `<p><strong>Result:</strong> It's a tie!</p>`;
         }
@@ -145,23 +156,22 @@ function compareCountries() {
     .catch(error => console.log('Error fetching population data:', error));
 }
 
-// Add event listeners for the button and the "Enter" key
+// Add the "Enter" key functionality for inputs and button click event
 document.getElementById('compareButton').addEventListener('click', compareCountries);
-
 document.getElementById('country1').addEventListener('keydown', function(event) {
-    if (event.key === 'Enter') {
-        event.preventDefault();
-        compareCountries();
-    }
+  if (event.key === 'Enter') {
+    event.preventDefault();
+    compareCountries();
+  }
 });
 document.getElementById('country2').addEventListener('keydown', function(event) {
-    if (event.key === 'Enter') {
-        event.preventDefault();
-        compareCountries();
-    }
+  if (event.key === 'Enter') {
+    event.preventDefault();
+    compareCountries();
+  }
 });
 
 // Function to trigger animations
 function showElementWithAnimation(id) {
-    document.getElementById(id).classList.add('show');
+  document.getElementById(id).classList.add('show');
 }
