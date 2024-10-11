@@ -519,7 +519,7 @@ function translateCountry(input) {
 function typeText(element, text) {
     element.innerHTML = ''; // Rensa tidigare text
     let i = 0;
-    const speed = 50; // Hastighet för animationen (millisekunder)
+    const speed = 25; // Dubbelt så snabb animation
 
     function type() {
         if (i < text.length) {
@@ -540,35 +540,28 @@ function compareCountries() {
   let country1Internal = translateCountry(country1Input);
   let country2Internal = translateCountry(country2Input);
 
-  console.log(`Comparing ${country1Input} (${country1Internal}) and ${country2Input} (${country2Internal})`);
-
   fetch('https://restcountries.com/v3.1/all?fields=name,population')
     .then(response => response.json())
     .then(data => {
-      console.log('Fetched data:', data); // Logga API-data
-
       // Hitta ländernas data
       const c1 = data.find(country => country.name.common.toLowerCase() === country1Internal.toLowerCase());
       const c2 = data.find(country => country.name.common.toLowerCase() === country2Internal.toLowerCase());
 
       if (!c1 || !c2) {
-        document.getElementById('result').innerHTML = `Land hittades inte. Menade du: ${!c1 ? country1Input : country2Input}?`;
-        console.log(`Country data not found for: ${!c1 ? country1Internal : country2Internal}`);
+        document.getElementById('result-left').innerHTML = `Land hittades inte. Menade du: ${!c1 ? country1Input : country2Input}?`;
         return;
       }
 
-      console.log('Found countries:', c1, c2); // Logga hittade länder
-
-      // Förbered resultattexten
-      let resultText = `${country1Input} vs. ${country2Input}\n`;
-      resultText += `Befolkning: ${c1.population} vs. ${c2.population}\n`;
+      // Resultattext för vänster och höger sida
+      let resultTextLeft = `${country1Input}\nBefolkning: ${c1.population}\n`;
+      let resultTextRight = `${country2Input}\nBefolkning: ${c2.population}\n`;
 
       const c1Military = militaryData[c1.name.common];
       const c2Military = militaryData[c2.name.common];
 
       if (c1Military && c2Military) {
-        resultText += `${country1Input} Militärstyrka: ${c1Military.military_strength}\n`;
-        resultText += `${country2Input} Militärstyrka: ${c2Military.military_strength}\n`;
+        resultTextLeft += `Militärstyrka: ${c1Military.military_strength}\n`;
+        resultTextRight += `Militärstyrka: ${c2Military.military_strength}\n`;
 
         // Beräkna poäng och vinnare
         let c1Score = c1Military.military_strength + c1.population;
@@ -576,27 +569,25 @@ function compareCountries() {
         let c1Chance = (c1Score / (c1Score + c2Score)) * 100;
         let c2Chance = 100 - c1Chance;
 
-        resultText += `Chans att vinna: ${country1Input} (${c1Chance.toFixed(2)}%) vs. ${country2Input} (${c2Chance.toFixed(2)}%)\n`;
+        resultTextLeft += `Chans att vinna: ${c1Chance.toFixed(2)}%\n`;
+        resultTextRight += `Chans att vinna: ${c2Chance.toFixed(2)}%\n`;
 
+        let winnerText = '';
         if (c1Score > c2Score) {
-          resultText += `Vinnare: ${country1Input}`;
+          winnerText = `Vinnare: ${country1Input}`;
         } else if (c2Score > c1Score) {
-          resultText += `Vinnare: ${country2Input}`;
+          winnerText = `Vinnare: ${country2Input}`;
         } else {
-          resultText += `Resultat: Oavgjort`;
+          winnerText = `Resultat: Oavgjort`;
         }
-      } else {
-        console.log('Military data not found for one or both countries');
-        resultText += 'Ingen militärdata tillgänglig för jämförelse.\n';
-      }
 
-      // Animera resultattexten med skrivmaskinseffekt
-      const resultElement = document.getElementById('result');
-      typeText(resultElement, resultText);
+        // Animera texten
+        typeText(document.getElementById('result-left'), resultTextLeft);
+        typeText(document.getElementById('result-right'), resultTextRight);
+        typeText(document.getElementById('winner'), winnerText);
+      }
     })
-    .catch(error => {
-      console.log('Error fetching population data:', error);
-    });
+    .catch(error => console.log('Error fetching population data:', error));
 }
 
 // Lägg till händelselyssnare för knapptryckning och Enter-tangent
