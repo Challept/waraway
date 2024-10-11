@@ -489,6 +489,10 @@ function typeText(element, text) {
     type();
 }
 
+function formatNumber(num) {
+  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 function calculateMilitaryScore(military, population) {
   const militaryStrengthWeight = 5;  // Mycket viktigt
   const warplanesWeight = 4;         // Mycket viktigt
@@ -556,16 +560,16 @@ function compareCountries() {
       const c2Military = militaryData[c2.name.common];
 
       if (c1Military && c2Military) {
-        // Organisera informationen i kategorier för varje land
-        resultTextLeft += `Befolkning: ${c1.population}\n`;
-        resultTextLeft += `Militärstyrka: ${c1Military.military_strength}\n`;
-        resultTextLeft += `Krigsplan: ${c1Military.warplanes}\n`;
-        resultTextLeft += `Stridsvagnar: ${c1Military.tanks}\n`;
+        // Organisera informationen i kategorier för varje land och formatera siffrorna
+        resultTextLeft += `Befolkning: ${formatNumber(c1.population)}\n`;
+        resultTextLeft += `Militärstyrka: ${formatNumber(c1Military.military_strength)}\n`;
+        resultTextLeft += `Krigsplan: ${formatNumber(c1Military.warplanes)}\n`;
+        resultTextLeft += `Stridsvagnar: ${formatNumber(c1Military.tanks)}\n`;
 
-        resultTextRight += `Befolkning: ${c2.population}\n`;
-        resultTextRight += `Militärstyrka: ${c2Military.military_strength}\n`;
-        resultTextRight += `Krigsplan: ${c2Military.warplanes}\n`;
-        resultTextRight += `Stridsvagnar: ${c2Military.tanks}\n`;
+        resultTextRight += `Befolkning: ${formatNumber(c2.population)}\n`;
+        resultTextRight += `Militärstyrka: ${formatNumber(c2Military.military_strength)}\n`;
+        resultTextRight += `Krigsplan: ${formatNumber(c2Military.warplanes)}\n`;
+        resultTextRight += `Stridsvagnar: ${formatNumber(c2Military.tanks)}\n`;
 
         // Beräkna poäng med viktighetsbaserat system
         let c1Score = calculateMilitaryScore(c1Military, c1.population);
