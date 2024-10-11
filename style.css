@@ -1,4 +1,3 @@
-
 body {
     font-family: Arial, sans-serif;
     text-align: center;
@@ -8,12 +7,14 @@ body {
 
 .container {
     display: flex;
-    justify-content: space-around;
-    margin: 20px;
+    justify-content: space-between;
+    margin: 20px auto;
+    width: 80%;
 }
 
 .left, .right {
-    width: 40%;
+    width: 45%;
+    text-align: left;
 }
 
 input {
@@ -22,11 +23,7 @@ input {
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    transition: border-color 0.3s;
-}
-
-input:focus {
-    border-color: #007BFF;
+    width: 90%;
 }
 
 button {
@@ -38,6 +35,7 @@ button {
     cursor: pointer;
     border-radius: 4px;
     transition: background-color 0.3s, transform 0.3s;
+    margin-top: 20px;
 }
 
 button:hover {
@@ -45,25 +43,25 @@ button:hover {
     transform: scale(1.05);
 }
 
-#result-left, #result-right, #winner {
-    margin-top: 20px;
+#result-left, #result-right {
     font-size: 18px;
+    margin-top: 10px;
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
 }
 
-#result-left.show, #result-right.show, #winner.show {
+#result-left.show, #result-right.show {
     opacity: 1;
 }
 
-#title {
-    font-size: 36px;
-    margin-bottom: 20px;
+#winner {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 30px;
     opacity: 0;
-    animation: fadeInTitle 1s forwards;
+    transition: opacity 0.5s ease-in-out;
 }
 
-@keyframes fadeInTitle {
-    from { opacity: 0; }
-    to { opacity: 1; }
+#winner.show {
+    opacity: 1;
 }
