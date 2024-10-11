@@ -460,7 +460,6 @@ const countryTranslations = {
   "förenade staterna": "USA",
   "deutschland": "Germany",
   "finland": "Finland"
-  // Lägg till fler översättningar vid behov
 };
 
 function levenshteinDistance(s1, s2) {
@@ -543,6 +542,8 @@ function compareCountries() {
   fetch('https://restcountries.com/v3.1/all?fields=name,population')
     .then(response => response.json())
     .then(data => {
+      console.log('Fetched data:', data); // Lägg till debug-utskrift
+
       // Hitta ländernas data
       const c1 = data.find(country => country.name.common.toLowerCase() === country1Internal.toLowerCase());
       const c2 = data.find(country => country.name.common.toLowerCase() === country2Internal.toLowerCase());
@@ -551,6 +552,8 @@ function compareCountries() {
         document.getElementById('result-left').innerHTML = `Land hittades inte. Menade du: ${!c1 ? country1Input : country2Input}?`;
         return;
       }
+
+      console.log('Found countries:', c1, c2); // Lägg till debug-utskrift
 
       // Resultattext för vänster och höger sida
       let resultTextLeft = `${country1Input}\nBefolkning: ${c1.population}\n`;
