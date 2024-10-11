@@ -458,11 +458,10 @@ const countryTranslations = {
   "usa": "USA",
   "förenade staterna": "USA",
   "deutschland": "Germany",
-  "finland": "Finland",
-  // Add more translations as needed
+  "finland": "Finland"
 };
 
-// Calculate Levenshtein Distance for typo correction
+// Function to handle Levenshtein Distance for typo correction
 function levenshteinDistance(s1, s2) {
   const len1 = s1.length;
   const len2 = s2.length;
@@ -488,6 +487,7 @@ function levenshteinDistance(s1, s2) {
   return dp[len2][len1];
 }
 
+// Find the closest country based on input
 function findClosestCountry(input, countryList) {
   let closestCountry = countryList[0];
   let minDistance = levenshteinDistance(input.toLowerCase(), countryList[0].toLowerCase());
@@ -503,6 +503,7 @@ function findClosestCountry(input, countryList) {
   return closestCountry;
 }
 
+// Translate input to an internal format for comparison
 function translateCountry(input) {
   const lowerCaseInput = input.toLowerCase();
   if (countryTranslations[lowerCaseInput]) {
@@ -513,6 +514,7 @@ function translateCountry(input) {
   return findClosestCountry(input, allCountries);
 }
 
+// Calculate chance of winning based on military strength and population
 function calculateChance(c1Score, c2Score) {
   const totalScore = c1Score + c2Score;
   const c1Chance = (c1Score / totalScore) * 100;
@@ -520,6 +522,7 @@ function calculateChance(c1Score, c2Score) {
   return { c1Chance: c1Chance.toFixed(2), c2Chance: c2Chance.toFixed(2) };
 }
 
+// Compare two countries based on their military data
 function compareCountries() {
   let country1Input = document.getElementById('country1').value;
   let country2Input = document.getElementById('country2').value;
@@ -588,7 +591,7 @@ function compareCountries() {
     .catch(error => console.log('Error fetching population data:', error));
 }
 
-// Add event listeners for the button click and enter key functionality
+// Add event listeners for button click and 'Enter' key
 document.getElementById('compareButton').addEventListener('click', compareCountries);
 document.getElementById('country1').addEventListener('keydown', function(event) {
   if (event.key === 'Enter') {
