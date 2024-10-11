@@ -507,34 +507,42 @@ function findClosestCountry(input, countryList) {
 function translateCountry(input) {
   const lowerCaseInput = input.toLowerCase();
   
-  // Om översättning finns, returnera det engelska namnet
   if (countryTranslations[lowerCaseInput]) {
     return countryTranslations[lowerCaseInput];
   }
 
-  // Annars hitta den närmaste matchningen
   const allCountries = Object.keys(militaryData).concat(Object.values(countryTranslations));
   return findClosestCountry(input, allCountries);
+}
+
+function typeText(element, text) {
+    element.innerHTML = ''; // Clear the previous text
+    let i = 0;
+    const speed = 50; // Speed of typing effect in milliseconds
+
+    function type() {
+        if (i < text.length) {
+            element.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(type, speed);
+        }
+    }
+
+    type();
 }
 
 function compareCountries() {
   let country1Input = document.getElementById('country1').value;
   let country2Input = document.getElementById('country2').value;
 
-  console.log(`Comparing ${country1Input} and ${country2Input}`); // Felsökning
-
-  // Använd translateCountry för att få rätt namn
+  // Translate countries to internal names
   let country1Internal = translateCountry(country1Input);
   let country2Internal = translateCountry(country2Input);
-
-  console.log(`Translated to ${country1Internal} and ${country2Internal}`); // Felsökning
 
   fetch('https://restcountries.com/v3.1/all?fields=name,population')
     .then(response => response.json())
     .then(data => {
-      console.log('Data fetched from API', data); // Felsökning
-
-      // Hitta ländernas data
+      // Find country data
       const c1 = data.find(country => country.name.common.toLowerCase() === country1Internal.toLowerCase());
       const c2 = data.find(country => country.name.common.toLowerCase() === country2Internal.toLowerCase());
 
@@ -543,67 +551,42 @@ function compareCountries() {
         return;
       }
 
-      let resultText = `
-        <h3>${country1Input} vs. ${country2Input}</h3>
-        <p><strong>Befolkning:</strong> ${c1.population} vs. ${c2.population}</p>
-      `;
-
-      console.log('Result text:', resultText); // Felsökning
+      // Result text preparation
+      let resultText = `${country1Input} vs. ${country2Input}\n`;
+      resultText += `Befolkning: ${c1.population} vs. ${c2.population}\n`;
 
       const c1Military = militaryData[c1.name.common];
       const c2Military = militaryData[c2.name.common];
 
-      const militaryPromises = [];
+      if (c1Military && c2Military) {
+        resultText += `${country1Input} Militärstyrka: ${c1Military.military_strength}\n`;
+        resultText += `${country2Input} Militärstyrka: ${c2Military.military_strength}\n`;
 
-      if (c1Military) {
-        resultText += `
-          <p><strong>${country1Input} Militärstyrka:</strong> ${c1Military.military_strength}</p>
-          <p><strong>Tillgängliga för krig:</strong> ${c1Military.available_for_war}</p>
-          <p><strong>Krigsplan:</strong> ${c1Military.warplanes}</p>
-          <p><strong>Stridsvagnar:</strong> ${c1Military.tanks}</p>
-          <p><strong>Sjöstridsstyrka:</strong> ${c1Military.naval_strength}</p>
-        `;
-      } else {
-        militaryPromises.push(fetchMilitaryDataFromWikipedia(c1.name.common).then(militaryExtract => {
-          resultText += `<p><strong>${country1Input} Militärdata:</strong> ${militaryExtract}</p>`;
-        }));
-      }
+        // Calculate scores and winner
+        let c1Score = c1Military.military_strength + c1.population;
+        let c2Score = c2Military.military_strength + c2.population;
+        let c1Chance = (c1Score / (c1Score + c2Score)) * 100;
+        let c2Chance = 100 - c1Chance;
 
-      if (c2Military) {
-        resultText += `
-          <p><strong>${country2Input} Militärstyrka:</strong> ${c2Military.military_strength}</p>
-          <p><strong>Tillgängliga för krig:</strong> ${c2Military.available_for_war}</p>
-          <p><strong>Krigsplan:</strong> ${c2Military.warplanes}</p>
-          <p><strong>Stridsvagnar:</strong> ${c2Military.tanks}</p>
-          <p><strong>Sjöstridsstyrka:</strong> ${c2Military.naval_strength}</p>
-        `;
-      } else {
-        militaryPromises.push(fetchMilitaryDataFromWikipedia(c2.name.common).then(militaryExtract => {
-          resultText += `<p><strong>${country2Input} Militärdata:</strong> ${militaryExtract}</p>`;
-        }));
-      }
-
-      Promise.all(militaryPromises).then(() => {
-        let c1Score = (c1Military?.military_strength || 0) + c1.population;
-        let c2Score = (c2Military?.military_strength || 0) + c2.population;
+        resultText += `Chans att vinna: ${country1Input} (${c1Chance.toFixed(2)}%) vs. ${country2Input} (${c2Chance.toFixed(2)}%)\n`;
 
         if (c1Score > c2Score) {
-          resultText += `<p><strong>Vinnare:</strong> ${country1Input} (Baserat på militärstyrka och befolkning)</p>`;
+          resultText += `Vinnare: ${country1Input}`;
         } else if (c2Score > c1Score) {
-          resultText += `<p><strong>Vinnare:</strong> ${country2Input} (Baserat på militärstyrka och befolkning)</p>`;
+          resultText += `Vinnare: ${country2Input}`;
         } else {
-          resultText += `<p><strong>Resultat:</strong> Det är oavgjort!</p>`;
+          resultText += `Resultat: Oavgjort`;
         }
+      }
 
-        console.log('Final result:', resultText); // Felsökning
-
-        document.getElementById('result').innerHTML = resultText;
-      });
+      // Animate the result text with typewriter effect
+      const resultElement = document.getElementById('result');
+      typeText(resultElement, resultText);
     })
     .catch(error => console.log('Error fetching population data:', error));
 }
 
-// Lägg till knappklick och "Enter"-funktionalitet för att trigga jämförelsen
+// Event listeners for button click and Enter key
 document.getElementById('compareButton').addEventListener('click', compareCountries);
 document.getElementById('country1').addEventListener('keydown', function(event) {
   if (event.key === 'Enter') {
@@ -617,4 +600,3 @@ document.getElementById('country2').addEventListener('keydown', function(event) 
     compareCountries();
   }
 });
-
