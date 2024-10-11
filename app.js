@@ -474,9 +474,9 @@ function translateCountry(input) {
 }
 
 function typeText(element, text) {
-    element.innerHTML = ''; 
+    element.innerHTML = ''; // Rensa tidigare text
     let i = 0;
-    const speed = 25; 
+    const speed = 25; // Hastighet för animationen (millisekunder)
 
     function type() {
         if (i < text.length) {
@@ -492,8 +492,7 @@ function typeText(element, text) {
 function calculateMilitaryScore(military) {
   return military.military_strength + 
          (military.warplanes * 10) + 
-         (military.tanks * 15) + 
-         (military.naval_strength * 20); 
+         (military.tanks * 15); 
 }
 
 function compareCountries() {
@@ -514,16 +513,27 @@ function compareCountries() {
         return;
       }
 
-      let resultTextLeft = `${country1Input}\nBefolkning: ${c1.population}\n`;
-      let resultTextRight = `${country2Input}\nBefolkning: ${c2.population}\n`;
+      let resultTextLeft = `${country1Input}\n`;
+      let resultTextRight = `${country2Input}\n`;
 
       const c1Military = militaryData[c1.name.common];
       const c2Military = militaryData[c2.name.common];
 
       if (c1Military && c2Military) {
-        // Lägg till militära fordon i texten
-        resultTextLeft += `Militärstyrka: ${c1Military.military_strength}\nKrigsplan: ${c1Military.warplanes}\nStridsvagnar: ${c1Military.tanks}\nFlottstyrka: ${c1Military.naval_strength}\n`;
-        resultTextRight += `Militärstyrka: ${c2Military.military_strength}\nKrigsplan: ${c2Military.warplanes}\nStridsvagnar: ${c2Military.tanks}\nFlottstyrka: ${c2Military.naval_strength}\n`;
+        // Organisera informationen i kategorier för varje land
+        resultTextLeft += `\nKategori:\n`;
+        resultTextLeft += `Befolkning: ${c1.population}\n`;
+        resultTextLeft += `Militärstyrka: ${c1Military.military_strength}\n`;
+        resultTextLeft += `Tillgängliga för krig: ${c1Military.available_for_war}\n`;
+        resultTextLeft += `Krigsplan: ${c1Military.warplanes}\n`;
+        resultTextLeft += `Stridsvagnar: ${c1Military.tanks}\n`;
+
+        resultTextRight += `\nKategori:\n`;
+        resultTextRight += `Befolkning: ${c2.population}\n`;
+        resultTextRight += `Militärstyrka: ${c2Military.military_strength}\n`;
+        resultTextRight += `Tillgängliga för krig: ${c2Military.available_for_war}\n`;
+        resultTextRight += `Krigsplan: ${c2Military.warplanes}\n`;
+        resultTextRight += `Stridsvagnar: ${c2Military.tanks}\n`;
 
         // Beräkna poäng
         let c1Score = calculateMilitaryScore(c1Military) + c1.population;
@@ -540,13 +550,13 @@ function compareCountries() {
         let explanation = '';
         if (c1Score > c2Score) {
           winnerText = `Vinnare: ${country1Input}`;
-          explanation = `${country1Input} vann på grund av högre militärstyrka, inklusive fler krigsplan, stridsvagnar och flottstyrka.`;
+          explanation = `${country1Input} vann på grund av överlägsen militärstyrka och fler stridsvagnar och krigsplan.`;
         } else if (c2Score > c1Score) {
           winnerText = `Vinnare: ${country2Input}`;
-          explanation = `${country2Input} vann tack vare större antal militära fordon och bättre övergripande kapacitet i strid.`;
+          explanation = `${country2Input} vann tack vare fler militära fordon och övergripande stridskapacitet.`;
         } else {
           winnerText = `Resultat: Oavgjort`;
-          explanation = `Båda länderna har liknande styrkor och resurser, vilket resulterar i ett oavgjort resultat.`;
+          explanation = `Båda länderna har likvärdiga styrkor och resurser.`;
         }
 
         // Visa texten med animering
