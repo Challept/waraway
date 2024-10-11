@@ -507,18 +507,20 @@ function findClosestCountry(input, countryList) {
 function translateCountry(input) {
   const lowerCaseInput = input.toLowerCase();
   
+  // Om översättning finns, returnera det engelska namnet
   if (countryTranslations[lowerCaseInput]) {
     return countryTranslations[lowerCaseInput];
   }
 
+  // Annars hitta den närmaste matchningen
   const allCountries = Object.keys(militaryData).concat(Object.values(countryTranslations));
   return findClosestCountry(input, allCountries);
 }
 
 function typeText(element, text) {
-    element.innerHTML = ''; // Clear the previous text
+    element.innerHTML = ''; // Rensa tidigare text
     let i = 0;
-    const speed = 50; // Speed of typing effect in milliseconds
+    const speed = 50; // Hastighet för animationen (millisekunder)
 
     function type() {
         if (i < text.length) {
@@ -535,14 +537,14 @@ function compareCountries() {
   let country1Input = document.getElementById('country1').value;
   let country2Input = document.getElementById('country2').value;
 
-  // Translate countries to internal names
+  // Översätt länder till interna namn
   let country1Internal = translateCountry(country1Input);
   let country2Internal = translateCountry(country2Input);
 
   fetch('https://restcountries.com/v3.1/all?fields=name,population')
     .then(response => response.json())
     .then(data => {
-      // Find country data
+      // Hitta ländernas data
       const c1 = data.find(country => country.name.common.toLowerCase() === country1Internal.toLowerCase());
       const c2 = data.find(country => country.name.common.toLowerCase() === country2Internal.toLowerCase());
 
@@ -551,7 +553,7 @@ function compareCountries() {
         return;
       }
 
-      // Result text preparation
+      // Förbered resultattexten
       let resultText = `${country1Input} vs. ${country2Input}\n`;
       resultText += `Befolkning: ${c1.population} vs. ${c2.population}\n`;
 
@@ -562,7 +564,7 @@ function compareCountries() {
         resultText += `${country1Input} Militärstyrka: ${c1Military.military_strength}\n`;
         resultText += `${country2Input} Militärstyrka: ${c2Military.military_strength}\n`;
 
-        // Calculate scores and winner
+        // Beräkna poäng och vinnare
         let c1Score = c1Military.military_strength + c1.population;
         let c2Score = c2Military.military_strength + c2.population;
         let c1Chance = (c1Score / (c1Score + c2Score)) * 100;
@@ -579,14 +581,14 @@ function compareCountries() {
         }
       }
 
-      // Animate the result text with typewriter effect
+      // Animera resultattexten med skrivmaskinseffekt
       const resultElement = document.getElementById('result');
       typeText(resultElement, resultText);
     })
     .catch(error => console.log('Error fetching population data:', error));
 }
 
-// Event listeners for button click and Enter key
+// Lägg till händelselyssnare för knapptryckning och Enter-tangent
 document.getElementById('compareButton').addEventListener('click', compareCountries);
 document.getElementById('country1').addEventListener('keydown', function(event) {
   if (event.key === 'Enter') {
@@ -600,3 +602,4 @@ document.getElementById('country2').addEventListener('keydown', function(event) 
     compareCountries();
   }
 });
+
