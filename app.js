@@ -521,17 +521,13 @@ function compareCountries() {
 
       if (c1Military && c2Military) {
         // Organisera informationen i kategorier för varje land
-        resultTextLeft += `\nKategori:\n`;
         resultTextLeft += `Befolkning: ${c1.population}\n`;
         resultTextLeft += `Militärstyrka: ${c1Military.military_strength}\n`;
-        resultTextLeft += `Tillgängliga för krig: ${c1Military.available_for_war}\n`;
         resultTextLeft += `Krigsplan: ${c1Military.warplanes}\n`;
         resultTextLeft += `Stridsvagnar: ${c1Military.tanks}\n`;
 
-        resultTextRight += `\nKategori:\n`;
         resultTextRight += `Befolkning: ${c2.population}\n`;
         resultTextRight += `Militärstyrka: ${c2Military.military_strength}\n`;
-        resultTextRight += `Tillgängliga för krig: ${c2Military.available_for_war}\n`;
         resultTextRight += `Krigsplan: ${c2Military.warplanes}\n`;
         resultTextRight += `Stridsvagnar: ${c2Military.tanks}\n`;
 
@@ -567,7 +563,17 @@ function compareCountries() {
         // Animera texten
         typeText(document.getElementById('result-left'), resultTextLeft);
         typeText(document.getElementById('result-right'), resultTextRight);
-        typeText(document.getElementById('winner'), `${winnerText}\n${explanation}`);
+        typeText(document.getElementById('winner'), `${winnerText}`);
+
+        // Lägg till dropdown-meny för förklaringen
+        const explanationElement = document.getElementById('explanation');
+        explanationElement.innerHTML = `<button id="explain-toggle">Varför vann ${winnerText}?</button><div id="explanation-content" style="display:none;">${explanation}</div>`;
+        
+        // Klickhändelse för att visa/dölja förklaringen
+        document.getElementById('explain-toggle').addEventListener('click', function() {
+          const content = document.getElementById('explanation-content');
+          content.style.display = content.style.display === 'none' ? 'block' : 'none';
+        });
       }
     })
     .catch(error => console.log('Error fetching population data:', error));
