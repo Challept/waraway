@@ -935,22 +935,6 @@ function translateCountry(input) {
   return findClosestCountry(input, allCountries);
 }
 
-function typeText(element, text) {
-    element.innerHTML = ''; // Rensa tidigare text
-    let i = 0;
-    const speed = 50; // Medelsnabb skrivanimation (justerat från 25ms till 50ms)
-
-    function type() {
-        if (i < text.length) {
-            element.innerHTML += text.charAt(i);
-            i++;
-            setTimeout(type, speed);
-        }
-    }
-
-    type();
-}
-
 function formatNumber(num) {
   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); // Tusentalsavgränsare
 }
@@ -1070,13 +1054,13 @@ function compareCountries() {
         explanation = 'Both countries have equivalent strength and resources.';
       }
 
-      // Visa texten med animation
-      typeText(document.getElementById('result-left'), resultTextLeft);
-      typeText(document.getElementById('result-right'), resultTextRight);
-      typeText(document.getElementById('winner'), `${winnerText}`);
+      // Visa texten direkt
+      document.getElementById('result-left').innerHTML = resultTextLeft;
+      document.getElementById('result-right').innerHTML = resultTextRight;
+      document.getElementById('winner').innerHTML = `${winnerText}`;
 
       // Visa förklaring direkt under vinnaren, synkroniserad
-      typeText(document.getElementById('explanation'), explanation);
+      document.getElementById('explanation').innerHTML = explanation;
     })
     .catch(error => console.log('Error fetching population data:', error));
 }
