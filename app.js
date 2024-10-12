@@ -909,6 +909,7 @@ const militaryData = {
     "tanks": 50,
     "naval_strength": 0
   }
+};
 
 // Translations from Swedish to English
 // Placera countryTranslations här för att säkerställa att den är tillgänglig globalt
