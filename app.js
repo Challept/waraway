@@ -910,9 +910,6 @@ const militaryData = {
     "naval_strength": 0
   }
 
-  // You can continue to expand this list for additional countries...
-};
-
 // Translations from Swedish to English
 // Placera countryTranslations här för att säkerställa att den är tillgänglig globalt
 const countryTranslations = {
