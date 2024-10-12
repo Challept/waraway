@@ -463,12 +463,8 @@ const countryTranslations = {
   "finland": "Finland"
 };
 
-let version = 1.0; // Startar version på 1.0
-
-function updateVersion() {
-  version += 0.2; // Öka version med 0.2
-  document.getElementById('version').innerText = `Version: ${version.toFixed(1)}`;
-}
+// Versionshantering
+let version = 1.2;  // Börja med version 1.2
 
 function translateCountry(input) {
   const lowerCaseInput = input.toLowerCase();
@@ -478,6 +474,22 @@ function translateCountry(input) {
 
   const allCountries = Object.keys(militaryData).concat(Object.values(countryTranslations));
   return findClosestCountry(input, allCountries);
+}
+
+function typeText(element, text) {
+    element.innerHTML = ''; // Rensa tidigare text
+    let i = 0;
+    const speed = 25; // Hastighet för animationen (millisekunder)
+
+    function type() {
+        if (i < text.length) {
+            element.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(type, speed);
+        }
+    }
+
+    type();
 }
 
 function formatNumber(num) {
@@ -533,6 +545,8 @@ function compareCountries() {
   let country1Internal = translateCountry(country1Input);
   let country2Internal = translateCountry(country2Input);
 
+  console.log(`Comparing ${country1Internal} and ${country2Internal}`);
+
   fetch('https://restcountries.com/v3.1/all?fields=name,population')
     .then(response => response.json())
     .then(data => {
@@ -540,7 +554,7 @@ function compareCountries() {
       const c2 = data.find(country => country.name.common.toLowerCase() === country2Internal.toLowerCase());
 
       if (!c1 || !c2) {
-        document.getElementById('result-left').innerText = `Country not found. Did you mean: ${!c1 ? country1Input : country2Input}?`;
+        document.getElementById('result-left').innerHTML = `Country not found. Did you mean: ${!c1 ? country1Input : country2Input}?`;
         return;
       }
 
@@ -549,24 +563,26 @@ function compareCountries() {
       const c2Military = militaryData[c2.name.common];
 
       if (!c1Military || !c2Military) {
-        document.getElementById('result-left').innerText = `Military data not found for ${!c1Military ? country1Input : country2Input}.`;
+        document.getElementById('result-left').innerHTML = `Military data not found for ${!c1Military ? country1Input : country2Input}.`;
         return;
       }
 
       // Visa data för varje land i listformat
       let resultTextLeft = `
-        Population: ${formatNumber(c1.population)}\n
-        Military Strength: ${formatNumber(c1Military.military_strength)}\n
-        Warplanes: ${formatNumber(c1Military.warplanes)}\n
-        Tanks: ${formatNumber(c1Military.tanks)}
-      `;
+        <ul>
+          <li><strong>Population:</strong> ${formatNumber(c1.population)}</li>
+          <li><strong>Military Strength:</strong> ${formatNumber(c1Military.military_strength)}</li>
+          <li><strong>Warplanes:</strong> ${formatNumber(c1Military.warplanes)}</li>
+          <li><strong>Tanks:</strong> ${formatNumber(c1Military.tanks)}</li>
+        </ul>`;
       
       let resultTextRight = `
-        Population: ${formatNumber(c2.population)}\n
-        Military Strength: ${formatNumber(c2Military.military_strength)}\n
-        Warplanes: ${formatNumber(c2Military.warplanes)}\n
-        Tanks: ${formatNumber(c2Military.tanks)}
-      `;
+        <ul>
+          <li><strong>Population:</strong> ${formatNumber(c2.population)}</li>
+          <li><strong>Military Strength:</strong> ${formatNumber(c2Military.military_strength)}</li>
+          <li><strong>Warplanes:</strong> ${formatNumber(c2Military.warplanes)}</li>
+          <li><strong>Tanks:</strong> ${formatNumber(c2Military.tanks)}</li>
+        </ul>`;
 
       // Beräkna vinstchans
       let c1Score = calculateMilitaryScore(c1Military, c1.population);
@@ -576,9 +592,9 @@ function compareCountries() {
       let c2Chance = 100 - c1Chance;
 
       // Visa vinstchans centralt
-      document.getElementById('win-chances').innerText = `
-        ${country1Internal} win chance: ${c1Chance.toFixed(2)}%\n
-        ${country2Internal} win chance: ${c2Chance.toFixed(2)}%
+      document.getElementById('win-chances').innerHTML = `
+        <strong>${country1Internal} win chance:</strong> ${c1Chance.toFixed(2)}%<br>
+        <strong>${country2Internal} win chance:</strong> ${c2Chance.toFixed(2)}%<br>
       `;
 
       // Dynamiskt genererad förklaring
@@ -595,12 +611,12 @@ function compareCountries() {
         explanation = 'Both countries have equivalent strength and resources.';
       }
 
-      // Visa resultatet i vänster och höger sida
-      document.getElementById('result-left').innerText = resultTextLeft;
-      document.getElementById('result-right').innerText = resultTextRight;
+      // Visa texten med animering
+      document.getElementById('result-left').innerHTML = resultTextLeft;
+      document.getElementById('result-right').innerHTML = resultTextRight;
+      typeText(document.getElementById('winner'), `${winnerText}`);
 
-      // Visa vinnaren och koppla dropdown-texten för förklaring
-      document.getElementById('winner').innerText = `${winnerText}`;
+      // Dropdown-meny för förklaring
       const explanationElement = document.getElementById('explanation');
       explanationElement.innerHTML = `<button id="explain-toggle">Why did they win?</button><div id="explanation-content" style="display:none;">${explanation}</div>`;
       
@@ -608,11 +624,13 @@ function compareCountries() {
         const content = document.getElementById('explanation-content');
         content.style.display = content.style.display === 'none' ? 'block' : 'none';
       });
-
-      updateVersion(); // Uppdatera versionen varje gång en jämförelse görs
     })
     .catch(error => console.log('Error fetching population data:', error));
 }
+
+// Versionsnummer och uppdatering av sidhuvudet
+document.getElementById('version').innerText = `Version: ${version}`;
+version += 0.2;
 
 // Lägg till händelselyssnare för knapptryckning och Enter-tangent
 document.getElementById('compareButton').addEventListener('click', compareCountries);
