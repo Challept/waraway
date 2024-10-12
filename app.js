@@ -1260,154 +1260,100 @@ function formatNumber(num) {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-function calculateMilitaryScore(military, population) {
+function calculateMilitaryScore(military) {
     const militaryStrengthWeight = 5;
     const warplanesWeight = 4;
     const tanksWeight = 3;
     const navalStrengthWeight = 3;
     const missileDefenseWeight = 3;
-    const populationWeight = 2;
 
     return (military.military_strength * militaryStrengthWeight) +
            (military.warplanes * warplanesWeight) +
            (military.tanks * tanksWeight) +
            (military.naval_strength * navalStrengthWeight) +
-           (military.missile_defense_systems * missileDefenseWeight) +
-           (population * populationWeight);
+           (military.missile_defense_systems * missileDefenseWeight);
 }
 
-function generateExplanation(c1Military, c2Military, c1Name, c2Name) {
-    let explanation = '';
-
-    if (c1Military.military_strength > c2Military.military_strength) {
-        explanation += `${c1Name} won due to superior military strength. `;
-    } else if (c1Military.military_strength < c2Military.military_strength) {
-        explanation += `${c2Name} won due to superior military strength. `;
-    }
-
-    if (c1Military.warplanes > c2Military.warplanes) {
-        explanation += `${c1Name} had more warplanes, giving them an aerial advantage. `;
-    } else if (c1Military.warplanes < c2Military.warplanes) {
-        explanation += `${c2Name} had more warplanes, giving them aerial superiority. `;
-    }
-
-    if (c1Military.tanks > c2Military.tanks) {
-        explanation += `${c1Name} had more tanks, giving them an advantage on the ground. `;
-    } else if (c1Military.tanks < c2Military.tanks) {
-        explanation += `${c2Name} had more tanks, giving them a ground advantage. `;
-    }
-
-    if (c1Military.naval_strength > c2Military.naval_strength) {
-        explanation += `${c1Name} had more naval strength, giving them an advantage at sea. `;
-    } else if (c1Military.naval_strength < c2Military.naval_strength) {
-        explanation += `${c2Name} had more naval strength, giving them an advantage at sea. `;
-    }
-
-    if (c1Military.missile_defense_systems > c2Military.missile_defense_systems) {
-        explanation += `${c1Name} had superior missile defense systems, giving them an edge in defense. `;
-    } else if (c1Military.missile_defense_systems < c2Military.missile_defense_systems) {
-        explanation += `${c2Name} had superior missile defense systems, giving them better defensive capabilities. `;
-    }
-
-    if (explanation === '') {
-        explanation = 'Both countries have similar military resources and strength.';
-    }
-
-    return explanation;
+function sumMilitaryData(militaries) {
+    return militaries.reduce((sum, military) => {
+        sum.military_strength += military.military_strength;
+        sum.warplanes += military.warplanes;
+        sum.tanks += military.tanks;
+        sum.naval_strength += military.naval_strength;
+        sum.missile_defense_systems += military.missile_defense_systems;
+        return sum;
+    }, {
+        military_strength: 0,
+        warplanes: 0,
+        tanks: 0,
+        naval_strength: 0,
+        missile_defense_systems: 0
+    });
 }
 
 function compareCountries() {
-    let country1Input = document.getElementById('country1').value;
-    let country2Input = document.getElementById('country2').value;
+    const team1Countries = [
+        translateCountry(document.getElementById('country1-1').value),
+        translateCountry(document.getElementById('country1-2').value),
+        translateCountry(document.getElementById('country1-3').value)
+    ];
+    const team2Countries = [
+        translateCountry(document.getElementById('country2-1').value),
+        translateCountry(document.getElementById('country2-2').value),
+        translateCountry(document.getElementById('country2-3').value)
+    ];
 
-    let country1Internal = translateCountry(country1Input);
-    let country2Internal = translateCountry(country2Input);
+    const allCountries = team1Countries.concat(team2Countries);
 
     fetch('https://restcountries.com/v3.1/all?fields=name,population')
         .then(response => response.json())
         .then(data => {
-            const c1 = data.find(country => country.name.common.toLowerCase() === country1Internal.toLowerCase());
-            const c2 = data.find(country => country.name.common.toLowerCase() === country2Internal.toLowerCase());
+            let team1Militaries = [];
+            let team2Militaries = [];
 
-            if (!c1 || !c2) {
-                document.getElementById('result-left').innerHTML = `Country not found. Did you mean: ${!c1 ? country1Internal : country2Internal}?`;
-                return;
-            }
+            team1Countries.forEach(countryName => {
+                const countryData = data.find(country => country.name.common.toLowerCase() === countryName.toLowerCase());
+                if (countryData) {
+                    const militaryDataForCountry = militaryData[countryData.name.common];
+                    if (militaryDataForCountry) {
+                        team1Militaries.push(militaryDataForCountry);
+                    }
+                }
+            });
 
-            const c1Military = militaryData[c1.name.common];
-            const c2Military = militaryData[c2.name.common];
+            team2Countries.forEach(countryName => {
+                const countryData = data.find(country => country.name.common.toLowerCase() === countryName.toLowerCase());
+                if (countryData) {
+                    const militaryDataForCountry = militaryData[countryData.name.common];
+                    if (militaryDataForCountry) {
+                        team2Militaries.push(militaryDataForCountry);
+                    }
+                }
+            });
 
-            if (!c1Military || !c2Military) {
-                document.getElementById('result-left').innerHTML = `Military data not found for ${!c1Military ? country1Input : country2Input}.`;
-                return;
-            }
+            const team1Total = sumMilitaryData(team1Militaries);
+            const team2Total = sumMilitaryData(team2Militaries);
 
-            let resultTextLeft = `
-                <ul>
-                  <li><strong>Population:</strong> ${formatNumber(c1.population)}</li>
-                  <li><strong>Military Strength:</strong> ${formatNumber(c1Military.military_strength)}</li>
-                  <li><strong>Available for War:</strong> ${formatNumber(c1Military.available_for_war)}</li>
-                  <li><strong>Warplanes:</strong> ${formatNumber(c1Military.warplanes)}</li>
-                  <li><strong>Tanks:</strong> ${formatNumber(c1Military.tanks)}</li>
-                  <li><strong>Naval Strength:</strong> ${formatNumber(c1Military.naval_strength)}</li>
-                  <li><strong>Missile Defense Systems:</strong> ${formatNumber(c1Military.missile_defense_systems)}</li>
-                  <li><strong>Safety Level:</strong> ${c1Military.safety_level}</li>
-                </ul>`;
-            
-            let resultTextRight = `
-                <ul>
-                  <li><strong>Population:</strong> ${formatNumber(c2.population)}</li>
-                  <li><strong>Military Strength:</strong> ${formatNumber(c2Military.military_strength)}</li>
-                  <li><strong>Available for War:</strong> ${formatNumber(c2Military.available_for_war)}</li>
-                  <li><strong>Warplanes:</strong> ${formatNumber(c2Military.warplanes)}</li>
-                  <li><strong>Tanks:</strong> ${formatNumber(c2Military.tanks)}</li>
-                  <li><strong>Naval Strength:</strong> ${formatNumber(c2Military.naval_strength)}</li>
-                  <li><strong>Missile Defense Systems:</strong> ${formatNumber(c2Military.missile_defense_systems)}</li>
-                  <li><strong>Safety Level:</strong> ${c2Military.safety_level}</li>
-                </ul>`;
+            const team1Score = calculateMilitaryScore(team1Total);
+            const team2Score = calculateMilitaryScore(team2Total);
 
-            let c1Score = calculateMilitaryScore(c1Military, c1.population);
-            let c2Score = calculateMilitaryScore(c2Military, c2.population);
+            let resultText = `Team 1 vs Team 2:<br>
+                <strong>Team 1 Score:</strong> ${team1Score}<br>
+                <strong>Team 2 Score:</strong> ${team2Score}<br>`;
 
-            let c1Chance = (c1Score / (c1Score + c2Score)) * 100;
-            let c2Chance = 100 - c1Chance;
-
-            document.getElementById('win-chances').innerHTML = `
-                <strong>${country1Internal} win chance:</strong> ${c1Chance.toFixed(2)}%<br>
-                <strong>${country2Internal} win chance:</strong> ${c2Chance.toFixed(2)}%<br>
-            `;
-
-            let winnerText = '';
-            let explanation = '';
-            if (c1Score > c2Score) {
-                winnerText = `Winner: ${country1Internal}`;
-                explanation = generateExplanation(c1Military, c2Military, country1Internal, country2Internal);
-            } else if (c2Score > c1Score) {
-                winnerText = `Winner: ${country2Internal}`;
-                explanation = generateExplanation(c2Military, c1Military, country2Internal, country1Internal);
+            let winner = '';
+            if (team1Score > team2Score) {
+                winner = 'Team 1 wins!';
+            } else if (team1Score < team2Score) {
+                winner = 'Team 2 wins!';
             } else {
-                winnerText = `Result: Draw`;
-                explanation = 'Both countries have equivalent strength and resources.';
+                winner = 'It\'s a draw!';
             }
 
-            document.getElementById('result-left').innerHTML = resultTextLeft;
-            document.getElementById('result-right').innerHTML = resultTextRight;
-            document.getElementById('winner').innerHTML = `${winnerText}`;
-            document.getElementById('explanation').innerHTML = explanation;
+            document.getElementById('result-left').innerHTML = resultText;
+            document.getElementById('winner').innerHTML = winner;
         })
-        .catch(error => console.log('Error fetching population data:', error));
+        .catch(error => console.log('Error fetching data:', error));
 }
 
 document.getElementById('compareButton').addEventListener('click', compareCountries);
-document.getElementById('country1').addEventListener('keydown', function(event) {
-    if (event.key === 'Enter') {
-        event.preventDefault();
-        compareCountries();
-    }
-});
-document.getElementById('country2').addEventListener('keydown', function(event) {
-    if (event.key === 'Enter') {
-        event.preventDefault();
-        compareCountries();
-    }
-});
