@@ -2,7 +2,8 @@ body {
     font-family: Arial, sans-serif;
     text-align: center;
     margin-top: 50px;
-    background-color: #f4f4f4;
+    background-color: #ADD8E6; /* Ljusblå bakgrund */
+    color: #000000; /* Svart text */
 }
 
 .container {
@@ -24,6 +25,7 @@ input {
     border: 1px solid #ccc;
     border-radius: 4px;
     width: 90%;
+    color: #000000; /* Svart text */
 }
 
 button {
@@ -48,6 +50,7 @@ button:hover {
     margin-top: 10px;
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
+    color: #000000; /* Svart text */
 }
 
 #result-left.show, #result-right.show {
@@ -60,8 +63,29 @@ button:hover {
     margin-top: 30px;
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
+    color: #000000; /* Svart text */
 }
 
 #winner.show {
     opacity: 1;
+}
+
+#win-chances {
+    text-align: center;
+    margin-top: 10px;
+    color: #000000; /* Svart text */
+}
+
+#explanation button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+#explanation-content {
+    margin-top: 10px;
+    color: #000000; /* Svart text */
 }
