@@ -506,22 +506,28 @@ function calculateMilitaryScore(military, population) {
 }
 
 // Dynamisk förklaring baserat på vilken kategori som har störst inverkan
-function generateExplanation(c1Military, c2Military, c1Name, c2Name, winner) {
+function generateExplanation(c1Military, c2Military, c1Name, c2Name) {
   let explanation = '';
 
   if (c1Military.military_strength > c2Military.military_strength) {
-    explanation += `${winner} won due to superior military strength. `;
+    explanation += `${c1Name} won due to superior military strength. `;
+  } else if (c1Military.military_strength < c2Military.military_strength) {
+    explanation += `${c2Name} won due to superior military strength. `;
   }
 
   if (c1Military.warplanes > c2Military.warplanes) {
-    explanation += `${winner} had more warplanes, giving them an aerial advantage. `;
+    explanation += `${c1Name} had more warplanes, giving them an aerial advantage. `;
+  } else if (c1Military.warplanes < c2Military.warplanes) {
+    explanation += `${c2Name} had more warplanes, giving them aerial superiority. `;
   }
 
   if (c1Military.tanks > c2Military.tanks) {
-    explanation += `${winner} had more tanks, giving them an advantage on the ground. `;
+    explanation += `${c1Name} had more tanks, giving them an advantage on the ground. `;
+  } else if (c1Military.tanks < c2Military.tanks) {
+    explanation += `${c2Name} had more tanks, giving them a ground advantage. `;
   }
 
-  if (!explanation) {
+  if (explanation === '') {
     explanation = 'Both countries have similar military resources and strength.';
   }
 
@@ -532,7 +538,6 @@ function compareCountries() {
   let country1Input = document.getElementById('country1').value;
   let country2Input = document.getElementById('country2').value;
 
-  // Översätt länder till interna engelska namn
   let country1Internal = translateCountry(country1Input);
   let country2Internal = translateCountry(country2Input);
 
@@ -549,7 +554,6 @@ function compareCountries() {
         return;
       }
 
-      // Kontrollera att militärdata finns för båda länderna
       const c1Military = militaryData[c1.name.common];
       const c2Military = militaryData[c2.name.common];
 
@@ -558,7 +562,7 @@ function compareCountries() {
         return;
       }
 
-      // Visa data för varje land i listformat
+      // Visa data för varje land i listformat, varje kategori på en rad
       let resultTextLeft = `
         <ul>
           <li><strong>Population:</strong> ${formatNumber(c1.population)}</li>
@@ -575,39 +579,34 @@ function compareCountries() {
           <li><strong>Tanks:</strong> ${formatNumber(c2Military.tanks)}</li>
         </ul>`;
 
-      // Beräkna vinstchans
       let c1Score = calculateMilitaryScore(c1Military, c1.population);
       let c2Score = calculateMilitaryScore(c2Military, c2.population);
 
       let c1Chance = (c1Score / (c1Score + c2Score)) * 100;
       let c2Chance = 100 - c1Chance;
 
-      // Visa vinstchans centralt
       document.getElementById('win-chances').innerHTML = `
         <strong>${country1Internal} win chance:</strong> ${c1Chance.toFixed(2)}%<br>
         <strong>${country2Internal} win chance:</strong> ${c2Chance.toFixed(2)}%<br>
       `;
 
-      // Dynamiskt genererad förklaring och synkad vinnare
       let winnerText = '';
       let explanation = '';
       if (c1Score > c2Score) {
         winnerText = `Winner: ${country1Internal}`;
-        explanation = generateExplanation(c1Military, c2Military, country1Internal, country2Internal, country1Internal);
+        explanation = generateExplanation(c1Military, c2Military, country1Internal, country2Internal);
       } else if (c2Score > c1Score) {
         winnerText = `Winner: ${country2Internal}`;
-        explanation = generateExplanation(c2Military, c1Military, country2Internal, country1Internal, country2Internal);
+        explanation = generateExplanation(c2Military, c1Military, country2Internal, country1Internal);
       } else {
         winnerText = `Result: Draw`;
         explanation = 'Both countries have equivalent strength and resources.';
       }
 
-      // Visa texten
       document.getElementById('result-left').innerHTML = resultTextLeft;
       document.getElementById('result-right').innerHTML = resultTextRight;
       document.getElementById('winner').innerHTML = `${winnerText}`;
 
-      // Dropdown-meny för förklaring
       const explanationElement = document.getElementById('explanation');
       explanationElement.innerHTML = `<button id="explain-toggle">Why did they win?</button><div id="explanation-content" style="display:none;">${explanation}</div>`;
       
