@@ -71,6 +71,27 @@ button:hover {
     border-radius: 5px;
 }
 
+/* Styling för kategorier */
+.categories {
+    margin-top: 30px;
+}
+
+.categories h2 {
+    font-size: 24px;
+    color: #000000;
+}
+
+.categories ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.categories ul li {
+    font-size: 18px;
+    margin: 5px 0;
+    color: #000000;
+}
+
 /* Mobilanpassning */
 @media screen and (max-width: 768px) {
     .container {
@@ -82,17 +103,6 @@ button:hover {
         width: 100%;
         text-align: center;
     }
-}
-
-/* Styling för världskartan (om du vill använda den) */
-#world-map-container {
-    text-align: center;
-    margin-top: 20px;
-}
-
-#world-map {
-    width: 200px;
-    height: auto;
 }
 
 /* Footer (Om oss-sektion) */
