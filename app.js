@@ -1419,7 +1419,6 @@ function compareCountries() {
             document.getElementById('result-left').innerHTML = resultTextLeft;
             document.getElementById('result-right').innerHTML = resultTextRight;
             document.getElementById('winner').innerHTML = `${winnerText}`;
-
             document.getElementById('explanation').innerHTML = explanation;
         })
         .catch(error => console.log('Error fetching population data:', error));
