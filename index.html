@@ -5,6 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Who Will Win the War?</title>
     <link rel="stylesheet" href="style.css">
+
+    <!-- Inkludera Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    
+    <style>
+        #map {
+            height: 600px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .left, .right {
+            width: 45%;
+        }
+
+        h1, #winner, #win-chances, #explanation {
+            text-align: center;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            display: block;
+            margin: 0 auto;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+    </style>
 </head>
 <body>
     <div id="version" style="position: absolute; top: 10px; left: 10px;"></div> <!-- Version i vänstra hörnet -->
@@ -29,8 +66,15 @@
 
     <div id="explanation"></div>
 
+    <!-- Div för kartan -->
+    <div id="map"></div>
+
     <button id="compareButton">Compare</button>
 
+    <!-- Inkludera Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    
+    <!-- Inkludera app.js som innehåller all logik -->
     <script src="app.js"></script>
 </body>
 </html>
