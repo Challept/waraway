@@ -908,7 +908,7 @@ const militaryData = {
     "warplanes": 20,
     "tanks": 50,
     "naval_strength": 0
-  };
+  }
 
   // You can continue to expand this list for additional countries...
 };
