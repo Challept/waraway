@@ -1,4 +1,4 @@
-const militaryData =
+const militaryData = {
   "Afghanistan": {
     "military_strength": 150000,
     "available_for_war": 25000000,
@@ -908,7 +908,7 @@ const militaryData =
     "warplanes": 20,
     "tanks": 50,
     "naval_strength": 0
-  }
+  };
 
   // You can continue to expand this list for additional countries...
 };
