@@ -5,6 +5,9 @@ body {
     margin-top: 50px;
     background-color: #ADD8E6; /* Ljusblå bakgrund */
     color: #000000; /* Svart text */
+    position: relative;
+    min-height: 100vh;
+    padding-bottom: 50px; /* Utrymme för footer */
 }
 
 /* Layout för vänster och höger sektion */
@@ -79,7 +82,10 @@ button:hover {
         width: 100%;
         text-align: center;
     }
-    #world-map-container {
+}
+
+/* Styling för världskartan (om du vill använda den) */
+#world-map-container {
     text-align: center;
     margin-top: 20px;
 }
@@ -87,4 +93,36 @@ button:hover {
 #world-map {
     width: 200px;
     height: auto;
+}
+
+/* Footer (Om oss-sektion) */
+footer#about-us {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    font-size: 14px;
+}
+
+/* Textanimation */
+.animated-text {
+    font-size: 36px;
+    font-weight: bold;
+    color: #333;
+    animation: text-glow 2s ease-in-out infinite alternate;
+}
+
+/* Keyframes för textanimation */
+@keyframes text-glow {
+    0% {
+        color: #007BFF;
+        text-shadow: 0 0 10px #007BFF;
+    }
+    100% {
+        color: #0056b3;
+        text-shadow: 0 0 20px #0056b3;
+    }
 }
