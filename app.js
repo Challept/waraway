@@ -1266,28 +1266,32 @@ function calculateMilitaryScore(military) {
     const tanksWeight = 3;
     const navalStrengthWeight = 3;
     const missileDefenseWeight = 3;
+    const populationWeight = 2;
 
     return (military.military_strength * militaryStrengthWeight) +
            (military.warplanes * warplanesWeight) +
            (military.tanks * tanksWeight) +
            (military.naval_strength * navalStrengthWeight) +
-           (military.missile_defense_systems * missileDefenseWeight);
+           (military.missile_defense_systems * missileDefenseWeight) +
+           (military.population * populationWeight); // Including population weight
 }
 
-function sumMilitaryData(militaries) {
-    return militaries.reduce((sum, military) => {
+function sumMilitaryData(militaries, populations) {
+    return militaries.reduce((sum, military, index) => {
         sum.military_strength += military.military_strength;
         sum.warplanes += military.warplanes;
         sum.tanks += military.tanks;
         sum.naval_strength += military.naval_strength;
         sum.missile_defense_systems += military.missile_defense_systems;
+        sum.population += populations[index]; // Summing populations as well
         return sum;
     }, {
         military_strength: 0,
         warplanes: 0,
         tanks: 0,
         naval_strength: 0,
-        missile_defense_systems: 0
+        missile_defense_systems: 0,
+        population: 0 // Added population to the summary
     });
 }
 
@@ -1296,20 +1300,26 @@ function compareCountries() {
         translateCountry(document.getElementById('country1-1').value),
         translateCountry(document.getElementById('country1-2').value),
         translateCountry(document.getElementById('country1-3').value)
-    ];
+    ].filter(Boolean); // Filter out empty fields
+
     const team2Countries = [
         translateCountry(document.getElementById('country2-1').value),
         translateCountry(document.getElementById('country2-2').value),
         translateCountry(document.getElementById('country2-3').value)
-    ];
+    ].filter(Boolean); // Filter out empty fields
 
-    const allCountries = team1Countries.concat(team2Countries);
+    if (team1Countries.length < 1 || team2Countries.length < 1) {
+        alert("You must choose at least 1 country for each side.");
+        return;
+    }
 
     fetch('https://restcountries.com/v3.1/all?fields=name,population')
         .then(response => response.json())
         .then(data => {
             let team1Militaries = [];
             let team2Militaries = [];
+            let team1Populations = [];
+            let team2Populations = [];
 
             team1Countries.forEach(countryName => {
                 const countryData = data.find(country => country.name.common.toLowerCase() === countryName.toLowerCase());
@@ -1317,6 +1327,7 @@ function compareCountries() {
                     const militaryDataForCountry = militaryData[countryData.name.common];
                     if (militaryDataForCountry) {
                         team1Militaries.push(militaryDataForCountry);
+                        team1Populations.push(countryData.population);
                     }
                 }
             });
@@ -1327,31 +1338,55 @@ function compareCountries() {
                     const militaryDataForCountry = militaryData[countryData.name.common];
                     if (militaryDataForCountry) {
                         team2Militaries.push(militaryDataForCountry);
+                        team2Populations.push(countryData.population);
                     }
                 }
             });
 
-            const team1Total = sumMilitaryData(team1Militaries);
-            const team2Total = sumMilitaryData(team2Militaries);
+            const team1Total = sumMilitaryData(team1Militaries, team1Populations);
+            const team2Total = sumMilitaryData(team2Militaries, team2Populations);
 
             const team1Score = calculateMilitaryScore(team1Total);
             const team2Score = calculateMilitaryScore(team2Total);
 
-            let resultText = `Team 1 vs Team 2:<br>
-                <strong>Team 1 Score:</strong> ${team1Score}<br>
-                <strong>Team 2 Score:</strong> ${team2Score}<br>`;
+            // Sammanfattning för varje lag inklusive population
+            let resultText = `
+                <h3>Sammanfattning:</h3>
+                <div class="team-summary">
+                    <h4>Team 1</h4>
+                    <ul>
+                        <li><strong>Total Population:</strong> ${formatNumber(team1Total.population)}</li>
+                        <li><strong>Total Military Strength:</strong> ${formatNumber(team1Total.military_strength)}</li>
+                        <li><strong>Total Warplanes:</strong> ${formatNumber(team1Total.warplanes)}</li>
+                        <li><strong>Total Tanks:</strong> ${formatNumber(team1Total.tanks)}</li>
+                        <li><strong>Total Naval Strength:</strong> ${formatNumber(team1Total.naval_strength)}</li>
+                        <li><strong>Total Missile Defense Systems:</strong> ${formatNumber(team1Total.missile_defense_systems)}</li>
+                    </ul>
+                </div>
+                <div class="team-summary">
+                    <h4>Team 2</h4>
+                    <ul>
+                        <li><strong>Total Population:</strong> ${formatNumber(team2Total.population)}</li>
+                        <li><strong>Total Military Strength:</strong> ${formatNumber(team2Total.military_strength)}</li>
+                        <li><strong>Total Warplanes:</strong> ${formatNumber(team2Total.warplanes)}</li>
+                        <li><strong>Total Tanks:</strong> ${formatNumber(team2Total.tanks)}</li>
+                        <li><strong>Total Naval Strength:</strong> ${formatNumber(team2Total.naval_strength)}</li>
+                        <li><strong>Total Missile Defense Systems:</strong> ${formatNumber(team2Total.missile_defense_systems)}</li>
+                    </ul>
+                </div>`;
 
-            let winner = '';
+            // Beräkna vinnare
+            let winnerText = '';
             if (team1Score > team2Score) {
-                winner = 'Team 1 wins!';
-            } else if (team1Score < team2Score) {
-                winner = 'Team 2 wins!';
+                winnerText = `Vinnare: Team 1`;
+            } else if (team2Score > team1Score) {
+                winnerText = `Vinnare: Team 2`;
             } else {
-                winner = 'It\'s a draw!';
+                winnerText = `Resultat: Oavgjort`;
             }
 
             document.getElementById('result-left').innerHTML = resultText;
-            document.getElementById('winner').innerHTML = winner;
+            document.getElementById('winner').innerHTML = winnerText;
         })
         .catch(error => console.log('Error fetching data:', error));
 }
