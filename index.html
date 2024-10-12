@@ -1,4 +1,4 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,24 +7,26 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="version" style="position: absolute; top: 10px; left: 10px; font-size: 14px;">Version: 1.0</div>
+    <div id="version" style="position: absolute; top: 10px; left: 10px;"></div> <!-- Version i vänstra hörnet -->
     <h1 id="title">Who Will Win the War?</h1>
 
+    <!-- Layout för vänster och höger sida -->
     <div class="container">
         <div class="left">
             <input type="text" id="country1" placeholder="Enter first country">
-            <div id="result-left"></div>
+            <div id="result-left"></div> <!-- Här visas resultatet för vänster sida -->
         </div>
         <div class="right">
             <input type="text" id="country2" placeholder="Enter second country">
-            <div id="result-right"></div>
+            <div id="result-right"></div> <!-- Här visas resultatet för höger sida -->
         </div>
     </div>
 
+    <!-- Vinnare i mitten -->
     <div id="winner" style="margin-top: 20px;"></div>
     
     <div id="win-chances" style="text-align: center; margin-top: 10px;"></div>
-    
+
     <div id="explanation"></div>
 
     <button id="compareButton">Compare</button>
