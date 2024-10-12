@@ -1,13 +1,13 @@
-/* En mycket enkel stil för att säkerställa att texten visas */
+/* Modern och stilren stil för text och bakgrund */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Helvetica Neue', sans-serif;
     text-align: center;
     margin-top: 50px;
-    background-color: #ffffff; /* Vit bakgrund */
-    color: #ff0000; /* Röd text för att göra den extremt synlig */
+    background-color: #f0f4f8; /* Ljus och modern bakgrundsfärg */
+    color: #333333; /* Mörkgrå text för bra läsbarhet */
 }
 
-/* Enkel layout utan skuggor eller extra stilar */
+/* Flex-layout för att hålla vänster och höger sektioner snygga och balanserade */
 .container {
     display: flex;
     justify-content: space-between;
@@ -18,51 +18,60 @@ body {
 .left, .right {
     width: 45%;
     text-align: left;
+    background-color: #ffffff; /* Vit bakgrund för resultatboxar */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Subtil skugga för ett lyft */
 }
 
-/* Enkel stil för inputfält */
+/* Stil för inputfält */
 input {
-    padding: 10px;
+    padding: 12px;
     margin: 10px;
     font-size: 16px;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 6px;
     width: 90%;
-    color: #000000; /* Svart text */
-    background-color: #ffffff; /* Vit bakgrund för inmatningsfält */
+    color: #333333; /* Mörk text i input */
+    background-color: #f9fafb; /* Ljus bakgrund för input */
 }
 
-/* Enkel stil för knappar */
+/* Knappens stil för ett modernt och interaktivt utseende */
 button {
-    padding: 10px 20px;
+    padding: 12px 24px;
     font-size: 16px;
     background-color: #007BFF;
     color: white;
     border: none;
     cursor: pointer;
-    border-radius: 4px;
-    margin-top: 20px;
+    border-radius: 6px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 button:hover {
     background-color: #0056b3;
+    transform: scale(1.05);
 }
 
-/* Enkel resultattext */
+/* Snyggt resultat för text */
 #result-left, #result-right, #winner, #win-chances {
     font-size: 18px;
     margin-top: 10px;
-    color: #ff0000; /* Röd text för maximal synlighet */
-    background-color: #ffffff; /* Vit bakgrund */
-    padding: 10px;
+    color: #333333; /* Snygg och modern färg på text */
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 6px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Enkel dropdown-meny */
+/* Dropdown-menyn */
 #explanation-content {
     margin-top: 10px;
-    color: #ff0000; /* Röd text */
-    background-color: #ffffff;
-    padding: 10px;
+    color: #333333;
+    background-color: #f9fafb;
+    padding: 15px;
+    border-radius: 6px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Mobilanpassning */
