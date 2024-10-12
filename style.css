@@ -30,6 +30,7 @@ input {
     border-radius: 4px;
     width: 90%;
     color: #000000; /* Svart text */
+    background-color: #FFFFFF; /* Vit bakgrund för inmatningsfält */
 }
 
 /* Styling för knappar */
@@ -63,6 +64,7 @@ button:hover {
     transition: opacity 0.5s ease-in-out;
 }
 
+/* Vinnare texten */
 #winner {
     font-size: 22px;
     font-weight: bold;
