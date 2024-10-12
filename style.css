@@ -1,102 +1,82 @@
-/* Grundläggande stil för body */
+/* Sätter bakgrundsfärgen till ljusblå och textfärgen till svart */
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: Arial, sans-serif;
     text-align: center;
-    margin: 0;
-    padding: 0;
-    background-color: #f0f0f0; /* Ljus bakgrund för en modern känsla */
-    color: #333333; /* Mörk text för god kontrast */
-    overflow-x: hidden; /* Förhindra horisontell scroll */
+    margin-top: 50px;
+    background-color: #ADD8E6; /* Ljusblå bakgrund */
+    color: #000000; /* Svart text */
 }
 
-/* Container stil för att göra sidan responsiv */
+/* Layout för vänster och höger sektion */
 .container {
     display: flex;
     justify-content: space-between;
-    flex-wrap: wrap;
     margin: 20px auto;
-    width: 90%;
+    width: 80%;
 }
 
-/* Justering för vänster och höger sektion */
 .left, .right {
     width: 45%;
     text-align: left;
-    padding: 20px;
 }
 
-/* Gör det responsivt för mobil */
-@media screen and (max-width: 768px) {
-    .container {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .left, .right {
-        width: 100%;
-        padding: 10px;
-        text-align: center;
-    }
-}
-
-/* Inputfältens stil */
+/* Styling för inputfält */
 input {
     padding: 10px;
     margin: 10px;
     font-size: 16px;
-    border: 2px solid #ccc;
-    border-radius: 8px;
-    width: 80%;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 90%;
+    color: #000000; /* Svart text */
+    background-color: #ffffff; /* Vit bakgrund för inmatningsfält */
 }
 
-/* Knappar med hover-effekter */
+/* Styling för knappar */
 button {
-    padding: 12px 24px;
+    padding: 10px 20px;
     font-size: 16px;
     background-color: #007BFF;
     color: white;
     border: none;
     cursor: pointer;
-    border-radius: 8px;
+    border-radius: 4px;
     margin-top: 20px;
-    transition: background-color 0.3s, transform 0.3s;
 }
 
 button:hover {
     background-color: #0056b3;
-    transform: scale(1.05);
 }
 
-/* Stil för resultatsektionerna */
-#result-left, #result-right {
+/* Resultattexten som visas på vänster och höger sida */
+#result-left, #result-right, #winner, #win-chances {
     font-size: 18px;
     margin-top: 10px;
-    color: #444;
-    background-color: #ffffff;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
+    color: #000000; /* Svart text */
+    background-color: #ffffff; /* Vit bakgrund */
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); /* Lätt skugga för synlighet */
 }
 
-/* Stil för vinnaren och vinstchanser */
-#winner, #win-chances {
-    font-size: 22px;
-    font-weight: bold;
-    margin-top: 30px;
+/* Enkel dropdown-meny */
+#explanation-content {
+    margin-top: 10px;
+    color: #000000; /* Svart text */
     background-color: #ffffff;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
+    padding: 10px;
+    border-radius: 5px;
 }
 
-/* Textanimering för text som skrivs */
-.typing-animation {
-    border-right: 3px solid rgba(0, 0, 0, 0.75);
-    white-space: nowrap;
-    overflow: hidden;
+/* Mobilanpassning */
+@media screen and (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .left, .right {
+        width: 100%;
+        text-align: center;
+    }
 }
