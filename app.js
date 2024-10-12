@@ -460,8 +460,8 @@ const countryTranslations = {
   "förenade staterna": "USA",
   "deutschland": "Germany",
   "norge": "Norway",
-  "finland": "Finland",
-  // Fler översättningar kan läggas till vid behov
+  "finland": "Finland"
+  // Lägg till fler översättningar om det behövs
 };
 
 function translateCountry(input) {
@@ -477,7 +477,7 @@ function translateCountry(input) {
 function typeText(element, text) {
     element.innerHTML = ''; // Rensa tidigare text
     let i = 0;
-    const speed = 25; // Hastighet för animationen (millisekunder)
+    const speed = 25; // Skrivanimationens hastighet (millisekunder)
 
     function type() {
         if (i < text.length) {
@@ -491,7 +491,7 @@ function typeText(element, text) {
 }
 
 function formatNumber(num) {
-  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); // Lägger till tusentalsavgränsare
+  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); // Tusentalsavgränsare
 }
 
 function calculateMilitaryScore(military, population) {
@@ -509,6 +509,7 @@ function calculateMilitaryScore(military, population) {
 function generateExplanation(c1Military, c2Military, c1Name, c2Name) {
   let explanation = '';
 
+  // Jämför varje kategori och generera förklaringen
   if (c1Military.military_strength > c2Military.military_strength) {
     explanation += `${c1Name} won due to superior military strength. `;
   } else if (c1Military.military_strength < c2Military.military_strength) {
@@ -538,8 +539,11 @@ function compareCountries() {
   let country1Input = document.getElementById('country1').value;
   let country2Input = document.getElementById('country2').value;
 
+  // Översätt länder till engelska för intern jämförelse
   let country1Internal = translateCountry(country1Input);
   let country2Internal = translateCountry(country2Input);
+
+  console.log(`Comparing ${country1Internal} and ${country2Internal}`);
 
   fetch('https://restcountries.com/v3.1/all?fields=name,population')
     .then(response => response.json())
@@ -552,6 +556,7 @@ function compareCountries() {
         return;
       }
 
+      // Kontrollera att militärdata finns för båda länderna
       const c1Military = militaryData[c1.name.common];
       const c2Military = militaryData[c2.name.common];
 
@@ -560,7 +565,7 @@ function compareCountries() {
         return;
       }
 
-      // Visa data för varje land i listaform
+      // Visa information för varje land i listformat
       let resultTextLeft = `
         <ul>
           <li><strong>Population:</strong> ${formatNumber(c1.population)}</li>
@@ -577,14 +582,14 @@ function compareCountries() {
           <li><strong>Tanks:</strong> ${formatNumber(c2Military.tanks)}</li>
         </ul>`;
 
-      // Beräkna vinstchanser
+      // Beräkna vinstchans
       let c1Score = calculateMilitaryScore(c1Military, c1.population);
       let c2Score = calculateMilitaryScore(c2Military, c2.population);
 
       let c1Chance = (c1Score / (c1Score + c2Score)) * 100;
       let c2Chance = 100 - c1Chance;
 
-      // Visa vinstchanserna
+      // Visa vinstchans centralt
       document.getElementById('win-chances').innerHTML = `
         <strong>${country1Internal} win chance:</strong> ${c1Chance.toFixed(2)}%<br>
         <strong>${country2Internal} win chance:</strong> ${c2Chance.toFixed(2)}%<br>
@@ -604,37 +609,25 @@ function compareCountries() {
         explanation = 'Both countries have equivalent strength and resources.';
       }
 
-      // Visa texten med en enkel animation
+      // Visa texten
       document.getElementById('result-left').innerHTML = resultTextLeft;
       document.getElementById('result-right').innerHTML = resultTextRight;
-      typeText(document.getElementById('winner'), `${winnerText}`);
+      document.getElementById('winner').innerHTML = `${winnerText}`;
 
-      // Dropdown-meny för förklaring
-      const explanationElement = document.getElementById('explanation');
-      explanationElement.innerHTML = `<button id="explain-toggle">Why did they win?</button><div id="explanation-content" style="display:none;">${explanation}</div>`;
-      
-      document.getElementById('explain-toggle').addEventListener('click', function() {
-        const content = document.getElementById('explanation-content');
-        content.style.display = content.style.display === 'none' ? 'block' : 'none';
-      });
+      // Visa förklaring direkt under vinnaren, synkroniserad
+      document.getElementById('explanation').innerHTML = explanation;
     })
     .catch(error => console.log('Error fetching population data:', error));
 }
 
-// Lägg till animation när resultaten visas
-document.getElementById('compareButton').addEventListener('click', function() {
-    document.getElementById('result-left').classList.add('animate');
-    document.getElementById('result-right').classList.add('animate');
-    compareCountries();
-});
-
+// Lägg till händelselyssnare för knapptryckning och Enter-tangent
+document.getElementById('compareButton').addEventListener('click', compareCountries);
 document.getElementById('country1').addEventListener('keydown', function(event) {
   if (event.key === 'Enter') {
     event.preventDefault();
     compareCountries();
   }
 });
-
 document.getElementById('country2').addEventListener('keydown', function(event) {
   if (event.key === 'Enter') {
     event.preventDefault();
