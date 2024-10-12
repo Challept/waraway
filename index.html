@@ -5,79 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Who Will Win the War?</title>
     <link rel="stylesheet" href="style.css">
-
-    <!-- Inkludera Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    
-    <style>
-        #map {
-            height: 600px;
-            width: 100%;
-            margin-top: 20px;
-        }
-
-        .container {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .left, .right {
-            width: 45%;
-        }
-
-        h1, #winner, #win-chances, #explanation {
-            text-align: center;
-        }
-
-        input[type="text"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-        }
-
-        button {
-            display: block;
-            margin: 0 auto;
-            padding: 10px 20px;
-            font-size: 16px;
-        }
-    </style>
 </head>
 <body>
-    <div id="version" style="position: absolute; top: 10px; left: 10px;"></div> <!-- Version i vänstra hörnet -->
+    <div id="version" style="position: absolute; top: 10px; left: 10px;"></div>
     <h1 id="title">Who Will Win the War?</h1>
 
     <!-- Layout för vänster och höger sida -->
     <div class="container">
         <div class="left">
             <input type="text" id="country1" placeholder="Enter first country">
-            <div id="result-left"></div> <!-- Här visas resultatet för vänster sida -->
+            <div id="result-left"></div>
         </div>
         <div class="right">
             <input type="text" id="country2" placeholder="Enter second country">
-            <div id="result-right"></div> <!-- Här visas resultatet för höger sida -->
+            <div id="result-right"></div>
         </div>
     </div>
 
-    <!-- Vinnare i mitten -->
+    <!-- Vinnare och förklaringar -->
     <div id="winner" style="margin-top: 20px;"></div>
-    
-    <div id="win-chances" style="text-align: center; margin-top: 10px;"></div>
-
+    <div id="win-chances"></div>
     <div id="explanation"></div>
+
+    <!-- Knappen över kartan -->
+    <button id="compareButton">Compare</button>
 
     <!-- Div för kartan -->
     <div id="world-map-container">
-    <img id="world-map" src="world-map.svg" alt="World Map" />
-</div>
+        <img id="world-map" src="world-map.svg" alt="World Map" />
+    </div>
 
-
-    <button id="compareButton">Compare</button>
-
-    <!-- Inkludera Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    
-    <!-- Inkludera app.js som innehåller all logik -->
     <script src="app.js"></script>
 </body>
 </html>
