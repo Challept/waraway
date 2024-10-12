@@ -1,13 +1,14 @@
-/* Sätter bakgrundsfärgen till ljusblå och textfärgen till svart */
+/* Grundläggande styling */
 body {
     font-family: Arial, sans-serif;
     text-align: center;
-    margin-top: 50px;
+    margin: 0;
+    padding: 0;
     background-color: #ADD8E6; /* Ljusblå bakgrund */
     color: #000000; /* Svart text */
-    position: relative;
+    display: flex;
+    flex-direction: column;
     min-height: 100vh;
-    padding-bottom: 50px; /* Utrymme för footer */
 }
 
 /* Layout för vänster och höger sektion */
@@ -16,6 +17,7 @@ body {
     justify-content: space-between;
     margin: 20px auto;
     width: 80%;
+    flex: 1;
 }
 
 .left, .right {
@@ -71,27 +73,6 @@ button:hover {
     border-radius: 5px;
 }
 
-/* Styling för kategorier */
-.categories {
-    margin-top: 30px;
-}
-
-.categories h2 {
-    font-size: 24px;
-    color: #000000;
-}
-
-.categories ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-.categories ul li {
-    font-size: 18px;
-    margin: 5px 0;
-    color: #000000;
-}
-
 /* Mobilanpassning */
 @media screen and (max-width: 768px) {
     .container {
@@ -105,14 +86,13 @@ button:hover {
     }
 }
 
-/* Footer (Om oss-sektion) */
-footer#about-us {
+/* Footer styling */
+footer {
     background-color: #333;
-    color: #fff;
+    color: white;
     text-align: center;
-    padding: 10px;
-    position: absolute;
-    bottom: 0;
+    padding: 10px 0;
+    position: fixed;
     width: 100%;
-    font-size: 14px;
+    bottom: 0;
 }
