@@ -925,6 +925,7 @@ const countryTranslations = {
   // Lägg till fler översättningar om det behövs
 };
 // Funktion för att hitta närmaste land genom att använda Levenshtein-avstånd
+// Funktion för att hitta närmaste land genom att använda Levenshtein-avstånd
 function findClosestCountry(input, countryList) {
     input = input.toLowerCase();
     let closestCountry = '';
