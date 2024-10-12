@@ -1210,7 +1210,6 @@ function findClosestCountry(input, countryList) {
     return closestCountry;
 }
 
-// Levenshtein distance-algoritmen för att beräkna avstånd mellan två strängar
 function levenshteinDistance(a, b) {
     const matrix = [];
 
@@ -1230,9 +1229,9 @@ function levenshteinDistance(a, b) {
                 matrix[i][j] = matrix[i - 1][j - 1];
             } else {
                 matrix[i][j] = Math.min(
-                    matrix[i - 1][j - 1] + 1, // Substitution
-                    matrix[i][j - 1] + 1,     // Insättning
-                    matrix[i - 1][j] + 1      // Borttagning
+                    matrix[i - 1][j - 1] + 1, 
+                    matrix[i][j - 1] + 1,     
+                    matrix[i - 1][j] + 1      
                 );
             }
         }
@@ -1241,47 +1240,41 @@ function levenshteinDistance(a, b) {
     return matrix[b.length][a.length];
 }
 
-// Uppdaterad translateCountry-funktion för att hantera stavfel och USA-fallet
 function translateCountry(input) {
     const lowerCaseInput = input.toLowerCase();
-
-    // Kontrollera om land är en direkt match (även vid stavfel som "Sverge")
     if (countryTranslations[lowerCaseInput]) {
         return countryTranslations[lowerCaseInput];
     }
 
-    // Specialfall för USA (matchar olika varianter av "USA")
     if (lowerCaseInput === "usa" || lowerCaseInput === "us" || lowerCaseInput === "u.s.a" || lowerCaseInput === "united states") {
         return "United States";
     }
 
-    // Om ingen direkt match hittas, leta efter den närmaste matchen med Levenshtein-avstånd
     const allCountries = Object.keys(militaryData).concat(Object.values(countryTranslations));
     const closestMatch = findClosestCountry(input, allCountries);
 
-    return closestMatch; // Returnerar den närmaste matchen
+    return closestMatch;
 }
 
 function formatNumber(num) {
-    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); // Tusentalsavgränsare
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-// Uppdaterad för att lägga till missilförsvar och bombrobotar
 function calculateMilitaryScore(military, population) {
     const militaryStrengthWeight = 5;  
     const warplanesWeight = 4;         
     const tanksWeight = 3;             
     const navalStrengthWeight = 3;     
-    const missileDefenseWeight = 3;    // Ny vikt för missilförsvarssystem
-    const bombRobotsWeight = 2;        // Ny vikt för bombrobotar
+    const missileDefenseWeight = 3;    
+    const bombRobotsWeight = 2;        
     const populationWeight = 2;        
 
     return (military.military_strength * militaryStrengthWeight) +
            (military.warplanes * warplanesWeight) +
            (military.tanks * tanksWeight) +
            (military.naval_strength * navalStrengthWeight) +
-           (military.missile_defense_systems * missileDefenseWeight) + // Ny kategori
-           (military.bomb_robots * bombRobotsWeight) + // Ny kategori
+           (military.missile_defense_systems * missileDefenseWeight) +
+           (military.bomb_robots * bombRobotsWeight) +
            (population * populationWeight); 
 }
 
@@ -1329,6 +1322,25 @@ function generateExplanation(c1Military, c2Military, c1Name, c2Name) {
     }
 
     return explanation;
+}
+
+function colorMap(winningCountry, losingCountry) {
+    const worldMap = document.getElementById('worldMap');
+
+    // Ändra färg på vinnande och förlorande land
+    worldMap.onload = () => {
+        const svgDoc = worldMap.contentDocument;
+        const winningCountryElement = svgDoc.getElementById(winningCountry);
+        const losingCountryElement = svgDoc.getElementById(losingCountry);
+
+        if (winningCountryElement) {
+            winningCountryElement.style.fill = "green";
+        }
+
+        if (losingCountryElement) {
+            losingCountryElement.style.fill = "red";
+        }
+    };
 }
 
 function compareCountries() {
@@ -1395,9 +1407,11 @@ function compareCountries() {
             if (c1Score > c2Score) {
                 winnerText = `Winner: ${country1Internal}`;
                 explanation = generateExplanation(c1Military, c2Military, country1Internal, country2Internal);
+                colorMap(country1Internal, country2Internal); // Markera vinnande och förlorande land
             } else if (c2Score > c1Score) {
                 winnerText = `Winner: ${country2Internal}`;
                 explanation = generateExplanation(c2Military, c1Military, country2Internal, country1Internal);
+                colorMap(country2Internal, country1Internal); // Markera vinnande och förlorande land
             } else {
                 winnerText = `Result: Draw`;
                 explanation = 'Both countries have equivalent strength and resources.';
@@ -1412,7 +1426,6 @@ function compareCountries() {
         .catch(error => console.log('Error fetching population data:', error));
 }
 
-// Event listeners för knappar och Enter-tangent
 document.getElementById('compareButton').addEventListener('click', compareCountries);
 document.getElementById('country1').addEventListener('keydown', function(event) {
     if (event.key === 'Enter') {
