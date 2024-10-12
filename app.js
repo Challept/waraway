@@ -1,4 +1,4 @@
-{
+const militaryData = {
   "Afghanistan": {
     "military_strength": 150000,
     "available_for_war": 25000000,
