@@ -106,23 +106,3 @@ footer#about-us {
     width: 100%;
     font-size: 14px;
 }
-
-/* Textanimation */
-.animated-text {
-    font-size: 36px;
-    font-weight: bold;
-    color: #333;
-    animation: text-glow 2s ease-in-out infinite alternate;
-}
-
-/* Keyframes för textanimation */
-@keyframes text-glow {
-    0% {
-        color: #007BFF;
-        text-shadow: 0 0 10px #007BFF;
-    }
-    100% {
-        color: #0056b3;
-        text-shadow: 0 0 20px #0056b3;
-    }
-}
