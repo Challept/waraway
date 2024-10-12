@@ -506,28 +506,22 @@ function calculateMilitaryScore(military, population) {
 }
 
 // Dynamisk förklaring baserat på vilken kategori som har störst inverkan
-function generateExplanation(c1Military, c2Military, c1Name, c2Name) {
+function generateExplanation(c1Military, c2Military, c1Name, c2Name, winner) {
   let explanation = '';
 
   if (c1Military.military_strength > c2Military.military_strength) {
-    explanation += `${c1Name} won due to superior military strength. `;
-  } else if (c1Military.military_strength < c2Military.military_strength) {
-    explanation += `${c2Name} won due to superior military strength. `;
+    explanation += `${winner} won due to superior military strength. `;
   }
 
   if (c1Military.warplanes > c2Military.warplanes) {
-    explanation += `${c1Name} had more warplanes, giving them an aerial advantage. `;
-  } else if (c1Military.warplanes < c2Military.warplanes) {
-    explanation += `${c2Name} had more warplanes, giving them aerial superiority. `;
+    explanation += `${winner} had more warplanes, giving them an aerial advantage. `;
   }
 
   if (c1Military.tanks > c2Military.tanks) {
-    explanation += `${c1Name} had more tanks, giving them an advantage on the ground. `;
-  } else if (c1Military.tanks < c2Military.tanks) {
-    explanation += `${c2Name} had more tanks, giving them a ground advantage. `;
+    explanation += `${winner} had more tanks, giving them an advantage on the ground. `;
   }
 
-  if (explanation === '') {
+  if (!explanation) {
     explanation = 'Both countries have similar military resources and strength.';
   }
 
@@ -594,24 +588,24 @@ function compareCountries() {
         <strong>${country2Internal} win chance:</strong> ${c2Chance.toFixed(2)}%<br>
       `;
 
-      // Dynamiskt genererad förklaring
+      // Dynamiskt genererad förklaring och synkad vinnare
       let winnerText = '';
       let explanation = '';
       if (c1Score > c2Score) {
         winnerText = `Winner: ${country1Internal}`;
-        explanation = generateExplanation(c1Military, c2Military, country1Internal, country2Internal);
+        explanation = generateExplanation(c1Military, c2Military, country1Internal, country2Internal, country1Internal);
       } else if (c2Score > c1Score) {
         winnerText = `Winner: ${country2Internal}`;
-        explanation = generateExplanation(c2Military, c1Military, country2Internal, country1Internal);
+        explanation = generateExplanation(c2Military, c1Military, country2Internal, country1Internal, country2Internal);
       } else {
         winnerText = `Result: Draw`;
         explanation = 'Both countries have equivalent strength and resources.';
       }
 
-      // Visa texten med animering
+      // Visa texten
       document.getElementById('result-left').innerHTML = resultTextLeft;
       document.getElementById('result-right').innerHTML = resultTextRight;
-      typeText(document.getElementById('winner'), `${winnerText}`);
+      document.getElementById('winner').innerHTML = `${winnerText}`;
 
       // Dropdown-meny för förklaring
       const explanationElement = document.getElementById('explanation');
