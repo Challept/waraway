@@ -954,7 +954,6 @@ function calculateMilitaryScore(military, population) {
 function generateExplanation(c1Military, c2Military, c1Name, c2Name) {
   let explanation = '';
 
-  // Jämför varje kategori och generera förklaringen
   if (c1Military.military_strength > c2Military.military_strength) {
     explanation += `${c1Name} won due to superior military strength. `;
   } else if (c1Military.military_strength < c2Military.military_strength) {
@@ -984,11 +983,8 @@ function compareCountries() {
   let country1Input = document.getElementById('country1').value;
   let country2Input = document.getElementById('country2').value;
 
-  // Översätt länder till engelska för intern jämförelse
   let country1Internal = translateCountry(country1Input);
   let country2Internal = translateCountry(country2Input);
-
-  console.log(`Comparing ${country1Internal} and ${country2Internal}`);
 
   fetch('https://restcountries.com/v3.1/all?fields=name,population')
     .then(response => response.json())
@@ -1001,7 +997,6 @@ function compareCountries() {
         return;
       }
 
-      // Kontrollera att militärdata finns för båda länderna
       const c1Military = militaryData[c1.name.common];
       const c2Military = militaryData[c2.name.common];
 
@@ -1010,7 +1005,6 @@ function compareCountries() {
         return;
       }
 
-      // Visa information för varje land i listformat
       let resultTextLeft = `
         <ul>
           <li><strong>Population:</strong> ${formatNumber(c1.population)}</li>
@@ -1027,20 +1021,17 @@ function compareCountries() {
           <li><strong>Tanks:</strong> ${formatNumber(c2Military.tanks)}</li>
         </ul>`;
 
-      // Beräkna vinstchans
       let c1Score = calculateMilitaryScore(c1Military, c1.population);
       let c2Score = calculateMilitaryScore(c2Military, c2.population);
 
       let c1Chance = (c1Score / (c1Score + c2Score)) * 100;
       let c2Chance = 100 - c1Chance;
 
-      // Visa vinstchans centralt
       document.getElementById('win-chances').innerHTML = `
         <strong>${country1Internal} win chance:</strong> ${c1Chance.toFixed(2)}%<br>
         <strong>${country2Internal} win chance:</strong> ${c2Chance.toFixed(2)}%<br>
       `;
 
-      // Dynamiskt genererad förklaring
       let winnerText = '';
       let explanation = '';
       if (c1Score > c2Score) {
@@ -1054,18 +1045,15 @@ function compareCountries() {
         explanation = 'Both countries have equivalent strength and resources.';
       }
 
-      // Visa texten direkt
       document.getElementById('result-left').innerHTML = resultTextLeft;
       document.getElementById('result-right').innerHTML = resultTextRight;
       document.getElementById('winner').innerHTML = `${winnerText}`;
 
-      // Visa förklaring direkt under vinnaren, synkroniserad
       document.getElementById('explanation').innerHTML = explanation;
     })
     .catch(error => console.log('Error fetching population data:', error));
 }
 
-// Lägg till händelselyssnare för knapptryckning och Enter-tangent
 document.getElementById('compareButton').addEventListener('click', compareCountries);
 document.getElementById('country1').addEventListener('keydown', function(event) {
   if (event.key === 'Enter') {
