@@ -473,24 +473,8 @@ function translateCountry(input) {
   return findClosestCountry(input, allCountries);
 }
 
-function typeText(element, text) {
-    element.innerHTML = ''; // Rensa tidigare text
-    let i = 0;
-    const speed = 25; // Hastighet för animationen (millisekunder)
-
-    function type() {
-        if (i < text.length) {
-            element.innerHTML += text.charAt(i);
-            i++;
-            setTimeout(type, speed);
-        }
-    }
-
-    type();
-}
-
 function formatNumber(num) {
-  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); // Lägger till tusentalsavgränsare
+  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 function calculateMilitaryScore(military, population) {
@@ -505,7 +489,6 @@ function calculateMilitaryScore(military, population) {
          (population * populationWeight); 
 }
 
-// Dynamisk förklaring baserat på vilken kategori som har störst inverkan
 function generateExplanation(c1Military, c2Military, c1Name, c2Name) {
   let explanation = '';
 
@@ -540,8 +523,6 @@ function compareCountries() {
 
   let country1Internal = translateCountry(country1Input);
   let country2Internal = translateCountry(country2Input);
-
-  console.log(`Comparing ${country1Internal} and ${country2Internal}`);
 
   fetch('https://restcountries.com/v3.1/all?fields=name,population')
     .then(response => response.json())
@@ -585,6 +566,7 @@ function compareCountries() {
       let c1Chance = (c1Score / (c1Score + c2Score)) * 100;
       let c2Chance = 100 - c1Chance;
 
+      // Visa vinstchanser centralt
       document.getElementById('win-chances').innerHTML = `
         <strong>${country1Internal} win chance:</strong> ${c1Chance.toFixed(2)}%<br>
         <strong>${country2Internal} win chance:</strong> ${c2Chance.toFixed(2)}%<br>
@@ -603,10 +585,12 @@ function compareCountries() {
         explanation = 'Both countries have equivalent strength and resources.';
       }
 
+      // Visa resultatet i vänster och höger sida
       document.getElementById('result-left').innerHTML = resultTextLeft;
       document.getElementById('result-right').innerHTML = resultTextRight;
-      document.getElementById('winner').innerHTML = `${winnerText}`;
 
+      // Visa vinnaren och koppla dropdown-texten för förklaring
+      document.getElementById('winner').innerHTML = `${winnerText}`;
       const explanationElement = document.getElementById('explanation');
       explanationElement.innerHTML = `<button id="explain-toggle">Why did they win?</button><div id="explanation-content" style="display:none;">${explanation}</div>`;
       
