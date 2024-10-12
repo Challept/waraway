@@ -924,6 +924,7 @@ const countryTranslations = {
   "finland": "Finland"
   // Lägg till fler översättningar om det behövs
 };
+// Funktion för att hitta närmaste land genom att använda Levenshtein-avstånd
 function findClosestCountry(input, countryList) {
     input = input.toLowerCase();
     let closestCountry = '';
@@ -940,6 +941,7 @@ function findClosestCountry(input, countryList) {
     return closestCountry;
 }
 
+// Levenshtein distance-algoritmen för att beräkna avstånd mellan två strängar
 function levenshteinDistance(a, b) {
     const matrix = [];
 
@@ -958,7 +960,11 @@ function levenshteinDistance(a, b) {
             if (b.charAt(i - 1) === a.charAt(j - 1)) {
                 matrix[i][j] = matrix[i - 1][j - 1];
             } else {
-                matrix[i][j] = Math.min(matrix[i - 1][j - 1] + 1, Math.min(matrix[i][j - 1] + 1, matrix[i - 1][j] + 1));
+                matrix[i][j] = Math.min(
+                    matrix[i - 1][j - 1] + 1, // Substitution
+                    matrix[i][j - 1] + 1,     // Insättning
+                    matrix[i - 1][j] + 1      // Borttagning
+                );
             }
         }
     }
@@ -966,6 +972,7 @@ function levenshteinDistance(a, b) {
     return matrix[b.length][a.length];
 }
 
+// Uppdaterad translateCountry-funktion för att hantera stavfel
 function translateCountry(input) {
   const lowerCaseInput = input.toLowerCase();
   if (countryTranslations[lowerCaseInput]) {
@@ -973,23 +980,25 @@ function translateCountry(input) {
   }
 
   const allCountries = Object.keys(militaryData).concat(Object.values(countryTranslations));
-  return findClosestCountry(input, allCountries);
+  const closestMatch = findClosestCountry(input, allCountries);
+
+  return closestMatch; // Returnerar den närmaste matchen
 }
 
 function formatNumber(num) {
-  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); // Tusentalsavgränsare
 }
 
 function calculateMilitaryScore(military, population) {
-  const militaryStrengthWeight = 5;
-  const warplanesWeight = 4;
-  const tanksWeight = 3;
-  const populationWeight = 2;
+  const militaryStrengthWeight = 5;  // Mycket viktigt
+  const warplanesWeight = 4;         // Mycket viktigt
+  const tanksWeight = 3;             // Viktigt
+  const populationWeight = 2;        // Viktigt
 
-  return (military.military_strength * militaryStrengthWeight) +
-         (military.warplanes * warplanesWeight) +
-         (military.tanks * tanksWeight) +
-         (population * populationWeight);
+  return (military.military_strength * militaryStrengthWeight) + 
+         (military.warplanes * warplanesWeight) + 
+         (military.tanks * tanksWeight) + 
+         (population * populationWeight); 
 }
 
 function generateExplanation(c1Military, c2Military, c1Name, c2Name) {
@@ -1034,7 +1043,7 @@ function compareCountries() {
       const c2 = data.find(country => country.name.common.toLowerCase() === country2Internal.toLowerCase());
 
       if (!c1 || !c2) {
-        document.getElementById('result-left').innerHTML = `Country not found. Did you mean: ${!c1 ? country1Input : country2Input}?`;
+        document.getElementById('result-left').innerHTML = `Country not found. Did you mean: ${!c1 ? country1Internal : country2Internal}?`;
         return;
       }
 
