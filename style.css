@@ -79,4 +79,12 @@ button:hover {
         width: 100%;
         text-align: center;
     }
+    #world-map-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#world-map {
+    width: 80%;
+    height: auto;
 }
