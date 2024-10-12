@@ -926,6 +926,7 @@ const countryTranslations = {
 };
 // Funktion för att hitta närmaste land genom att använda Levenshtein-avstånd
 // Funktion för att hitta närmaste land genom att använda Levenshtein-avstånd
+// Funktion för att hitta närmaste land baserat på stavfel (Levenshtein-avstånd)
 function findClosestCountry(input, countryList) {
     input = input.toLowerCase();
     let closestCountry = '';
@@ -973,13 +974,21 @@ function levenshteinDistance(a, b) {
     return matrix[b.length][a.length];
 }
 
-// Uppdaterad translateCountry-funktion för att hantera stavfel
+// Uppdaterad translateCountry-funktion för att hantera stavfel och USA-fallet
 function translateCountry(input) {
   const lowerCaseInput = input.toLowerCase();
+
+  // Kontrollera om land är en direkt match (även vid stavfel som "Sverge")
   if (countryTranslations[lowerCaseInput]) {
     return countryTranslations[lowerCaseInput];
   }
 
+  // Specialfall för USA (matchar olika varianter av "USA")
+  if (lowerCaseInput === "usa" || lowerCaseInput === "us" || lowerCaseInput === "u.s.a" || lowerCaseInput === "united states") {
+    return "United States";
+  }
+
+  // Om ingen direkt match hittas, leta efter den närmaste matchen med Levenshtein-avstånd
   const allCountries = Object.keys(militaryData).concat(Object.values(countryTranslations));
   const closestMatch = findClosestCountry(input, allCountries);
 
@@ -1105,6 +1114,7 @@ function compareCountries() {
     .catch(error => console.log('Error fetching population data:', error));
 }
 
+// Event listeners för knappar och Enter-tangent
 document.getElementById('compareButton').addEventListener('click', compareCountries);
 document.getElementById('country1').addEventListener('keydown', function(event) {
   if (event.key === 'Enter') {
