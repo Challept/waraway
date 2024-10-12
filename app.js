@@ -938,7 +938,7 @@ function translateCountry(input) {
 function typeText(element, text) {
     element.innerHTML = ''; // Rensa tidigare text
     let i = 0;
-    const speed = 25; // Skrivanimationens hastighet (millisekunder)
+    const speed = 50; // Medelsnabb skrivanimation (justerat från 25ms till 50ms)
 
     function type() {
         if (i < text.length) {
@@ -1070,13 +1070,13 @@ function compareCountries() {
         explanation = 'Both countries have equivalent strength and resources.';
       }
 
-      // Visa texten
-      document.getElementById('result-left').innerHTML = resultTextLeft;
-      document.getElementById('result-right').innerHTML = resultTextRight;
-      document.getElementById('winner').innerHTML = `${winnerText}`;
+      // Visa texten med animation
+      typeText(document.getElementById('result-left'), resultTextLeft);
+      typeText(document.getElementById('result-right'), resultTextRight);
+      typeText(document.getElementById('winner'), `${winnerText}`);
 
       // Visa förklaring direkt under vinnaren, synkroniserad
-      document.getElementById('explanation').innerHTML = explanation;
+      typeText(document.getElementById('explanation'), explanation);
     })
     .catch(error => console.log('Error fetching population data:', error));
 }
