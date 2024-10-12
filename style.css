@@ -1,11 +1,13 @@
+/* Sätter bakgrundsfärgen till blå och textfärgen till röd */
 body {
     font-family: Arial, sans-serif;
     text-align: center;
     margin-top: 50px;
-    background-color: #ADD8E6; /* Ljusblå bakgrund */
-    color: #000000; /* Svart text */
+    background-color: #0000FF; /* Blå bakgrund */
+    color: #FF0000; /* Röd text */
 }
 
+/* Kontrollerar layouten för vänster och höger sektion */
 .container {
     display: flex;
     justify-content: space-between;
@@ -18,6 +20,7 @@ body {
     text-align: left;
 }
 
+/* Styling för inputfält */
 input {
     padding: 10px;
     margin: 10px;
@@ -25,9 +28,10 @@ input {
     border: 1px solid #ccc;
     border-radius: 4px;
     width: 90%;
-    color: #000000; /* Svart text */
+    color: #FF0000; /* Röd text */
 }
 
+/* Styling för knappar */
 button {
     padding: 10px 20px;
     font-size: 16px;
@@ -45,37 +49,41 @@ button:hover {
     transform: scale(1.05);
 }
 
+/* Resultattexten som visas på vänster och höger sida */
 #result-left, #result-right {
     font-size: 18px;
     margin-top: 10px;
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
-    color: #000000; /* Svart text */
+    color: #FF0000; /* Röd text */
 }
 
 #result-left.show, #result-right.show {
     opacity: 1;
 }
 
+/* Visar vinnaren */
 #winner {
     font-size: 22px;
     font-weight: bold;
     margin-top: 30px;
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
-    color: #000000; /* Svart text */
+    color: #FF0000; /* Röd text */
 }
 
 #winner.show {
     opacity: 1;
 }
 
+/* Visar vinstchanser i mitten */
 #win-chances {
     text-align: center;
     margin-top: 10px;
-    color: #000000; /* Svart text */
+    color: #FF0000; /* Röd text */
 }
 
+/* Dropdown-knappen */
 #explanation button {
     background-color: #007BFF;
     color: white;
@@ -85,7 +93,21 @@ button:hover {
     border-radius: 4px;
 }
 
+/* Text förklaringen */
 #explanation-content {
     margin-top: 10px;
-    color: #000000; /* Svart text */
+    color: #FF0000; /* Röd text */
+}
+
+/* Lägger till responsiv design för mobil */
+@media screen and (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .left, .right {
+        width: 100%;
+        text-align: center;
+    }
 }
