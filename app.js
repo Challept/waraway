@@ -1266,7 +1266,6 @@ function calculateMilitaryScore(military, population) {
     const tanksWeight = 3;
     const navalStrengthWeight = 3;
     const missileDefenseWeight = 3;
-    const bombRobotsWeight = 2;
     const populationWeight = 2;
 
     return (military.military_strength * militaryStrengthWeight) +
@@ -1274,7 +1273,6 @@ function calculateMilitaryScore(military, population) {
            (military.tanks * tanksWeight) +
            (military.naval_strength * navalStrengthWeight) +
            (military.missile_defense_systems * missileDefenseWeight) +
-           (military.bomb_robots * bombRobotsWeight) +
            (population * populationWeight);
 }
 
@@ -1311,35 +1309,11 @@ function generateExplanation(c1Military, c2Military, c1Name, c2Name) {
         explanation += `${c2Name} had superior missile defense systems, giving them better defensive capabilities. `;
     }
 
-    if (c1Military.bomb_robots > c2Military.bomb_robots) {
-        explanation += `${c1Name} had more bomb robots, providing an advantage in bomb disposal operations. `;
-    } else if (c1Military.bomb_robots < c2Military.bomb_robots) {
-        explanation += `${c2Name} had more bomb robots, offering better bomb disposal capabilities. `;
-    }
-
     if (explanation === '') {
         explanation = 'Both countries have similar military resources and strength.';
     }
 
     return explanation;
-}
-
-function colorMap(winningCountry, losingCountry) {
-    const worldMap = document.getElementById('world-map');
-
-    worldMap.onload = () => {
-        const svgDoc = worldMap.contentDocument;
-        const winningCountryElement = svgDoc.getElementById(winningCountry);
-        const losingCountryElement = svgDoc.getElementById(losingCountry);
-
-        if (winningCountryElement) {
-            winningCountryElement.style.fill = "green";
-        }
-
-        if (losingCountryElement) {
-            losingCountryElement.style.fill = "red";
-        }
-    };
 }
 
 function compareCountries() {
@@ -1372,22 +1346,24 @@ function compareCountries() {
                 <ul>
                   <li><strong>Population:</strong> ${formatNumber(c1.population)}</li>
                   <li><strong>Military Strength:</strong> ${formatNumber(c1Military.military_strength)}</li>
+                  <li><strong>Available for War:</strong> ${formatNumber(c1Military.available_for_war)}</li>
                   <li><strong>Warplanes:</strong> ${formatNumber(c1Military.warplanes)}</li>
                   <li><strong>Tanks:</strong> ${formatNumber(c1Military.tanks)}</li>
                   <li><strong>Naval Strength:</strong> ${formatNumber(c1Military.naval_strength)}</li>
                   <li><strong>Missile Defense Systems:</strong> ${formatNumber(c1Military.missile_defense_systems)}</li>
-                  <li><strong>Bomb Robots:</strong> ${formatNumber(c1Military.bomb_robots)}</li>
+                  <li><strong>Safety Level:</strong> ${c1Military.safety_level}</li>
                 </ul>`;
             
             let resultTextRight = `
                 <ul>
                   <li><strong>Population:</strong> ${formatNumber(c2.population)}</li>
                   <li><strong>Military Strength:</strong> ${formatNumber(c2Military.military_strength)}</li>
+                  <li><strong>Available for War:</strong> ${formatNumber(c2Military.available_for_war)}</li>
                   <li><strong>Warplanes:</strong> ${formatNumber(c2Military.warplanes)}</li>
                   <li><strong>Tanks:</strong> ${formatNumber(c2Military.tanks)}</li>
                   <li><strong>Naval Strength:</strong> ${formatNumber(c2Military.naval_strength)}</li>
                   <li><strong>Missile Defense Systems:</strong> ${formatNumber(c2Military.missile_defense_systems)}</li>
-                  <li><strong>Bomb Robots:</strong> ${formatNumber(c2Military.bomb_robots)}</li>
+                  <li><strong>Safety Level:</strong> ${c2Military.safety_level}</li>
                 </ul>`;
 
             let c1Score = calculateMilitaryScore(c1Military, c1.population);
@@ -1406,11 +1382,9 @@ function compareCountries() {
             if (c1Score > c2Score) {
                 winnerText = `Winner: ${country1Internal}`;
                 explanation = generateExplanation(c1Military, c2Military, country1Internal, country2Internal);
-                colorMap(country1Internal, country2Internal);
             } else if (c2Score > c1Score) {
                 winnerText = `Winner: ${country2Internal}`;
                 explanation = generateExplanation(c2Military, c1Military, country2Internal, country1Internal);
-                colorMap(country2Internal, country1Internal);
             } else {
                 winnerText = `Result: Draw`;
                 explanation = 'Both countries have equivalent strength and resources.';
