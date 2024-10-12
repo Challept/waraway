@@ -1229,9 +1229,9 @@ function levenshteinDistance(a, b) {
                 matrix[i][j] = matrix[i - 1][j - 1];
             } else {
                 matrix[i][j] = Math.min(
-                    matrix[i - 1][j - 1] + 1, 
-                    matrix[i][j - 1] + 1,     
-                    matrix[i - 1][j] + 1      
+                    matrix[i - 1][j - 1] + 1,
+                    matrix[i][j - 1] + 1,
+                    matrix[i - 1][j] + 1
                 );
             }
         }
@@ -1261,13 +1261,13 @@ function formatNumber(num) {
 }
 
 function calculateMilitaryScore(military, population) {
-    const militaryStrengthWeight = 5;  
-    const warplanesWeight = 4;         
-    const tanksWeight = 3;             
-    const navalStrengthWeight = 3;     
-    const missileDefenseWeight = 3;    
-    const bombRobotsWeight = 2;        
-    const populationWeight = 2;        
+    const militaryStrengthWeight = 5;
+    const warplanesWeight = 4;
+    const tanksWeight = 3;
+    const navalStrengthWeight = 3;
+    const missileDefenseWeight = 3;
+    const bombRobotsWeight = 2;
+    const populationWeight = 2;
 
     return (military.military_strength * militaryStrengthWeight) +
            (military.warplanes * warplanesWeight) +
@@ -1275,7 +1275,7 @@ function calculateMilitaryScore(military, population) {
            (military.naval_strength * navalStrengthWeight) +
            (military.missile_defense_systems * missileDefenseWeight) +
            (military.bomb_robots * bombRobotsWeight) +
-           (population * populationWeight); 
+           (population * populationWeight);
 }
 
 function generateExplanation(c1Military, c2Military, c1Name, c2Name) {
@@ -1325,9 +1325,8 @@ function generateExplanation(c1Military, c2Military, c1Name, c2Name) {
 }
 
 function colorMap(winningCountry, losingCountry) {
-    const worldMap = document.getElementById('worldMap');
+    const worldMap = document.getElementById('world-map');
 
-    // Ändra färg på vinnande och förlorande land
     worldMap.onload = () => {
         const svgDoc = worldMap.contentDocument;
         const winningCountryElement = svgDoc.getElementById(winningCountry);
@@ -1407,11 +1406,11 @@ function compareCountries() {
             if (c1Score > c2Score) {
                 winnerText = `Winner: ${country1Internal}`;
                 explanation = generateExplanation(c1Military, c2Military, country1Internal, country2Internal);
-                colorMap(country1Internal, country2Internal); // Markera vinnande och förlorande land
+                colorMap(country1Internal, country2Internal);
             } else if (c2Score > c1Score) {
                 winnerText = `Winner: ${country2Internal}`;
                 explanation = generateExplanation(c2Military, c1Military, country2Internal, country1Internal);
-                colorMap(country2Internal, country1Internal); // Markera vinnande och förlorande land
+                colorMap(country2Internal, country1Internal);
             } else {
                 winnerText = `Result: Draw`;
                 explanation = 'Both countries have equivalent strength and resources.';
