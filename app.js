@@ -1,4 +1,5 @@
 const militaryData = {
+  {
   "Afghanistan": {
     "military_strength": 150000,
     "available_for_war": 25000000,
@@ -314,12 +315,26 @@ const militaryData = {
     "tanks": 1004,
     "naval_strength": 155
   },
-  "Mexico": {
-    "military_strength": 215000,
-    "available_for_war": 65000000,
-    "warplanes": 464,
-    "tanks": 0,
-    "naval_strength": 145
+  "Jordan": {
+    "military_strength": 100000,
+    "available_for_war": 5000000,
+    "warplanes": 250,
+    "tanks": 1200,
+    "naval_strength": 27
+  },
+  "Kazakhstan": {
+    "military_strength": 39000,
+    "available_for_war": 3000000,
+    "warplanes": 238,
+    "tanks": 300,
+    "naval_strength": 14
+  },
+  "Kenya": {
+    "military_strength": 24000,
+    "available_for_war": 5000000,
+    "warplanes": 127,
+    "tanks": 76,
+    "naval_strength": 18
   },
   "North Korea": {
     "military_strength": 1280000,
@@ -328,125 +343,575 @@ const militaryData = {
     "tanks": 6000,
     "naval_strength": 967
   },
+  "South Korea": {
+    "military_strength": 555000,
+    "available_for_war": 25000000,
+    "warplanes": 1600,
+    "tanks": 2600,
+    "naval_strength": 234
+  },
+  "Kuwait": {
+    "military_strength": 15000,
+    "available_for_war": 1000000,
+    "warplanes": 85,
+    "tanks": 368,
+    "naval_strength": 38
+  },
+  "Kyrgyzstan": {
+    "military_strength": 20000,
+    "available_for_war": 1000000,
+    "warplanes": 40,
+    "tanks": 150,
+    "naval_strength": 0
+  },
+  "Laos": {
+    "military_strength": 30000,
+    "available_for_war": 2000000,
+    "warplanes": 25,
+    "tanks": 100,
+    "naval_strength": 0
+  },
+  "Latvia": {
+    "military_strength": 6000,
+    "available_for_war": 500000,
+    "warplanes": 10,
+    "tanks": 0,
+    "naval_strength": 5
+  },
+  "Lebanon": {
+    "military_strength": 80000,
+    "available_for_war": 3000000,
+    "warplanes": 66,
+    "tanks": 300,
+    "naval_strength": 50
+  },
+  "Lesotho": {
+    "military_strength": 2000,
+    "available_for_war": 50000,
+    "warplanes": 5,
+    "tanks": 0,
+    "naval_strength": 0
+  },
+  "Liberia": {
+    "military_strength": 2000,
+    "available_for_war": 100000,
+    "warplanes": 2,
+    "tanks": 0,
+    "naval_strength": 0
+  },
+  "Libya": {
+    "military_strength": 30000,
+    "available_for_war": 2000000,
+    "warplanes": 200,
+    "tanks": 500,
+    "naval_strength": 10
+  },
+  "Lithuania": {
+    "military_strength": 16000,
+    "available_for_war": 500000,
+    "warplanes": 20,
+    "tanks": 0,
+    "naval_strength": 0
+  },
+  "Luxembourg": {
+    "military_strength": 1000,
+    "available_for_war": 50000,
+    "warplanes": 0,
+    "tanks": 0,
+    "naval_strength": 0
+  },
+  "Madagascar": {
+    "military_strength": 21000,
+    "available_for_war": 5000000,
+    "warplanes": 10,
+    "tanks": 20,
+    "naval_strength": 10
+  },
+  "Malawi": {
+    "military_strength": 12000,
+    "available_for_war": 2000000,
+    "warplanes": 10,
+    "tanks": 10,
+    "naval_strength": 0
+  },
+  "Malaysia": {
+    "military_strength": 110000,
+    "available_for_war": 10000000,
+    "warplanes": 200,
+    "tanks": 100,
+    "naval_strength": 60
+  },
+  "Mali": {
+    "military_strength": 18000,
+    "available_for_war": 4000000,
+    "warplanes": 10,
+    "tanks": 20,
+    "naval_strength": 0
+  },
+  "Malta": {
+    "military_strength": 2000,
+    "available_for_war": 50000,
+    "warplanes": 0,
+    "tanks": 0,
+    "naval_strength": 0
+  },
+  "Mauritania": {
+    "military_strength": 20000,
+    "available_for_war": 1000000,
+    "warplanes": 10,
+    "tanks": 20,
+    "naval_strength": 0
+  },
+  "Mexico": {
+    "military_strength": 277000,
+    "available_for_war": 50000000,
+    "warplanes": 500,
+    "tanks": 350,
+    "naval_strength": 143
+  },
+  "Moldova": {
+    "military_strength": 5000,
+    "available_for_war": 500000,
+    "warplanes": 10,
+    "tanks": 0,
+    "naval_strength": 0
+  },
+  "Mongolia": {
+    "military_strength": 10000,
+    "available_for_war": 1000000,
+    "warplanes": 20,
+    "tanks": 50,
+    "naval_strength": 0
+  },
+  "Montenegro": {
+    "military_strength": 2000,
+    "available_for_war": 50000,
+    "warplanes": 5,
+    "tanks": 0,
+    "naval_strength": 0
+  },
+  "Morocco": {
+    "military_strength": 195000,
+    "available_for_war": 10000000,
+    "warplanes": 300,
+    "tanks": 1200,
+    "naval_strength": 121
+  },
+  "Mozambique": {
+    "military_strength": 11000,
+    "available_for_war": 5000000,
+    "warplanes": 10,
+    "tanks": 20,
+    "naval_strength": 10
+  },
+  "Myanmar": {
+    "military_strength": 406000,
+    "available_for_war": 20000000,
+    "warplanes": 300,
+    "tanks": 600,
+    "naval_strength": 100
+  },
+  "Namibia": {
+    "military_strength": 9000,
+    "available_for_war": 500000,
+    "warplanes": 10,
+    "tanks": 20,
+    "naval_strength": 0
+  },
+  "Nepal": {
+    "military_strength": 95000,
+    "available_for_war": 5000000,
+    "warplanes": 10,
+    "tanks": 20,
+    "naval_strength": 0
+  },
+  "Netherlands": {
+    "military_strength": 35000,
+    "available_for_war": 2000000,
+    "warplanes": 200,
+    "tanks": 0,
+    "naval_strength": 60
+  },
+  "New Zealand": {
+    "military_strength": 9000,
+    "available_for_war": 500000,
+    "warplanes": 50,
+    "tanks": 0,
+    "naval_strength": 20
+  },
+  "Nicaragua": {
+    "military_strength": 12000,
+    "available_for_war": 1000000,
+    "warplanes": 10,
+    "tanks": 20,
+    "naval_strength": 10
+  },
+  "Niger": {
+    "military_strength": 5000,
+    "available_for_war": 1000000,
+    "warplanes": 10,
+    "tanks": 20,
+    "naval_strength": 0
+  },
+  "Nigeria": {
+    "military_strength": 162000,
+    "available_for_war": 50000000,
+    "warplanes": 300,
+    "tanks": 200,
+    "naval_strength": 75
+  },
   "Norway": {
     "military_strength": 23000,
-    "available_for_war": 600000,
-    "warplanes": 132,
-    "tanks": 36,
-    "naval_strength": 53
+    "available_for_war": 1000000,
+    "warplanes": 100,
+    "tanks": 50,
+    "naval_strength": 60
+  },
+  "Oman": {
+    "military_strength": 42000,
+    "available_for_war": 1000000,
+    "warplanes": 100,
+    "tanks": 200,
+    "naval_strength": 20
   },
   "Pakistan": {
     "military_strength": 654000,
-    "available_for_war": 96000000,
-    "warplanes": 1364,
-    "tanks": 2200,
+    "available_for_war": 75000000,
+    "warplanes": 1342,
+    "tanks": 2680,
     "naval_strength": 100
   },
+  "Panama": {
+    "military_strength": 12000,
+    "available_for_war": 1000000,
+    "warplanes": 10,
+    "tanks": 0,
+    "naval_strength": 10
+  },
+  "Papua New Guinea": {
+    "military_strength": 3000,
+    "available_for_war": 500000,
+    "warplanes": 5,
+    "tanks": 0,
+    "naval_strength": 0
+  },
+  "Paraguay": {
+    "military_strength": 12000,
+    "available_for_war": 1000000,
+    "warplanes": 10,
+    "tanks": 20,
+    "naval_strength": 10
+  },
+  "Peru": {
+    "military_strength": 90000,
+    "available_for_war": 10000000,
+    "warplanes": 300,
+    "tanks": 300,
+    "naval_strength": 60
+  },
   "Philippines": {
-    "military_strength": 142000,
-    "available_for_war": 40000000,
-    "warplanes": 149,
-    "tanks": 45,
-    "naval_strength": 129
+    "military_strength": 125000,
+    "available_for_war": 50000000,
+    "warplanes": 300,
+    "tanks": 100,
+    "naval_strength": 100
   },
   "Poland": {
-    "military_strength": 114000,
-    "available_for_war": 20000000,
-    "warplanes": 469,
-    "tanks": 700,
-    "naval_strength": 83
+    "military_strength": 120000,
+    "available_for_war": 10000000,
+    "warplanes": 500,
+    "tanks": 1000,
+    "naval_strength": 50
+  },
+  "Portugal": {
+    "military_strength": 32000,
+    "available_for_war": 2000000,
+    "warplanes": 100,
+    "tanks": 100,
+    "naval_strength": 40
+  },
+  "Qatar": {
+    "military_strength": 12000,
+    "available_for_war": 1000000,
+    "warplanes": 100,
+    "tanks": 100,
+    "naval_strength": 20
+  },
+  "Romania": {
+    "military_strength": 70000,
+    "available_for_war": 5000000,
+    "warplanes": 200,
+    "tanks": 500,
+    "naval_strength": 20
   },
   "Russia": {
     "military_strength": 1000000,
-    "available_for_war": 20000000,
-    "warplanes": 4163,
-    "tanks": 12500,
-    "naval_strength": 603
+    "available_for_war": 500000000,
+    "warplanes": 4000,
+    "tanks": 12000,
+    "naval_strength": 600
+  },
+  "Rwanda": {
+    "military_strength": 33000,
+    "available_for_war": 5000000,
+    "warplanes": 20,
+    "tanks": 50,
+    "naval_strength": 0
   },
   "Saudi Arabia": {
     "military_strength": 227000,
-    "available_for_war": 15000000,
-    "warplanes": 848,
-    "tanks": 1062,
-    "naval_strength": 55
+    "available_for_war": 10000000,
+    "warplanes": 700,
+    "tanks": 1000,
+    "naval_strength": 50
+  },
+  "Senegal": {
+    "military_strength": 20000,
+    "available_for_war": 5000000,
+    "warplanes": 20,
+    "tanks": 50,
+    "naval_strength": 10
+  },
+  "Serbia": {
+    "military_strength": 28000,
+    "available_for_war": 2000000,
+    "warplanes": 100,
+    "tanks": 300,
+    "naval_strength": 20
+  },
+  "Sierra Leone": {
+    "military_strength": 8000,
+    "available_for_war": 1000000,
+    "warplanes": 5,
+    "tanks": 10,
+    "naval_strength": 0
+  },
+  "Singapore": {
+    "military_strength": 72000,
+    "available_for_war": 5000000,
+    "warplanes": 200,
+    "tanks": 100,
+    "naval_strength": 20
+  },
+  "Slovakia": {
+    "military_strength": 16000,
+    "available_for_war": 1000000,
+    "warplanes": 50,
+    "tanks": 100,
+    "naval_strength": 0
+  },
+  "Slovenia": {
+    "military_strength": 7000,
+    "available_for_war": 500000,
+    "warplanes": 20,
+    "tanks": 50,
+    "naval_strength": 0
+  },
+  "Somalia": {
+    "military_strength": 20000,
+    "available_for_war": 5000000,
+    "warplanes": 10,
+    "tanks": 20,
+    "naval_strength": 0
   },
   "South Africa": {
-    "military_strength": 66000,
-    "available_for_war": 6000000,
-    "warplanes": 226,
-    "tanks": 195,
-    "naval_strength": 47
-  },
-  "South Korea": {
-    "military_strength": 600000,
-    "available_for_war": 25000000,
-    "warplanes": 1640,
-    "tanks": 2400,
-    "naval_strength": 234
+    "military_strength": 67000,
+    "available_for_war": 10000000,
+    "warplanes": 200,
+    "tanks": 200,
+    "naval_strength": 30
   },
   "Spain": {
     "military_strength": 125000,
-    "available_for_war": 20000000,
-    "warplanes": 503,
-    "tanks": 327,
-    "naval_strength": 133
+    "available_for_war": 10000000,
+    "warplanes": 500,
+    "tanks": 300,
+    "naval_strength": 60
+  },
+  "Sri Lanka": {
+    "military_strength": 250000,
+    "available_for_war": 10000000,
+    "warplanes": 200,
+    "tanks": 100,
+    "naval_strength": 50
+  },
+  "Sudan": {
+    "military_strength": 100000,
+    "available_for_war": 10000000,
+    "warplanes": 100,
+    "tanks": 200,
+    "naval_strength": 20
   },
   "Sweden": {
-    "military_strength": 22000,
-    "available_for_war": 350000,
+    "military_strength": 25000,
+    "available_for_war": 2000000,
     "warplanes": 200,
-    "tanks": 120,
-    "naval_strength": 63
+    "tanks": 100,
+    "naval_strength": 50
   },
   "Switzerland": {
-    "military_strength": 21000,
-    "available_for_war": 1500000,
-    "warplanes": 95,
-    "tanks": 134,
+    "military_strength": 20000,
+    "available_for_war": 1000000,
+    "warplanes": 100,
+    "tanks": 50,
     "naval_strength": 0
   },
+  "Syria": {
+    "military_strength": 142000,
+    "available_for_war": 10000000,
+    "warplanes": 500,
+    "tanks": 2000,
+    "naval_strength": 20
+  },
+  "Taiwan": {
+    "military_strength": 165000,
+    "available_for_war": 10000000,
+    "warplanes": 600,
+    "tanks": 1000,
+    "naval_strength": 50
+  },
+  "Tajikistan": {
+    "military_strength": 20000,
+    "available_for_war": 1000000,
+    "warplanes": 20,
+    "tanks": 100,
+    "naval_strength": 0
+  },
+  "Tanzania": {
+    "military_strength": 27000,
+    "available_for_war": 10000000,
+    "warplanes": 20,
+    "tanks": 50,
+    "naval_strength": 10
+  },
+  "Thailand": {
+    "military_strength": 360000,
+    "available_for_war": 50000000,
+    "warplanes": 500,
+    "tanks": 1000,
+    "naval_strength": 100
+  },
+  "Togo": {
+    "military_strength": 8000,
+    "available_for_war": 1000000,
+    "warplanes": 10,
+    "tanks": 20,
+    "naval_strength": 0
+  },
+  "Trinidad and Tobago": {
+    "military_strength": 4000,
+    "available_for_war": 500000,
+    "warplanes": 5,
+    "tanks": 0,
+    "naval_strength": 10
+  },
+  "Tunisia": {
+    "military_strength": 36000,
+    "available_for_war": 2000000,
+    "warplanes": 100,
+    "tanks": 200,
+    "naval_strength": 20
+  },
   "Turkey": {
-    "military_strength": 355200,
-    "available_for_war": 35000000,
-    "warplanes": 1056,
-    "tanks": 3045,
-    "naval_strength": 194
+    "military_strength": 355000,
+    "available_for_war": 50000000,
+    "warplanes": 1000,
+    "tanks": 3000,
+    "naval_strength": 150
+  },
+  "Turkmenistan": {
+    "military_strength": 36000,
+    "available_for_war": 1000000,
+    "warplanes": 100,
+    "tanks": 500,
+    "naval_strength": 0
+  },
+  "Uganda": {
+    "military_strength": 45000,
+    "available_for_war": 10000000,
+    "warplanes": 20,
+    "tanks": 50,
+    "naval_strength": 10
   },
   "Ukraine": {
     "military_strength": 250000,
-    "available_for_war": 22000000,
-    "warplanes": 318,
-    "tanks": 2600,
-    "naval_strength": 38
+    "available_for_war": 20000000,
+    "warplanes": 300,
+    "tanks": 1000,
+    "naval_strength": 30
+  },
+  "United Arab Emirates": {
+    "military_strength": 63000,
+    "available_for_war": 1000000,
+    "warplanes": 500,
+    "tanks": 500,
+    "naval_strength": 75
   },
   "United Kingdom": {
-    "military_strength": 195000,
-    "available_for_war": 30000000,
-    "warplanes": 733,
-    "tanks": 227,
-    "naval_strength": 75
+    "military_strength": 194000,
+    "available_for_war": 10000000,
+    "warplanes": 800,
+    "tanks": 400,
+    "naval_strength": 150
   },
   "United States": {
     "military_strength": 1400000,
-    "available_for_war": 11800000,
-    "warplanes": 13247,
-    "tanks": 6209,
+    "available_for_war": 100000000,
+    "warplanes": 13200,
+    "tanks": 6200,
     "naval_strength": 490
   },
-  "USA": {
-    "military_strength": 1400000,
-    "available_for_war": 11800000,
-    "warplanes": 13247,
-    "tanks": 6209,
-    "naval_strength": 490
+  "Uruguay": {
+    "military_strength": 24000,
+    "available_for_war": 1000000,
+    "warplanes": 50,
+    "tanks": 100,
+    "naval_strength": 10
+  },
+  "Uzbekistan": {
+    "military_strength": 50000,
+    "available_for_war": 1000000,
+    "warplanes": 100,
+    "tanks": 420,
+    "naval_strength": 0
+  },
+  "Venezuela": {
+    "military_strength": 123000,
+    "available_for_war": 10000000,
+    "warplanes": 280,
+    "tanks": 500,
+    "naval_strength": 40
   },
   "Vietnam": {
     "military_strength": 482000,
-    "available_for_war": 49000000,
-    "warplanes": 291,
-    "tanks": 2800,
+    "available_for_war": 50000000,
+    "warplanes": 300,
+    "tanks": 1500,
     "naval_strength": 65
+  },
+  "Yemen": {
+    "military_strength": 66000,
+    "available_for_war": 10000000,
+    "warplanes": 100,
+    "tanks": 300,
+    "naval_strength": 10
+  },
+  "Zambia": {
+    "military_strength": 15000,
+    "available_for_war": 1000000,
+    "warplanes": 20,
+    "tanks": 50,
+    "naval_strength": 0
+  },
+  "Zimbabwe": {
+    "military_strength": 30000,
+    "available_for_war": 5000000,
+    "warplanes": 20,
+    "tanks": 50,
+    "naval_strength": 0
   }
+}
+
   // You can continue to expand this list for additional countries...
 };
 
