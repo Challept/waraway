@@ -467,13 +467,13 @@ const countryTranslations = {
 let version = 1.2;  // Börja med version 1.2
 
 function translateCountry(input) {
-  const lowerCaseInput = input.toLowerCase();
-  if (countryTranslations[lowerCaseInput]) {
-    return countryTranslations[lowerCaseInput];
-  }
+    const lowerCaseInput = input.toLowerCase();
+    if (countryTranslations[lowerCaseInput]) {
+        return countryTranslations[lowerCaseInput];
+    }
 
-  const allCountries = Object.keys(militaryData).concat(Object.values(countryTranslations));
-  return findClosestCountry(input, allCountries);
+    const allCountries = Object.keys(militaryData).concat(Object.values(countryTranslations));
+    return findClosestCountry(input, allCountries);
 }
 
 function typeText(element, text) {
@@ -493,156 +493,148 @@ function typeText(element, text) {
 }
 
 function formatNumber(num) {
-  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); // Lägger till tusentalsavgränsare
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); // Lägger till tusentalsavgränsare
 }
 
 function calculateMilitaryScore(military, population) {
-  const militaryStrengthWeight = 5;  // Mycket viktigt
-  const warplanesWeight = 4;         // Mycket viktigt
-  const tanksWeight = 3;             // Viktigt
-  const populationWeight = 2;        // Viktigt
+    const militaryStrengthWeight = 5;  // Mycket viktigt
+    const warplanesWeight = 4;         // Mycket viktigt
+    const tanksWeight = 3;             // Viktigt
+    const populationWeight = 2;        // Viktigt
 
-  return (military.military_strength * militaryStrengthWeight) + 
-         (military.warplanes * warplanesWeight) + 
-         (military.tanks * tanksWeight) + 
-         (population * populationWeight); 
+    return (military.military_strength * militaryStrengthWeight) + 
+           (military.warplanes * warplanesWeight) + 
+           (military.tanks * tanksWeight) + 
+           (population * populationWeight); 
 }
 
 // Dynamisk förklaring baserat på vilken kategori som har störst inverkan
 function generateExplanation(c1Military, c2Military, c1Name, c2Name) {
-  let explanation = '';
+    let explanation = '';
 
-  if (c1Military.military_strength > c2Military.military_strength) {
-    explanation += `${c1Name} won due to superior military strength. `;
-  } else if (c1Military.military_strength < c2Military.military_strength) {
-    explanation += `${c2Name} won due to superior military strength. `;
-  }
+    if (c1Military.military_strength > c2Military.military_strength) {
+        explanation += `${c1Name} won due to superior military strength. `;
+    } else if (c1Military.military_strength < c2Military.military_strength) {
+        explanation += `${c2Name} won due to superior military strength. `;
+    }
 
-  if (c1Military.warplanes > c2Military.warplanes) {
-    explanation += `${c1Name} had more warplanes, giving them an aerial advantage. `;
-  } else if (c1Military.warplanes < c2Military.warplanes) {
-    explanation += `${c2Name} had more warplanes, giving them aerial superiority. `;
-  }
+    if (c1Military.warplanes > c2Military.warplanes) {
+        explanation += `${c1Name} had more warplanes, giving them an aerial advantage. `;
+    } else if (c1Military.warplanes < c2Military.warplanes) {
+        explanation += `${c2Name} had more warplanes, giving them aerial superiority. `;
+    }
 
-  if (c1Military.tanks > c2Military.tanks) {
-    explanation += `${c1Name} had more tanks, giving them an advantage on the ground. `;
-  } else if (c1Military.tanks < c2Military.tanks) {
-    explanation += `${c2Name} had more tanks, giving them a ground advantage. `;
-  }
+    if (c1Military.tanks > c2Military.tanks) {
+        explanation += `${c1Name} had more tanks, giving them an advantage on the ground. `;
+    } else if (c1Military.tanks < c2Military.tanks) {
+        explanation += `${c2Name} had more tanks, giving them a ground advantage. `;
+    }
 
-  if (explanation === '') {
-    explanation = 'Both countries have similar military resources and strength.';
-  }
+    if (explanation === '') {
+        explanation = 'Both countries have similar military resources and strength.';
+    }
 
-  return explanation;
+    return explanation;
 }
 
 function compareCountries() {
-  let country1Input = document.getElementById('country1').value;
-  let country2Input = document.getElementById('country2').value;
+    let country1Input = document.getElementById('country1').value;
+    let country2Input = document.getElementById('country2').value;
 
-  // Översätt länder till interna engelska namn
-  let country1Internal = translateCountry(country1Input);
-  let country2Internal = translateCountry(country2Input);
+    // Översätt länder till interna engelska namn
+    let country1Internal = translateCountry(country1Input);
+    let country2Internal = translateCountry(country2Input);
 
-  console.log(`Comparing ${country1Internal} and ${country2Internal}`);
+    console.log(`Comparing ${country1Internal} and ${country2Internal}`);
 
-  fetch('https://restcountries.com/v3.1/all?fields=name,population')
-    .then(response => response.json())
-    .then(data => {
-      const c1 = data.find(country => country.name.common.toLowerCase() === country1Internal.toLowerCase());
-      const c2 = data.find(country => country.name.common.toLowerCase() === country2Internal.toLowerCase());
+    fetch('https://restcountries.com/v3.1/all?fields=name,population')
+        .then(response => response.json())
+        .then(data => {
+            const c1 = data.find(country => country.name.common.toLowerCase() === country1Internal.toLowerCase());
+            const c2 = data.find(country => country.name.common.toLowerCase() === country2Internal.toLowerCase());
 
-      if (!c1 || !c2) {
-        document.getElementById('result-left').innerHTML = `Country not found. Did you mean: ${!c1 ? country1Input : country2Input}?`;
-        return;
-      }
+            if (!c1 || !c2) {
+                document.getElementById('result-left').innerHTML = `Country not found. Did you mean: ${!c1 ? country1Input : country2Input}?`;
+                return;
+            }
 
-      // Kontrollera att militärdata finns för båda länderna
-      const c1Military = militaryData[c1.name.common];
-      const c2Military = militaryData[c2.name.common];
+            // Kontrollera att militärdata finns för båda länderna
+            const c1Military = militaryData[c1.name.common];
+            const c2Military = militaryData[c2.name.common];
 
-      if (!c1Military || !c2Military) {
-        document.getElementById('result-left').innerHTML = `Military data not found for ${!c1Military ? country1Input : country2Input}.`;
-        return;
-      }
+            if (!c1Military || !c2Military) {
+                document.getElementById('result-left').innerHTML = `Military data not found for ${!c1Military ? country1Input : country2Input}.`;
+                return;
+            }
 
-      // Visa data för varje land i listformat
-      let resultTextLeft = `
-        <ul>
-          <li><strong>Population:</strong> ${formatNumber(c1.population)}</li>
-          <li><strong>Military Strength:</strong> ${formatNumber(c1Military.military_strength)}</li>
-          <li><strong>Warplanes:</strong> ${formatNumber(c1Military.warplanes)}</li>
-          <li><strong>Tanks:</strong> ${formatNumber(c1Military.tanks)}</li>
-        </ul>`;
-      
-      let resultTextRight = `
-        <ul>
-          <li><strong>Population:</strong> ${formatNumber(c2.population)}</li>
-          <li><strong>Military Strength:</strong> ${formatNumber(c2Military.military_strength)}</li>
-          <li><strong>Warplanes:</strong> ${formatNumber(c2Military.warplanes)}</li>
-          <li><strong>Tanks:</strong> ${formatNumber(c2Military.tanks)}</li>
-        </ul>`;
+            // Visa data för varje land utan liststruktur
+            let resultTextLeft = `${country1Internal}\n`;
+            resultTextLeft += `Population: ${formatNumber(c1.population)}\n`;
+            resultTextLeft += `Military Strength: ${formatNumber(c1Military.military_strength)}\n`;
+            resultTextLeft += `Warplanes: ${formatNumber(c1Military.warplanes)}\n`;
+            resultTextLeft += `Tanks: ${formatNumber(c1Military.tanks)}\n`;
 
-      // Beräkna vinstchans
-      let c1Score = calculateMilitaryScore(c1Military, c1.population);
-      let c2Score = calculateMilitaryScore(c2Military, c2.population);
+            let resultTextRight = `${country2Internal}\n`;
+            resultTextRight += `Population: ${formatNumber(c2.population)}\n`;
+            resultTextRight += `Military Strength: ${formatNumber(c2Military.military_strength)}\n`;
+            resultTextRight += `Warplanes: ${formatNumber(c2Military.warplanes)}\n`;
+            resultTextRight += `Tanks: ${formatNumber(c2Military.tanks)}\n`;
 
-      let c1Chance = (c1Score / (c1Score + c2Score)) * 100;
-      let c2Chance = 100 - c1Chance;
+            // Beräkna vinstchans
+            let c1Score = calculateMilitaryScore(c1Military, c1.population);
+            let c2Score = calculateMilitaryScore(c2Military, c2.population);
 
-      // Visa vinstchans centralt
-      document.getElementById('win-chances').innerHTML = `
-        <strong>${country1Internal} win chance:</strong> ${c1Chance.toFixed(2)}%<br>
-        <strong>${country2Internal} win chance:</strong> ${c2Chance.toFixed(2)}%<br>
-      `;
+            let c1Chance = (c1Score / (c1Score + c2Score)) * 100;
+            let c2Chance = 100 - c1Chance;
 
-      // Dynamiskt genererad förklaring
-      let winnerText = '';
-      let explanation = '';
-      if (c1Score > c2Score) {
-        winnerText = `Winner: ${country1Internal}`;
-        explanation = generateExplanation(c1Military, c2Military, country1Internal, country2Internal);
-      } else if (c2Score > c1Score) {
-        winnerText = `Winner: ${country2Internal}`;
-        explanation = generateExplanation(c2Military, c1Military, country2Internal, country1Internal);
-      } else {
-        winnerText = `Result: Draw`;
-        explanation = 'Both countries have equivalent strength and resources.';
-      }
+            // Visa vinstchans centralt
+            document.getElementById('win-chances').innerHTML = `
+                <strong>${country1Internal} win chance:</strong> ${c1Chance.toFixed(2)}%<br>
+                <strong>${country2Internal} win chance:</strong> ${c2Chance.toFixed(2)}%<br>
+            `;
 
-      // Visa texten med animering
-      document.getElementById('result-left').innerHTML = resultTextLeft;
-      document.getElementById('result-right').innerHTML = resultTextRight;
-      typeText(document.getElementById('winner'), `${winnerText}`);
+            // Dynamiskt genererad förklaring
+            let winnerText = '';
+            let explanation = '';
+            if (c1Score > c2Score) {
+                winnerText = `Winner: ${country1Internal}`;
+                explanation = generateExplanation(c1Military, c2Military, country1Internal, country2Internal);
+            } else if (c2Score > c1Score) {
+                winnerText = `Winner: ${country2Internal}`;
+                explanation = generateExplanation(c2Military, c1Military, country2Internal, country1Internal);
+            } else {
+                winnerText = `Result: Draw`;
+                explanation = 'Both countries have equivalent strength and resources.';
+            }
 
-      // Dropdown-meny för förklaring
-      const explanationElement = document.getElementById('explanation');
-      explanationElement.innerHTML = `<button id="explain-toggle">Why did they win?</button><div id="explanation-content" style="display:none;">${explanation}</div>`;
-      
-      document.getElementById('explain-toggle').addEventListener('click', function() {
-        const content = document.getElementById('explanation-content');
-        content.style.display = content.style.display === 'none' ? 'block' : 'none';
-      });
-    })
-    .catch(error => console.log('Error fetching population data:', error));
+            // Visa texten med animering
+            typeText(document.getElementById('result-left'), resultTextLeft);
+            typeText(document.getElementById('result-right'), resultTextRight);
+            typeText(document.getElementById('winner'), `${winnerText}`);
+
+            // Dropdown-meny för förklaring
+            const explanationElement = document.getElementById('explanation');
+            explanationElement.innerHTML = `<button id="explain-toggle">Why did they win?</button><div id="explanation-content" style="display:none;">${explanation}</div>`;
+            
+            document.getElementById('explain-toggle').addEventListener('click', function() {
+                const content = document.getElementById('explanation-content');
+                content.style.display = content.style.display === 'none' ? 'block' : 'none';
+            });
+        })
+        .catch(error => console.log('Error fetching population data:', error));
 }
-
-// Versionsnummer och uppdatering av sidhuvudet
-document.getElementById('version').innerText = `Version: ${version}`;
-version += 0.2;
 
 // Lägg till händelselyssnare för knapptryckning och Enter-tangent
 document.getElementById('compareButton').addEventListener('click', compareCountries);
 document.getElementById('country1').addEventListener('keydown', function(event) {
-  if (event.key === 'Enter') {
-    event.preventDefault();
-    compareCountries();
-  }
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        compareCountries();
+    }
 });
 document.getElementById('country2').addEventListener('keydown', function(event) {
-  if (event.key === 'Enter') {
-    event.preventDefault();
-    compareCountries();
-  }
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        compareCountries();
+    }
 });
