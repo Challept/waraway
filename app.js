@@ -860,6 +860,13 @@ const militaryData = {
     "tanks": 6200,
     "naval_strength": 490
   },
+  "USA": {
+    "military_strength": 1400000,
+    "available_for_war": 100000000,
+    "warplanes": 13200,
+    "tanks": 6200,
+    "naval_strength": 490
+  },
   "Uruguay": {
     "military_strength": 24000,
     "available_for_war": 1000000,
@@ -924,8 +931,6 @@ const countryTranslations = {
   "finland": "Finland"
   // Lägg till fler översättningar om det behövs
 };
-// Funktion för att hitta närmaste land genom att använda Levenshtein-avstånd
-// Funktion för att hitta närmaste land genom att använda Levenshtein-avstånd
 // Funktion för att hitta närmaste land baserat på stavfel (Levenshtein-avstånd)
 function findClosestCountry(input, countryList) {
     input = input.toLowerCase();
@@ -976,155 +981,165 @@ function levenshteinDistance(a, b) {
 
 // Uppdaterad translateCountry-funktion för att hantera stavfel och USA-fallet
 function translateCountry(input) {
-  const lowerCaseInput = input.toLowerCase();
+    const lowerCaseInput = input.toLowerCase();
 
-  // Kontrollera om land är en direkt match (även vid stavfel som "Sverge")
-  if (countryTranslations[lowerCaseInput]) {
-    return countryTranslations[lowerCaseInput];
-  }
+    // Kontrollera om land är en direkt match (även vid stavfel som "Sverge")
+    if (countryTranslations[lowerCaseInput]) {
+        return countryTranslations[lowerCaseInput];
+    }
 
-  // Specialfall för USA (matchar olika varianter av "USA")
-  if (lowerCaseInput === "usa" || lowerCaseInput === "us" || lowerCaseInput === "u.s.a" || lowerCaseInput === "united states") {
-    return "United States";
-  }
+    // Specialfall för USA (matchar olika varianter av "USA")
+    if (lowerCaseInput === "usa" || lowerCaseInput === "us" || lowerCaseInput === "u.s.a" || lowerCaseInput === "united states") {
+        return "United States";
+    }
 
-  // Om ingen direkt match hittas, leta efter den närmaste matchen med Levenshtein-avstånd
-  const allCountries = Object.keys(militaryData).concat(Object.values(countryTranslations));
-  const closestMatch = findClosestCountry(input, allCountries);
+    // Om ingen direkt match hittas, leta efter den närmaste matchen med Levenshtein-avstånd
+    const allCountries = Object.keys(militaryData).concat(Object.values(countryTranslations));
+    const closestMatch = findClosestCountry(input, allCountries);
 
-  return closestMatch; // Returnerar den närmaste matchen
+    return closestMatch; // Returnerar den närmaste matchen
 }
 
 function formatNumber(num) {
-  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); // Tusentalsavgränsare
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); // Tusentalsavgränsare
 }
 
 function calculateMilitaryScore(military, population) {
-  const militaryStrengthWeight = 5;  // Mycket viktigt
-  const warplanesWeight = 4;         // Mycket viktigt
-  const tanksWeight = 3;             // Viktigt
-  const populationWeight = 2;        // Viktigt
+    const militaryStrengthWeight = 5;  // Mycket viktigt
+    const warplanesWeight = 4;         // Mycket viktigt
+    const tanksWeight = 3;             // Viktigt
+    const navalStrengthWeight = 3;     // Viktigt
+    const populationWeight = 2;        // Viktigt
 
-  return (military.military_strength * militaryStrengthWeight) + 
-         (military.warplanes * warplanesWeight) + 
-         (military.tanks * tanksWeight) + 
-         (population * populationWeight); 
+    return (military.military_strength * militaryStrengthWeight) +
+           (military.warplanes * warplanesWeight) +
+           (military.tanks * tanksWeight) +
+           (military.naval_strength * navalStrengthWeight) +
+           (population * populationWeight); 
 }
 
 function generateExplanation(c1Military, c2Military, c1Name, c2Name) {
-  let explanation = '';
+    let explanation = '';
 
-  if (c1Military.military_strength > c2Military.military_strength) {
-    explanation += `${c1Name} won due to superior military strength. `;
-  } else if (c1Military.military_strength < c2Military.military_strength) {
-    explanation += `${c2Name} won due to superior military strength. `;
-  }
+    if (c1Military.military_strength > c2Military.military_strength) {
+        explanation += `${c1Name} won due to superior military strength. `;
+    } else if (c1Military.military_strength < c2Military.military_strength) {
+        explanation += `${c2Name} won due to superior military strength. `;
+    }
 
-  if (c1Military.warplanes > c2Military.warplanes) {
-    explanation += `${c1Name} had more warplanes, giving them an aerial advantage. `;
-  } else if (c1Military.warplanes < c2Military.warplanes) {
-    explanation += `${c2Name} had more warplanes, giving them aerial superiority. `;
-  }
+    if (c1Military.warplanes > c2Military.warplanes) {
+        explanation += `${c1Name} had more warplanes, giving them an aerial advantage. `;
+    } else if (c1Military.warplanes < c2Military.warplanes) {
+        explanation += `${c2Name} had more warplanes, giving them aerial superiority. `;
+    }
 
-  if (c1Military.tanks > c2Military.tanks) {
-    explanation += `${c1Name} had more tanks, giving them an advantage on the ground. `;
-  } else if (c1Military.tanks < c2Military.tanks) {
-    explanation += `${c2Name} had more tanks, giving them a ground advantage. `;
-  }
+    if (c1Military.tanks > c2Military.tanks) {
+        explanation += `${c1Name} had more tanks, giving them an advantage on the ground. `;
+    } else if (c1Military.tanks < c2Military.tanks) {
+        explanation += `${c2Name} had more tanks, giving them a ground advantage. `;
+    }
 
-  if (explanation === '') {
-    explanation = 'Both countries have similar military resources and strength.';
-  }
+    if (c1Military.naval_strength > c2Military.naval_strength) {
+        explanation += `${c1Name} had more naval strength, giving them an advantage at sea. `;
+    } else if (c1Military.naval_strength < c2Military.naval_strength) {
+        explanation += `${c2Name} had more naval strength, giving them an advantage at sea. `;
+    }
 
-  return explanation;
+    if (explanation === '') {
+        explanation = 'Both countries have similar military resources and strength.';
+    }
+
+    return explanation;
 }
 
 function compareCountries() {
-  let country1Input = document.getElementById('country1').value;
-  let country2Input = document.getElementById('country2').value;
+    let country1Input = document.getElementById('country1').value;
+    let country2Input = document.getElementById('country2').value;
 
-  let country1Internal = translateCountry(country1Input);
-  let country2Internal = translateCountry(country2Input);
+    let country1Internal = translateCountry(country1Input);
+    let country2Internal = translateCountry(country2Input);
 
-  fetch('https://restcountries.com/v3.1/all?fields=name,population')
-    .then(response => response.json())
-    .then(data => {
-      const c1 = data.find(country => country.name.common.toLowerCase() === country1Internal.toLowerCase());
-      const c2 = data.find(country => country.name.common.toLowerCase() === country2Internal.toLowerCase());
+    fetch('https://restcountries.com/v3.1/all?fields=name,population')
+        .then(response => response.json())
+        .then(data => {
+            const c1 = data.find(country => country.name.common.toLowerCase() === country1Internal.toLowerCase());
+            const c2 = data.find(country => country.name.common.toLowerCase() === country2Internal.toLowerCase());
 
-      if (!c1 || !c2) {
-        document.getElementById('result-left').innerHTML = `Country not found. Did you mean: ${!c1 ? country1Internal : country2Internal}?`;
-        return;
-      }
+            if (!c1 || !c2) {
+                document.getElementById('result-left').innerHTML = `Country not found. Did you mean: ${!c1 ? country1Internal : country2Internal}?`;
+                return;
+            }
 
-      const c1Military = militaryData[c1.name.common];
-      const c2Military = militaryData[c2.name.common];
+            const c1Military = militaryData[c1.name.common];
+            const c2Military = militaryData[c2.name.common];
 
-      if (!c1Military || !c2Military) {
-        document.getElementById('result-left').innerHTML = `Military data not found for ${!c1Military ? country1Input : country2Input}.`;
-        return;
-      }
+            if (!c1Military || !c2Military) {
+                document.getElementById('result-left').innerHTML = `Military data not found for ${!c1Military ? country1Input : country2Input}.`;
+                return;
+            }
 
-      let resultTextLeft = `
-        <ul>
-          <li><strong>Population:</strong> ${formatNumber(c1.population)}</li>
-          <li><strong>Military Strength:</strong> ${formatNumber(c1Military.military_strength)}</li>
-          <li><strong>Warplanes:</strong> ${formatNumber(c1Military.warplanes)}</li>
-          <li><strong>Tanks:</strong> ${formatNumber(c1Military.tanks)}</li>
-        </ul>`;
-      
-      let resultTextRight = `
-        <ul>
-          <li><strong>Population:</strong> ${formatNumber(c2.population)}</li>
-          <li><strong>Military Strength:</strong> ${formatNumber(c2Military.military_strength)}</li>
-          <li><strong>Warplanes:</strong> ${formatNumber(c2Military.warplanes)}</li>
-          <li><strong>Tanks:</strong> ${formatNumber(c2Military.tanks)}</li>
-        </ul>`;
+            let resultTextLeft = `
+                <ul>
+                  <li><strong>Population:</strong> ${formatNumber(c1.population)}</li>
+                  <li><strong>Military Strength:</strong> ${formatNumber(c1Military.military_strength)}</li>
+                  <li><strong>Warplanes:</strong> ${formatNumber(c1Military.warplanes)}</li>
+                  <li><strong>Tanks:</strong> ${formatNumber(c1Military.tanks)}</li>
+                  <li><strong>Naval Strength:</strong> ${formatNumber(c1Military.naval_strength)}</li>
+                </ul>`;
+            
+            let resultTextRight = `
+                <ul>
+                  <li><strong>Population:</strong> ${formatNumber(c2.population)}</li>
+                  <li><strong>Military Strength:</strong> ${formatNumber(c2Military.military_strength)}</li>
+                  <li><strong>Warplanes:</strong> ${formatNumber(c2Military.warplanes)}</li>
+                  <li><strong>Tanks:</strong> ${formatNumber(c2Military.tanks)}</li>
+                  <li><strong>Naval Strength:</strong> ${formatNumber(c2Military.naval_strength)}</li>
+                </ul>`;
 
-      let c1Score = calculateMilitaryScore(c1Military, c1.population);
-      let c2Score = calculateMilitaryScore(c2Military, c2.population);
+            let c1Score = calculateMilitaryScore(c1Military, c1.population);
+            let c2Score = calculateMilitaryScore(c2Military, c2.population);
 
-      let c1Chance = (c1Score / (c1Score + c2Score)) * 100;
-      let c2Chance = 100 - c1Chance;
+            let c1Chance = (c1Score / (c1Score + c2Score)) * 100;
+            let c2Chance = 100 - c1Chance;
 
-      document.getElementById('win-chances').innerHTML = `
-        <strong>${country1Internal} win chance:</strong> ${c1Chance.toFixed(2)}%<br>
-        <strong>${country2Internal} win chance:</strong> ${c2Chance.toFixed(2)}%<br>
-      `;
+            document.getElementById('win-chances').innerHTML = `
+                <strong>${country1Internal} win chance:</strong> ${c1Chance.toFixed(2)}%<br>
+                <strong>${country2Internal} win chance:</strong> ${c2Chance.toFixed(2)}%<br>
+            `;
 
-      let winnerText = '';
-      let explanation = '';
-      if (c1Score > c2Score) {
-        winnerText = `Winner: ${country1Internal}`;
-        explanation = generateExplanation(c1Military, c2Military, country1Internal, country2Internal);
-      } else if (c2Score > c1Score) {
-        winnerText = `Winner: ${country2Internal}`;
-        explanation = generateExplanation(c2Military, c1Military, country2Internal, country1Internal);
-      } else {
-        winnerText = `Result: Draw`;
-        explanation = 'Both countries have equivalent strength and resources.';
-      }
+            let winnerText = '';
+            let explanation = '';
+            if (c1Score > c2Score) {
+                winnerText = `Winner: ${country1Internal}`;
+                explanation = generateExplanation(c1Military, c2Military, country1Internal, country2Internal);
+            } else if (c2Score > c1Score) {
+                winnerText = `Winner: ${country2Internal}`;
+                explanation = generateExplanation(c2Military, c1Military, country2Internal, country1Internal);
+            } else {
+                winnerText = `Result: Draw`;
+                explanation = 'Both countries have equivalent strength and resources.';
+            }
 
-      document.getElementById('result-left').innerHTML = resultTextLeft;
-      document.getElementById('result-right').innerHTML = resultTextRight;
-      document.getElementById('winner').innerHTML = `${winnerText}`;
+            document.getElementById('result-left').innerHTML = resultTextLeft;
+            document.getElementById('result-right').innerHTML = resultTextRight;
+            document.getElementById('winner').innerHTML = `${winnerText}`;
 
-      document.getElementById('explanation').innerHTML = explanation;
-    })
-    .catch(error => console.log('Error fetching population data:', error));
+            document.getElementById('explanation').innerHTML = explanation;
+        })
+        .catch(error => console.log('Error fetching population data:', error));
 }
 
 // Event listeners för knappar och Enter-tangent
 document.getElementById('compareButton').addEventListener('click', compareCountries);
 document.getElementById('country1').addEventListener('keydown', function(event) {
-  if (event.key === 'Enter') {
-    event.preventDefault();
-    compareCountries();
-  }
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        compareCountries();
+    }
 });
 document.getElementById('country2').addEventListener('keydown', function(event) {
-  if (event.key === 'Enter') {
-    event.preventDefault();
-    compareCountries();
-  }
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        compareCountries();
+    }
 });
