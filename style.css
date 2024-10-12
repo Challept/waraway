@@ -1,14 +1,13 @@
-/* Sätter bakgrundsfärgen till ljusblå och textfärgen till svart */
+/* En mycket enkel stil för att säkerställa att texten visas */
 body {
     font-family: Arial, sans-serif;
     text-align: center;
     margin-top: 50px;
-    background-color: #ADD8E6; /* Ljusblå bakgrund */
-    color: #000000; /* Svart text */
-    opacity: 1 !important; /* Säkerställer att det inte finns transparenseffekt */
+    background-color: #ffffff; /* Vit bakgrund */
+    color: #ff0000; /* Röd text för att göra den extremt synlig */
 }
 
-/* Layout för vänster och höger sektion */
+/* Enkel layout utan skuggor eller extra stilar */
 .container {
     display: flex;
     justify-content: space-between;
@@ -21,7 +20,7 @@ body {
     text-align: left;
 }
 
-/* Styling för inputfält */
+/* Enkel stil för inputfält */
 input {
     padding: 10px;
     margin: 10px;
@@ -30,10 +29,10 @@ input {
     border-radius: 4px;
     width: 90%;
     color: #000000; /* Svart text */
-    background-color: #FFFFFF; /* Vit bakgrund för inmatningsfält */
+    background-color: #ffffff; /* Vit bakgrund för inmatningsfält */
 }
 
-/* Styling för knappar */
+/* Enkel stil för knappar */
 button {
     padding: 10px 20px;
     font-size: 16px;
@@ -42,73 +41,31 @@ button {
     border: none;
     cursor: pointer;
     border-radius: 4px;
-    transition: background-color 0.3s, transform 0.3s;
     margin-top: 20px;
 }
 
 button:hover {
     background-color: #0056b3;
-    transform: scale(1.05);
 }
 
-/* Resultattexten som visas på vänster och höger sida */
-#result-left, #result-right {
+/* Enkel resultattext */
+#result-left, #result-right, #winner, #win-chances {
     font-size: 18px;
     margin-top: 10px;
-    opacity: 1 !important; /* Sätter textens opacitet till 100% */
-    color: #000000 !important; /* Svart text */
-    background-color: #FFFFFF; /* Vit bakgrund för att säkerställa synlighet */
+    color: #ff0000; /* Röd text för maximal synlighet */
+    background-color: #ffffff; /* Vit bakgrund */
     padding: 10px;
-    box-shadow: 0px 0px 5px #000000; /* Lägg till skugga runt texten för synlighet */
-    border-radius: 5px;
-    transition: opacity 0.5s ease-in-out;
 }
 
-/* Vinnare texten */
-#winner {
-    font-size: 22px;
-    font-weight: bold;
-    margin-top: 30px;
-    opacity: 1 !important;
-    color: #000000 !important;
-    background-color: #FFFFFF;
-    padding: 10px;
-    box-shadow: 0px 0px 5px #000000;
-    border-radius: 5px;
-}
-
-/* Visar vinstchanser i mitten */
-#win-chances {
-    text-align: center;
-    margin-top: 10px;
-    color: #000000 !important;
-    background-color: #FFFFFF;
-    padding: 10px;
-    box-shadow: 0px 0px 5px #000000;
-    border-radius: 5px;
-}
-
-/* Dropdown-knappen */
-#explanation button {
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    cursor: pointer;
-    padding: 10px;
-    border-radius: 4px;
-}
-
-/* Textförklaringen */
+/* Enkel dropdown-meny */
 #explanation-content {
     margin-top: 10px;
-    color: #000000 !important;
-    background-color: #FFFFFF;
+    color: #ff0000; /* Röd text */
+    background-color: #ffffff;
     padding: 10px;
-    box-shadow: 0px 0px 5px #000000;
-    border-radius: 5px;
 }
 
-/* Lägger till responsiv design för mobil */
+/* Mobilanpassning */
 @media screen and (max-width: 768px) {
     .container {
         flex-direction: column;
