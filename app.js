@@ -454,17 +454,15 @@ const militaryData = {
 // Placera countryTranslations här för att säkerställa att den är tillgänglig globalt
 const countryTranslations = {
   "sverige": "Sweden",
-  "norge": "Norway",
   "tyskland": "Germany",
   "ryssland": "Russia",
   "usa": "USA",
   "förenade staterna": "USA",
   "deutschland": "Germany",
-  "finland": "Finland"
+  "norge": "Norway",
+  "finland": "Finland",
+  // Fler översättningar kan läggas till vid behov
 };
-
-// Versionshantering
-let version = 1.2;  // Börja med version 1.2
 
 function translateCountry(input) {
   const lowerCaseInput = input.toLowerCase();
