@@ -86,13 +86,31 @@ button:hover {
     }
 }
 
-/* Footer styling */
-footer {
-    background-color: #333;
-    color: white;
+#about-us {
+    position: relative;
+    margin-top: 50px;
+    padding: 20px;
+    background-color: #ffffff; /* Vit bakgrund */
+    color: #000000; /* Standard svart text */
+    font-size: 14px;
     text-align: center;
-    padding: 10px 0;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
+    border-top: 1px solid #ddd;
+}
+
+.blue-text {
+    color: #007BFF; /* Blå text */
+}
+
+.green-text {
+    color: #28A745; /* Grön text */
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex-grow: 1;
 }
