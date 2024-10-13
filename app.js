@@ -1312,22 +1312,22 @@ function compareCountries() {
 
             let resultTextLeft = `
                 <ul>
-                  <li><strong>Population:</strong> ${formatNumber(c1.population)}</li>
-                  <li><strong>Military Strength:</strong> ${formatNumber(c1Military.military_strength)}</li>
-                  <li><strong>Warplanes:</strong> ${formatNumber(c1Military.warplanes)}</li>
-                  <li><strong>Tanks:</strong> ${formatNumber(c1Military.tanks)}</li>
-                  <li><strong>Naval Strength:</strong> ${formatNumber(c1Military.naval_strength)}</li>
-                  <li><strong>Missile Defense Systems:</strong> ${formatNumber(c1Military.missile_defense_systems)}</li>
+                  <li><strong>Befolkning:</strong> ${formatNumber(c1.population)}</li>
+                  <li><strong>Militär styrka:</strong> ${formatNumber(c1Military.military_strength)}</li>
+                  <li><strong>Krigsflygplan:</strong> ${formatNumber(c1Military.warplanes)}</li>
+                  <li><strong>Tankar:</strong> ${formatNumber(c1Military.tanks)}</li>
+                  <li><strong>Sjöstyrka:</strong> ${formatNumber(c1Military.naval_strength)}</li>
+                  <li><strong>Missilförsvarssystem:</strong> ${formatNumber(c1Military.missile_defense_systems)}</li>
                 </ul>`;
             
             let resultTextRight = `
                 <ul>
-                  <li><strong>Population:</strong> ${formatNumber(c2.population)}</li>
-                  <li><strong>Military Strength:</strong> ${formatNumber(c2Military.military_strength)}</li>
-                  <li><strong>Warplanes:</strong> ${formatNumber(c2Military.warplanes)}</li>
-                  <li><strong>Tanks:</strong> ${formatNumber(c2Military.tanks)}</li>
-                  <li><strong>Naval Strength:</strong> ${formatNumber(c2Military.naval_strength)}</li>
-                  <li><strong>Missile Defense Systems:</strong> ${formatNumber(c2Military.missile_defense_systems)}</li>
+                  <li><strong>Befolkning:</strong> ${formatNumber(c2.population)}</li>
+                  <li><strong>Militär styrka:</strong> ${formatNumber(c2Military.military_strength)}</li>
+                  <li><strong>Krigsflygplan:</strong> ${formatNumber(c2Military.warplanes)}</li>
+                  <li><strong>Tankar:</strong> ${formatNumber(c2Military.tanks)}</li>
+                  <li><strong>Sjöstyrka:</strong> ${formatNumber(c2Military.naval_strength)}</li>
+                  <li><strong>Missilförsvarssystem:</strong> ${formatNumber(c2Military.missile_defense_systems)}</li>
                 </ul>`;
 
             let c1Score = calculateMilitaryScore(c1Military);
@@ -1343,8 +1343,8 @@ function compareCountries() {
             let c2Chance = 100 - c1Chance;
 
             document.getElementById('win-chances').innerHTML = `
-                <strong>${country1Internal} win chance:</strong> ${c1Chance.toFixed(2)}%<br>
-                <strong>${country2Internal} win chance:</strong> ${c2Chance.toFixed(2)}%<br>
+                <strong>${country1Internal} Chans att vinna:</strong> ${c1Chance.toFixed(2)}%<br>
+                <strong>${country2Internal} Chans att vinna:</strong> ${c2Chance.toFixed(2)}%<br>
             `;
 
             let winnerText = '';
