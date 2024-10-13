@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grupp Krig</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Välj en Grupp eller ett Land</h1>
+
+    <div class="spel-meny">
+        <!-- Input för att välja grupper eller grupper och land -->
+        <input type="text" id="group1" placeholder="Ange första grupp (ex: NATO)">
+        <input type="text" id="group2" placeholder="Ange andra grupp eller land (ex: Ryssland)">
+
+        <!-- Jämförelseknapp -->
+        <button id="compareGroupButton">Jämför Grupp mot Grupp eller Grupp mot Land</button>
+    </div>
+
+    <!-- Resultatområden -->
+    <div id="result-left"></div>
+    <div id="result-right"></div>
+    <div id="winner"></div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 WarAway. Framtidens företag.</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
