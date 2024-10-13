@@ -1263,7 +1263,7 @@ function calculateMilitaryScore(military) {
     const militaryStrengthWeight = 5;
     const warplanesWeight = 4;
     const tanksWeight = 3;
-    const navalStrengthWeight = 3;
+    const navalStrengthWeight = 4;
     const missileDefenseWeight = 3;
     const populationWeight = 2;
 
@@ -1312,6 +1312,7 @@ function compare1v1() {
 
             let resultTextLeft = `
                 <ul>
+                <li><strong>Lag 1:</strong></li>
                   <li><strong>Befolkning:</strong> ${formatNumber(c1.population)}</li>
                   <li><strong>Militär styrka:</strong> ${formatNumber(c1Military.military_strength)}</li>
                   <li><strong>Krigsflygplan:</strong> ${formatNumber(c1Military.warplanes)}</li>
@@ -1322,6 +1323,7 @@ function compare1v1() {
             
             let resultTextRight = `
                 <ul>
+                <li><strong>Lag 2:</strong></li>
                   <li><strong>Befolkning:</strong> ${formatNumber(c2.population)}</li>
                   <li><strong>Militär styrka:</strong> ${formatNumber(c2Military.military_strength)}</li>
                   <li><strong>Krigsflygplan:</strong> ${formatNumber(c2Military.warplanes)}</li>
