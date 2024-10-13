@@ -5,8 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vem vinner kriget?</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Smooth back button styling */
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px); /* Slight movement on hover */
+        }
+    </style>
 </head>
 <body>
+    <!-- Back button to return to https://thecoolpal.com -->
+    <button class="back-button" onclick="window.location.href='https://thecoolpal.com'">Tillbaka</button>
+
     <div id="version" style="position: absolute; top: 10px; left: 10px;"></div>
     <h1 id="title">Vem vinner kriget?</h1>
 
@@ -27,6 +51,7 @@
     <div id="win-chances"></div>
     <button id="compareButton">Compare</button>
 
+    <!-- Om oss section -->
     <section id="about-us">
         <p>
             <span class="blue-text">Vi på WarAway</span> erbjuder en plattform för att jämföra länders militärstyrka och kapacitet. Även om våra simuleringar inte är verkliga, är all information och data vi presenterar baserad på riktiga och verifierbara fakta. 
