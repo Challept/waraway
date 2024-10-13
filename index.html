@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vem vinner kriget?</title>
     <link rel="stylesheet" href="style.css">
+    <script>
+        // Kolla om användaren har besökt "main"-sidan, annars omdirigera
+        if (!localStorage.getItem('visitedMain')) {
+            window.location.href = "/main";
+        }
+    </script>
 </head>
 <body>
     <div id="version" style="position: absolute; top: 10px; left: 10px;"></div>
