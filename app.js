@@ -1180,8 +1180,6 @@ const militaryData = {
   }
 }
 
-// Translations from Swedish to English
-// Placera countryTranslations här för att säkerställa att den är tillgänglig globalt
 const countryTranslations = {
   "sverige": "Sweden",
   "tyskland": "Germany",
@@ -1193,6 +1191,7 @@ const countryTranslations = {
   "finland": "Finland"
   // Lägg till fler översättningar om det behövs
 };
+
 // Funktion för att hitta närmaste land baserat på stavfel (Levenshtein-avstånd)
 function findClosestCountry(input, countryList) {
     input = input.toLowerCase();
@@ -1284,7 +1283,8 @@ function calculateMilitaryScore(military) {
            (population * populationWeight);
 }
 
-function compareCountries() {
+// Funktion för 1v1 kriget
+function compare1v1() {
     let country1Input = document.getElementById('country1').value;
     let country2Input = document.getElementById('country2').value;
 
@@ -1333,7 +1333,6 @@ function compareCountries() {
             let c1Score = calculateMilitaryScore(c1Military);
             let c2Score = calculateMilitaryScore(c2Military);
 
-            // Säkerställ att poängen inte är NaN
             if (isNaN(c1Score) || isNaN(c2Score)) {
                 document.getElementById('win-chances').innerHTML = 'Error in score calculation';
                 return;
@@ -1350,7 +1349,6 @@ function compareCountries() {
             let winnerText = '';
             const scoreDifference = Math.abs(c1Score - c2Score);
 
-            // Använd en liten tolerans för att undvika felaktiga oavgjorda resultat
             if (scoreDifference < 0.5) {
                 winnerText = `Resultat: Oavgjort`;
             } else if (c1Score > c2Score) {
@@ -1366,4 +1364,90 @@ function compareCountries() {
         .catch(error => console.log('Error fetching population data:', error));
 }
 
-document.getElementById('compareButton').addEventListener('click', compareCountries);
+// Funktion för 2v2 kriget
+function compare2v2() {
+    let country1Input = document.getElementById('country1').value;
+    let country2Input = document.getElementById('country2').value;
+    let country3Input = document.getElementById('country3').value;
+    let country4Input = document.getElementById('country4').value;
+
+    let country1Internal = translateCountry(country1Input);
+    let country2Internal = translateCountry(country2Input);
+    let country3Internal = translateCountry(country3Input);
+    let country4Internal = translateCountry(country4Input);
+
+    fetch('https://restcountries.com/v3.1/all?fields=name,population')
+        .then(response => response.json())
+        .then(data => {
+            const c1 = data.find(country => country.name.common.toLowerCase() === country1Internal.toLowerCase());
+            const c2 = data.find(country => country.name.common.toLowerCase() === country2Internal.toLowerCase());
+            const c3 = data.find(country => country.name.common.toLowerCase() === country3Internal.toLowerCase());
+            const c4 = data.find(country => country.name.common.toLowerCase() === country4Internal.toLowerCase());
+
+            if (!c1 || !c2 || !c3 || !c4) {
+                document.getElementById('result-left').innerHTML = `Country not found. Did you mean: ${!c1 ? country1Internal : country2Internal}?`;
+                return;
+            }
+
+            const c1Military = militaryData[c1.name.common];
+            const c2Military = militaryData[c2.name.common];
+            const c3Military = militaryData[c3.name.common];
+            const c4Military = militaryData[c4.name.common];
+
+            if (!c1Military || !c2Military || !c3Military || !c4Military) {
+                document.getElementById('result-left').innerHTML = `Military data not found for ${!c1Military ? country1Input : !c3Military ? country3Input : country2Input}.`;
+                return;
+            }
+
+            // Summera poängen för lag 1 (land 1 + land 2) och lag 2 (land 3 + land 4)
+            let team1Score = calculateMilitaryScore(c1Military) + calculateMilitaryScore(c2Military);
+            let team2Score = calculateMilitaryScore(c3Military) + calculateMilitaryScore(c4Military);
+
+            let team1Chance = (team1Score / (team1Score + team2Score)) * 100;
+            let team2Chance = 100 - team1Chance;
+
+            document.getElementById('win-chances').innerHTML = `
+                <strong>Lag 1 Chans att vinna:</strong> ${team1Chance.toFixed(2)}%<br>
+                <strong>Lag 2 Chans att vinna:</strong> ${team2Chance.toFixed(2)}%<br>
+            `;
+
+            let winnerText = '';
+            const scoreDifference = Math.abs(team1Score - team2Score);
+
+            if (scoreDifference < 0.5) {
+                winnerText = `Resultat: Oavgjort`;
+            } else if (team1Score > team2Score) {
+                winnerText = `Vinnare: Lag 1`;
+            } else {
+                winnerText = `Vinnare: Lag 2`;
+            }
+
+            document.getElementById('result-left').innerHTML = `
+                <ul>
+                  <li><strong>Lag 1 - Befolkning:</strong> ${formatNumber(c1.population + c2.population)}</li>
+                  <li><strong>Militär styrka (L1):</strong> ${formatNumber(c1Military.military_strength + c2Military.military_strength)}</li>
+                  <li><strong>Krigsflygplan (L1):</strong> ${formatNumber(c1Military.warplanes + c2Military.warplanes)}</li>
+                  <li><strong>Tankar (L1):</strong> ${formatNumber(c1Military.tanks + c2Military.tanks)}</li>
+                </ul>`;
+
+            document.getElementById('result-right').innerHTML = `
+                <ul>
+                  <li><strong>Lag 2 - Befolkning:</strong> ${formatNumber(c3.population + c4.population)}</li>
+                  <li><strong>Militär styrka (L2):</strong> ${formatNumber(c3Military.military_strength + c4Military.military_strength)}</li>
+                  <li><strong>Krigsflygplan (L2):</strong> ${formatNumber(c3Military.warplanes + c4Military.warplanes)}</li>
+                  <li><strong>Tankar (L2):</strong> ${formatNumber(c3Military.tanks + c4Military.tanks)}</li>
+                </ul>`;
+
+            document.getElementById('winner').innerHTML = `${winnerText}`;
+        })
+        .catch(error => console.log('Error fetching population data:', error));
+}
+
+// Bestäm vilken funktion som ska köras beroende på vilken sida användaren är på
+if (document.getElementById('compareButton')) {
+    if (window.location.pathname.includes('2v2krig.html')) {
+        document.getElementById('compareButton').addEventListener('click', compare2v2);
+    } else {
+        document.getElementById('compareButton').addEventListener('click', compare1v1);
+    }
+}
