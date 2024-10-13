@@ -27,6 +27,31 @@
             transform: translateY(-2px); /* Slight movement on hover */
         }
 
+        /* Gradient background styling */
+        body {
+            background: linear-gradient(135deg, #1E90FF, #D3D3D3); /* Blue to grey gradient */
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding-bottom: 100px; /* Padding for footer */
+        }
+
+        /* Styling for the compare button */
+        #compareButton {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        #compareButton:hover {
+            background-color: #0056b3;
+        }
+
         /* Styling for the "Om oss" section */
         #about-us {
             background-color: #007BFF;
@@ -87,7 +112,9 @@
     <!-- Vinnare och förklaringar -->
     <div id="winner" style="margin-top: 20px;"></div>
     <div id="win-chances"></div>
-    <button id="compareButton">Compare</button>
+
+    <!-- Updated button text to Swedish "Jämför" -->
+    <button id="compareButton">Jämför</button>
 
     <!-- Om oss section precis ovanför footern -->
     <section id="about-us">
@@ -103,5 +130,15 @@
     </footer>
 
     <script src="app.js"></script>
+
+    <script>
+        // Trigger compare on Enter key press
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                document.getElementById('compareButton').click();
+            }
+        });
+    </script>
 </body>
 </html>
