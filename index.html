@@ -11,6 +11,8 @@
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
             text-align: center;
+            margin: 0;
+            padding-bottom: 100px; /* Padding for footer */
         }
 
         #title {
@@ -74,13 +76,54 @@
             color: #666;
         }
 
+        /* Styling for the "Om oss" section */
+        #about-us {
+            position: fixed;
+            bottom: 60px; /* Keep above the footer */
+            left: 0;
+            width: 100%;
+            padding: 20px;
+            background-color: #007BFF;
+            color: white;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        #about-us .blue-text {
+            color: #00BFFF;
+        }
+
+        #about-us .green-text {
+            color: #32CD32;
+        }
+
+        /* Styling for the footer */
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+
+        footer span {
+            font-weight: bold;
+            color: #FFD700; /* Cool gold color for company name */
+        }
+
+        /* Footer hover effect */
+        footer span:hover {
+            color: #FFF;
+        }
     </style>
 </head>
 <body>
     <h1 id="title">Välj ditt Krigsspel</h1>
-
-    <!-- Button to go to 1v1 Krig page -->
-    <button class="top-button" onclick="window.location.href='https://thecoolpal.com/1v1krig.html';">Gå till 1v1 Krig</button>
 
     <!-- Scrollable options for different games -->
     <div class="spel-meny">
@@ -96,6 +139,20 @@
             <p>Fler spännande spel på väg!</p>
         </div>
     </div>
+
+    <!-- "Om oss" section -->
+    <section id="about-us">
+        <p>
+            <span class="blue-text">Vi på WarAway</span> erbjuder en plattform för att jämföra länders militärstyrka och kapacitet. 
+            Även om våra simuleringar inte är verkliga, är all information och data vi presenterar baserad på riktiga och verifierbara fakta. 
+            <span class="green-text">Vårt mål</span> är att ge användarna en informativ och underhållande upplevelse när de jämför olika nationers styrkor.
+        </p>
+    </section>
+
+    <!-- Footer section -->
+    <footer>
+        <p>&copy; 2024 <span>WarAway</span>. Framtidens företag. All information är noggrant verifierad för att ge dig en underhållande och informativ upplevelse.</p>
+    </footer>
 
     <script src="main.js"></script>
 </body>
