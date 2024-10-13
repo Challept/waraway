@@ -32,7 +32,15 @@
             background: linear-gradient(135deg, #1E90FF, #D3D3D3); /* Blue to grey gradient */
             font-family: Arial, sans-serif;
             text-align: center;
-            padding-bottom: 100px; /* Padding for footer */
+            margin: 0;
+            min-height: 100vh; /* Ensure the page takes full viewport height */
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Main content */
+        .content {
+            flex: 1;
         }
 
         /* Styling for the compare button */
@@ -45,7 +53,8 @@
             border-radius: 8px;
             cursor: pointer;
             margin-top: 20px;
-            display: inline-block; /* Makes the button adapt to the width of the text */
+            display: inline-block; /* Keeps the button size compact */
+            width: auto; /* Adjust to content */
             transition: background-color 0.3s ease;
         }
 
@@ -59,8 +68,8 @@
             color: white;
             padding: 20px;
             font-size: 14px;
-            margin: 0; /* Removes extra space between Om oss and footer */
             text-align: center;
+            margin: 0;
         }
 
         #about-us .blue-text {
@@ -79,6 +88,7 @@
             padding: 10px 0;
             font-size: 12px;
             letter-spacing: 1px;
+            position: relative;
         }
 
         footer span {
@@ -89,33 +99,42 @@
         footer span:hover {
             color: #FFF;
         }
+
+        /* Ensures footer sticks to the bottom */
+        .footer-container {
+            flex-shrink: 0;
+        }
+
     </style>
 </head>
 <body>
-    <!-- Back button to return to https://thecoolpal.com -->
-    <button class="back-button" onclick="window.location.href='https://thecoolpal.com'">Tillbaka</button>
+    <!-- Main content area -->
+    <div class="content">
+        <!-- Back button to return to https://thecoolpal.com -->
+        <button class="back-button" onclick="window.location.href='https://thecoolpal.com'">Tillbaka</button>
 
-    <div id="version" style="position: absolute; top: 10px; left: 10px;"></div>
-    <h1 id="title">Vem vinner kriget?</h1>
+        <div id="version" style="position: absolute; top: 10px; left: 10px;"></div>
+        <h1 id="title">Vem vinner kriget?</h1>
 
-    <!-- Layout för vänster och höger sida -->
-    <div class="container">
-        <div class="left">
-            <input type="text" id="country1" placeholder="Ange första landet">
-            <div id="result-left"></div>
+        <!-- Layout för vänster och höger sida -->
+        <div class="container">
+            <div class="left">
+                <input type="text" id="country1" placeholder="Ange första landet">
+                <div id="result-left"></div>
+            </div>
+            <div class="right">
+                <input type="text" id="country2" placeholder="Ange andra landet">
+                <div id="result-right"></div>
+            </div>
         </div>
-        <div class="right">
-            <input type="text" id="country2" placeholder="Ange andra landet">
-            <div id="result-right"></div>
-        </div>
+
+        <!-- Vinnare och förklaringar -->
+        <div id="winner" style="margin-top: 20px;"></div>
+        <div id="win-chances"></div>
+
+        <!-- Updated button text to Swedish "Jämför" -->
+        <button id="compareButton">Jämför</button>
     </div>
-
-    <!-- Vinnare och förklaringar -->
-    <div id="winner" style="margin-top: 20px;"></div>
-    <div id="win-chances"></div>
-
-    <!-- Updated button text to Swedish "Jämför" -->
-    <button id="compareButton">Jämför</button>
 
     <!-- Om oss section precis ovanför footern -->
     <section id="about-us">
@@ -126,7 +145,7 @@
     </section>
 
     <!-- Footer section -->
-    <footer>
+    <footer class="footer-container">
         <p>&copy; 2024 <span>WarAway</span>. Framtidens företag. All information är noggrant verifierad för att ge dig en underhållande och informativ upplevelse.</p>
     </footer>
 
