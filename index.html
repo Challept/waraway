@@ -51,24 +51,13 @@
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none; /* Ensures no underline */
+            color: inherit; /* Ensures text color stays consistent */
         }
 
         .spel-val:hover {
             transform: translateY(-10px);
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-        }
-
-        .spel-val a {
-            display: block;
-            font-size: 18px;
-            font-weight: bold;
-            color: #007BFF;
-            margin-bottom: 10px;
-            text-decoration: none;
-        }
-
-        .spel-val a:hover {
-            color: #0056b3;
         }
 
         .spel-val p {
@@ -128,16 +117,20 @@
     <!-- Scrollable options for different games -->
     <div class="spel-meny">
         <!-- First Game Option -->
-        <div class="spel-val">
-            <a href="1v1krig.html">1v1 Krig</a>
-            <p>Välj två länder och se vilket som vinner!</p>
-        </div>
+        <a href="1v1krig.html" class="spel-val">
+            <div>
+                <h3>1v1 Krig</h3>
+                <p>Välj två länder och se vilket som vinner!</p>
+            </div>
+        </a>
 
         <!-- Second Game Option (More games can be added here) -->
-        <div class="spel-val">
-            <a href="#">Kommande Spel</a>
-            <p>Fler spännande spel på väg!</p>
-        </div>
+        <a href="#" class="spel-val">
+            <div>
+                <h3>Kommande Spel</h3>
+                <p>Fler spännande spel på väg!</p>
+            </div>
+        </a>
     </div>
 
     <!-- "Om oss" section -->
