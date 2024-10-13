@@ -1407,8 +1407,8 @@ function compare2v2() {
             let team2Chance = 100 - team1Chance;
 
             document.getElementById('win-chances').innerHTML = `
-                <strong>${country1Internal} och ${country2Internal} Chans att vinna:</strong> ${team1Chance.toFixed(2)}%<br>
-                <strong>${country3Internal} och ${country4Internal} Chans att vinna:</strong> ${team2Chance.toFixed(2)}%<br>
+                <strong>Lag 1 chans att vinna:</strong> ${team1Chance.toFixed(2)}%<br>
+                <strong>Lag 2 chans att vinna:</strong> ${team2Chance.toFixed(2)}%<br>
             `;
 
             let winnerText = '';
@@ -1417,9 +1417,9 @@ function compare2v2() {
             if (scoreDifference < 0.5) {
                 winnerText = `Resultat: Oavgjort`;
             } else if (team1Score > team2Score) {
-                winnerText = `Vinnare: ${country1Internal} och ${country2Internal}`;
+                winnerText = `Vinnare: Lag 1`;
             } else {
-                winnerText = `Vinnare: ${country3Internal} och ${country4Internal}`;
+                winnerText = `Vinnare: Lag 2`;
             }
 
             document.getElementById('result-left').innerHTML = `
