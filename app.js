@@ -1312,7 +1312,6 @@ function compare1v1() {
 
             let resultTextLeft = `
                 <ul>
-                <li><strong>Lag 1:</strong></li>
                   <li><strong>Befolkning:</strong> ${formatNumber(c1.population)}</li>
                   <li><strong>Militär styrka:</strong> ${formatNumber(c1Military.military_strength)}</li>
                   <li><strong>Krigsflygplan:</strong> ${formatNumber(c1Military.warplanes)}</li>
@@ -1323,7 +1322,6 @@ function compare1v1() {
             
             let resultTextRight = `
                 <ul>
-                <li><strong>Lag 2:</strong></li>
                   <li><strong>Befolkning:</strong> ${formatNumber(c2.population)}</li>
                   <li><strong>Militär styrka:</strong> ${formatNumber(c2Military.military_strength)}</li>
                   <li><strong>Krigsflygplan:</strong> ${formatNumber(c2Military.warplanes)}</li>
@@ -1441,6 +1439,10 @@ function compare2v2() {
                 </ul>`;
 
             document.getElementById('winner').innerHTML = `${winnerText}`;
+
+            // Lägg till texten "LAG 1" och "LAG 2" ovanför kolumnerna
+            document.getElementById('team1-label').innerText = 'LAG 1';
+            document.getElementById('team2-label').innerText = 'LAG 2';
         })
         .catch(error => console.log('Error fetching population data:', error));
 }
