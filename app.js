@@ -1268,12 +1268,20 @@ function calculateMilitaryScore(military) {
     const missileDefenseWeight = 3;
     const populationWeight = 2;
 
-    return (military.military_strength * militaryStrengthWeight) +
-           (military.warplanes * warplanesWeight) +
-           (military.tanks * tanksWeight) +
-           (military.naval_strength * navalStrengthWeight) +
-           (military.missile_defense_systems * missileDefenseWeight) +
-           (military.population * populationWeight); // Population added to score
+    // Kontrollera att alla värden är numeriska och giltiga
+    const militaryStrength = military.military_strength || 0;
+    const warplanes = military.warplanes || 0;
+    const tanks = military.tanks || 0;
+    const navalStrength = military.naval_strength || 0;
+    const missileDefense = military.missile_defense_systems || 0;
+    const population = military.population || 0;
+
+    return (militaryStrength * militaryStrengthWeight) +
+           (warplanes * warplanesWeight) +
+           (tanks * tanksWeight) +
+           (navalStrength * navalStrengthWeight) +
+           (missileDefense * missileDefenseWeight) +
+           (population * populationWeight);
 }
 
 function compareCountries() {
@@ -1325,6 +1333,12 @@ function compareCountries() {
             let c1Score = calculateMilitaryScore(c1Military);
             let c2Score = calculateMilitaryScore(c2Military);
 
+            // Säkerställ att poängen inte är NaN
+            if (isNaN(c1Score) || isNaN(c2Score)) {
+                document.getElementById('win-chances').innerHTML = 'Error in score calculation';
+                return;
+            }
+
             let c1Chance = (c1Score / (c1Score + c2Score)) * 100;
             let c2Chance = 100 - c1Chance;
 
@@ -1334,12 +1348,15 @@ function compareCountries() {
             `;
 
             let winnerText = '';
-            if (c1Score > c2Score) {
-                winnerText = `Vinnare: ${country1Internal}`;
-            } else if (c2Score > c1Score) {
-                winnerText = `Vinnare: ${country2Internal}`;
-            } else {
+            const scoreDifference = Math.abs(c1Score - c2Score);
+
+            // Använd en liten tolerans för att undvika felaktiga oavgjorda resultat
+            if (scoreDifference < 0.5) {
                 winnerText = `Resultat: Oavgjort`;
+            } else if (c1Score > c2Score) {
+                winnerText = `Vinnare: ${country1Internal}`;
+            } else {
+                winnerText = `Vinnare: ${country2Internal}`;
             }
 
             document.getElementById('result-left').innerHTML = resultTextLeft;
