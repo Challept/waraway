@@ -7,10 +7,15 @@
     <link rel="stylesheet" href="style.css">
 
     <script>
-        // Kolla om användaren har besökt huvudmenyn, annars omdirigera till "/main"
-        if (!localStorage.getItem('visitedMain')) {
-            window.location.href = "/main";
-        }
+        // Kontrollera om användaren har besökt sidan tidigare
+        document.addEventListener("DOMContentLoaded", function() {
+            if (!localStorage.getItem('visitedMain')) {
+                // Sätt "visitedMain" till true för att undvika framtida omdirigeringar
+                localStorage.setItem('visitedMain', 'true');
+                // Omdirigera till "/main" bara en gång
+                window.location.href = "/main";
+            }
+        });
     </script>
 </head>
 <body>
