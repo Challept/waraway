@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vem vinner kriget?</title>
     <link rel="stylesheet" href="style.css">
+
     <script>
-        // Kolla om användaren har besökt "main"-sidan, annars omdirigera
+        // Kolla om användaren har besökt huvudmenyn, annars omdirigera till "/main"
         if (!localStorage.getItem('visitedMain')) {
             window.location.href = "/main";
         }
@@ -17,22 +18,23 @@
     <h1 id="title">Vem vinner kriget?</h1>
 
     <!-- Layout för vänster och höger sida -->
-  <div class="container">
-    <div class="left">
-        <input type="text" id="country1" placeholder="Ange första landet">
-        <div id="result-left"></div>
+    <div class="container">
+        <div class="left">
+            <input type="text" id="country1" placeholder="Ange första landet">
+            <div id="result-left"></div>
+        </div>
+        <div class="right">
+            <input type="text" id="country2" placeholder="Ange andra landet">
+            <div id="result-right"></div>
+        </div>
     </div>
-    <div class="right">
-        <input type="text" id="country2" placeholder="Ange andra landet">
-        <div id="result-right"></div>
-    </div>
-</div>
 
-<!-- Vinnare och förklaringar -->
-<div id="winner" style="margin-top: 20px;"></div>
-<div id="win-chances"></div>
-<button id="compareButton">Compare</button>
+    <!-- Vinnare och förklaringar -->
+    <div id="winner" style="margin-top: 20px;"></div>
+    <div id="win-chances"></div>
+    <button id="compareButton">Compare</button>
 
+    <!-- Om oss sektionen -->
     <section id="about-us">
         <p>
             <span class="blue-text">Vi på WarAway</span> erbjuder en plattform för att jämföra länders militärstyrka och kapacitet. Även om våra simuleringar inte är verkliga, är all information och data vi presenterar baserad på riktiga och verifierbara fakta. 
