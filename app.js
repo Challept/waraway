@@ -1177,6 +1177,38 @@ const militaryData = {
     "naval_strength": 0,
     "missile_defense_systems": 5,
     "bomb_robots": 2
+  },
+  "NATO": {
+    "military_strength": 3390797,
+    "available_for_war": 7628782,
+    "warplanes": 22308,
+    "tanks": 11390,
+    "naval_strength": 2258,
+    "missile_defense_systems": 500
+  },
+  "CSTO": {
+    "military_strength": 900000,
+    "available_for_war": 15000000,
+    "warplanes": 1500,
+    "tanks": 5000,
+    "naval_strength": 100,
+    "missile_defense_systems": 200
+  },
+  "Shanghai Cooperation Organization (SCO)": {
+    "military_strength": 3000000,
+    "available_for_war": 40000000,
+    "warplanes": 10000,
+    "tanks": 10000,
+    "naval_strength": 500,
+    "missile_defense_systems": 300
+  },
+  "European Union (EU)": {
+    "military_strength": 1500000,
+    "available_for_war": 30000000,
+    "warplanes": 7000,
+    "tanks": 6000,
+    "naval_strength": 1000,
+    "missile_defense_systems": 400
   }
 }
 
