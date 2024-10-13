@@ -1314,8 +1314,8 @@ function compare1v1() {
                 <ul>
                   <li><strong>Befolkning:</strong> ${formatNumber(c1.population)}</li>
                   <li><strong>Militär styrka:</strong> ${formatNumber(c1Military.military_strength)}</li>
-                  <li><strong>Krigsflygplan:</strong> ${formatNumber(c1Military.warplanes)}</li>
-                  <li><strong>Tankar:</strong> ${formatNumber(c1Military.tanks)}</li>
+                  <li><strong>Stridsflygplan:</strong> ${formatNumber(c1Military.warplanes)}</li>
+                  <li><strong>Stridsvagnar:</strong> ${formatNumber(c1Military.tanks)}</li>
                   <li><strong>Sjöstyrka:</strong> ${formatNumber(c1Military.naval_strength)}</li>
                   <li><strong>Missilförsvarssystem:</strong> ${formatNumber(c1Military.missile_defense_systems)}</li>
                 </ul>`;
@@ -1324,8 +1324,8 @@ function compare1v1() {
                 <ul>
                   <li><strong>Befolkning:</strong> ${formatNumber(c2.population)}</li>
                   <li><strong>Militär styrka:</strong> ${formatNumber(c2Military.military_strength)}</li>
-                  <li><strong>Krigsflygplan:</strong> ${formatNumber(c2Military.warplanes)}</li>
-                  <li><strong>Tankar:</strong> ${formatNumber(c2Military.tanks)}</li>
+                  <li><strong>Stridsflygplan:</strong> ${formatNumber(c2Military.warplanes)}</li>
+                  <li><strong>Stridsvagnar:</strong> ${formatNumber(c2Military.tanks)}</li>
                   <li><strong>Sjöstyrka:</strong> ${formatNumber(c2Military.naval_strength)}</li>
                   <li><strong>Missilförsvarssystem:</strong> ${formatNumber(c2Military.missile_defense_systems)}</li>
                 </ul>`;
@@ -1426,16 +1426,20 @@ function compare2v2() {
                 <ul>
                   <li><strong>Befolkning:</strong> ${formatNumber(c1.population + c2.population)}</li>
                   <li><strong>Militär styrka:</strong> ${formatNumber(c1Military.military_strength + c2Military.military_strength)}</li>
-                  <li><strong>Krigsflygplan:</strong> ${formatNumber(c1Military.warplanes + c2Military.warplanes)}</li>
-                  <li><strong>Tankar:</strong> ${formatNumber(c1Military.tanks + c2Military.tanks)}</li>
+                  <li><strong>Stridsflygplan:</strong> ${formatNumber(c1Military.warplanes + c2Military.warplanes)}</li>
+                  <li><strong>Stridsvagnar:</strong> ${formatNumber(c1Military.tanks + c2Military.tanks)}</li>
+                  <li><strong>Sjöstyrka:</strong> ${formatNumber(c1Military.naval_strength + c2Military.naval_strength)}</li>
+                  <li><strong>Missilförsvarssystem:</strong> ${formatNumber(c1Military.missile_defense_systems + c2Military.missile_defense_systems)}</li>
                 </ul>`;
 
             document.getElementById('result-right').innerHTML = `
                 <ul>
                   <li><strong>Befolkning:</strong> ${formatNumber(c3.population + c4.population)}</li>
                   <li><strong>Militär styrka:</strong> ${formatNumber(c3Military.military_strength + c4Military.military_strength)}</li>
-                  <li><strong>Krigsflygplan:</strong> ${formatNumber(c3Military.warplanes + c4Military.warplanes)}</li>
-                  <li><strong>Tankar:</strong> ${formatNumber(c3Military.tanks + c4Military.tanks)}</li>
+                  <li><strong>Stridsflygplan:</strong> ${formatNumber(c3Military.warplanes + c4Military.warplanes)}</li>
+                  <li><strong>Stridsvagnar:</strong> ${formatNumber(c3Military.tanks + c4Military.tanks)}</li>
+                  <li><strong>Sjöstyrka:</strong> ${formatNumber(c3Military.naval_strength + c4Military.naval_strength)}</li>
+                  <li><strong>Missilförsvarssystem:</strong> ${formatNumber(c3Military.missile_defense_systems + c4Military.missile_defense_systems)}</li>
                 </ul>`;
 
             document.getElementById('winner').innerHTML = `${winnerText}`;
