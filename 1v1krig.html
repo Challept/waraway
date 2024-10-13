@@ -21,23 +21,48 @@
             transition: background-color 0.3s ease, transform 0.3s ease;
         }
 
-         /* Styling for the footer */
+        /* Back button hover effect */
+        .back-button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px); /* Slight movement on hover */
+        }
+
+        /* Styling for the "Om oss" section */
+        #about-us {
+            background-color: #007BFF;
+            color: white;
+            padding: 20px;
+            font-size: 14px;
+            margin-top: 40px; /* Ensures spacing above footer */
+        }
+
+        #about-us .blue-text {
+            color: #00BFFF;
+        }
+
+        #about-us .green-text {
+            color: #32CD32;
+        }
+
+        /* Styling for the footer */
         footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
+            position: relative;
             background-color: #333;
             color: white;
             text-align: center;
             padding: 10px 0;
             font-size: 12px;
             letter-spacing: 1px;
+            margin-top: 20px; /* Spacing between footer and Om oss */
         }
 
-        .back-button:hover {
-            background-color: #0056b3;
-            transform: translateY(-2px); /* Slight movement on hover */
+        footer span {
+            font-weight: bold;
+            color: #FFD700; /* Cool gold color for company name */
+        }
+
+        footer span:hover {
+            color: #FFF;
         }
     </style>
 </head>
