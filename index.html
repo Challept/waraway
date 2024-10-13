@@ -39,9 +39,16 @@
         /* Game card styling */
         .spel-meny {
             display: flex;
-            justify-content: center;
+            flex-wrap: wrap; /* Allows items to wrap to the next line */
+            justify-content: center; /* Centers items in the middle */
             gap: 20px;
             margin-top: 40px;
+        }
+
+        /* Ensures that extra game cards on new rows are centered if there's an odd number of them */
+        .spel-meny > a:nth-child(odd):nth-last-child(1) {
+            justify-content: center;
+            width: 100%;
         }
 
         .spel-val {
@@ -124,7 +131,7 @@
             </div>
         </a>
 
-         <a href="2v2krig.html" class="spel-val">
+        <a href="2v2krig.html" class="spel-val">
             <div>
                 <h3>2v2 Krig</h3>
                 <p>Välj 4 länder och se vilket som vinner!</p>
@@ -138,7 +145,6 @@
                 <p>Fler spännande spel på väg!</p>
             </div>
         </a>
-    </div>
     
     <!-- Footer section -->
     <footer>
