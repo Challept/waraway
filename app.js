@@ -1399,7 +1399,7 @@ function compare2v2() {
                 return;
             }
 
-            // Summera poängen för lag 1 (land 1 + land 2) och lag 2 (land 3 + land 4)
+            // Summera poängen för land 1 + land 2 och land 3 + land 4
             let team1Score = calculateMilitaryScore(c1Military) + calculateMilitaryScore(c2Military);
             let team2Score = calculateMilitaryScore(c3Military) + calculateMilitaryScore(c4Military);
 
@@ -1407,8 +1407,8 @@ function compare2v2() {
             let team2Chance = 100 - team1Chance;
 
             document.getElementById('win-chances').innerHTML = `
-                <strong>Lag 1 Chans att vinna:</strong> ${team1Chance.toFixed(2)}%<br>
-                <strong>Lag 2 Chans att vinna:</strong> ${team2Chance.toFixed(2)}%<br>
+                <strong>${country1Internal} och ${country2Internal} Chans att vinna:</strong> ${team1Chance.toFixed(2)}%<br>
+                <strong>${country3Internal} och ${country4Internal} Chans att vinna:</strong> ${team2Chance.toFixed(2)}%<br>
             `;
 
             let winnerText = '';
@@ -1417,25 +1417,25 @@ function compare2v2() {
             if (scoreDifference < 0.5) {
                 winnerText = `Resultat: Oavgjort`;
             } else if (team1Score > team2Score) {
-                winnerText = `Vinnare: Lag 1`;
+                winnerText = `Vinnare: ${country1Internal} och ${country2Internal}`;
             } else {
-                winnerText = `Vinnare: Lag 2`;
+                winnerText = `Vinnare: ${country3Internal} och ${country4Internal}`;
             }
 
             document.getElementById('result-left').innerHTML = `
                 <ul>
-                  <li><strong>Lag 1 - Befolkning:</strong> ${formatNumber(c1.population + c2.population)}</li>
-                  <li><strong>Militär styrka (L1):</strong> ${formatNumber(c1Military.military_strength + c2Military.military_strength)}</li>
-                  <li><strong>Krigsflygplan (L1):</strong> ${formatNumber(c1Military.warplanes + c2Military.warplanes)}</li>
-                  <li><strong>Tankar (L1):</strong> ${formatNumber(c1Military.tanks + c2Military.tanks)}</li>
+                  <li><strong>Befolkning:</strong> ${formatNumber(c1.population + c2.population)}</li>
+                  <li><strong>Militär styrka:</strong> ${formatNumber(c1Military.military_strength + c2Military.military_strength)}</li>
+                  <li><strong>Krigsflygplan:</strong> ${formatNumber(c1Military.warplanes + c2Military.warplanes)}</li>
+                  <li><strong>Tankar:</strong> ${formatNumber(c1Military.tanks + c2Military.tanks)}</li>
                 </ul>`;
 
             document.getElementById('result-right').innerHTML = `
                 <ul>
-                  <li><strong>Lag 2 - Befolkning:</strong> ${formatNumber(c3.population + c4.population)}</li>
-                  <li><strong>Militär styrka (L2):</strong> ${formatNumber(c3Military.military_strength + c4Military.military_strength)}</li>
-                  <li><strong>Krigsflygplan (L2):</strong> ${formatNumber(c3Military.warplanes + c4Military.warplanes)}</li>
-                  <li><strong>Tankar (L2):</strong> ${formatNumber(c3Military.tanks + c4Military.tanks)}</li>
+                  <li><strong>Befolkning:</strong> ${formatNumber(c3.population + c4.population)}</li>
+                  <li><strong>Militär styrka:</strong> ${formatNumber(c3Military.military_strength + c4Military.military_strength)}</li>
+                  <li><strong>Krigsflygplan:</strong> ${formatNumber(c3Military.warplanes + c4Military.warplanes)}</li>
+                  <li><strong>Tankar:</strong> ${formatNumber(c3Military.tanks + c4Military.tanks)}</li>
                 </ul>`;
 
             document.getElementById('winner').innerHTML = `${winnerText}`;
