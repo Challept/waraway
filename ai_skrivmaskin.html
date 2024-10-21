@@ -44,7 +44,7 @@
             margin-top: 60px; /* Space for back button */
         }
 
-        /* Styling for the compare button */
+        /* Styling for the generate button */
         #compareButton {
             padding: 10px 20px;
             font-size: 16px;
@@ -115,29 +115,32 @@
         async function generateText() {
             const input = document.getElementById("input").value;
             const output = document.getElementById("output");
-            output.innerHTML = ""; // Clear previous output
+            output.innerHTML = ""; // Rensa tidigare text
 
-            // Call Hugging Face API
+            // Anropa Hugging Face API
             const response = await fetch('https://api-inference.huggingface.co/models/EleutherAI/gpt-neo-2.7B', {
                 method: 'POST',
                 headers: {
-                    'Authorization': 'Bearer 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', // Your API key
+                    'Authorization': 'Bearer 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', // Din API-nyckel
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({ inputs: input })
             });
+
+            // Logga hela svaret för felsökning
             const data = await response.json();
+            console.log(data); // Loggar svaret från API:et till konsolen
 
-            const textToType = data[0]?.generated_text || "Ingen text genererades."; // Handle API response
+            const textToType = data[0]?.generated_text || "Ingen text genererades."; // Hantera API-svaret
 
-            // Animated output display
+            // Animerad textutmatning
             for (const char of textToType) {
                 output.innerHTML += char;
-                await new Promise(resolve => setTimeout(resolve, 10)); // Wait 50 ms before next character
+                await new Promise(resolve => setTimeout(resolve, 10)); // Vänta 50 ms innan nästa tecken
             }
         }
 
-        // Trigger generation on Enter key press
+        // Utlös generering vid tryck på Enter-tangenten
         document.addEventListener('keydown', function(event) {
             if (event.key === 'Enter') {
                 event.preventDefault();
