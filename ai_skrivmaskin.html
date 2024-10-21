@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Skrivmaskin</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        #output {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-top: 20px;
+            background: #fff;
+            min-height: 100px;
+        }
+        #input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            margin-top: 10px;
+        }
+        /* Stil för footer */
+        .footer-container {
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #eaeaea;
+            border-top: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h1>AI Skrivmaskin</h1>
+    <input type="text" id="input" placeholder="Skriv din text här...">
+    <button id="compareButton" onclick="generateText()">Skriv!</button>
+    <div id="output"></div>
+
+    <!-- Footer-sektion -->
+    <footer class="footer-container">
+        <p>&copy; 2024 <span>WarAway</span>. Framtidens företag. All information är noggrant verifierad för att ge dig en underhållande och informativ upplevelse.</p>
+    </footer>
+
+    <script>
+        async function generateText() {
+            const input = document.getElementById("input").value;
+            const output = document.getElementById("output");
+            output.innerHTML = ""; // Rensa tidigare text
+
+            // Anropa Hugging Face API
+            const response = await fetch('https://api-inference.huggingface.co/models/gpt2', {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer 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', // Din API-nyckel
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ inputs: input })
+            });
+
+            const data = await response.json();
+
+            const textToType = data[0]?.generated_text || "Ingen text genererades."; // Hantera svar från API
+
+            // Animerad textutmatning
+            for (const char of textToType) {
+                output.innerHTML += char;
+                await new Promise(resolve => setTimeout(resolve, 50)); // Vänta 50 ms innan nästa tecken
+            }
+        }
+
+        // Utlös jämförelse vid tryck på Enter-tangenten
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                document.getElementById('compareButton').click();
+            }
+        });
+    </script>
+</body>
+</html>
