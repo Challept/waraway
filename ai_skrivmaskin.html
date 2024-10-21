@@ -133,7 +133,7 @@
             // Animated output display
             for (const char of textToType) {
                 output.innerHTML += char;
-                await new Promise(resolve => setTimeout(resolve, 50)); // Wait 50 ms before next character
+                await new Promise(resolve => setTimeout(resolve, 10)); // Wait 50 ms before next character
             }
         }
 
