@@ -107,6 +107,18 @@
             min-height: 100px; /* Ensure a minimum height */
         }
 
+        /* Message styling */
+        #statusMessage {
+            font-size: 16px;
+            color: #d9534f; /* Default red color for error */
+            margin-top: 10px;
+        }
+
+        /* Success message styling */
+        .success {
+            color: #5cb85c; /* Green color for success */
+        }
+
         /* Styling for footer */
         footer {
             background-color: #333;
@@ -142,6 +154,7 @@
             <h1>AI Skrivmaskin</h1>
             <input type="text" id="input" placeholder="Skriv din text här..." />
             <button id="compareButton" onclick="generateText()">Skriv!</button>
+            <div id="statusMessage"></div> <!-- Message area for status updates -->
         </div>
         <div class="right">
             <h2>Genererat Text:</h2>
@@ -158,7 +171,9 @@
         async function generateText() {
             const input = document.getElementById("input").value;
             const output = document.getElementById("output");
+            const statusMessage = document.getElementById("statusMessage");
             output.innerHTML = ""; // Rensa tidigare text
+            statusMessage.innerHTML = ""; // Rensa tidigare meddelande
 
             // Anropa den lokala Flask-servern
             const response = await fetch('http://127.0.0.1:5000/generate', {
@@ -168,6 +183,12 @@
                 },
                 body: JSON.stringify({ input: input })
             });
+
+            // Kontrollera om svaret är ok
+            if (!response.ok) {
+                statusMessage.innerHTML = "Fel vid anrop av server."; // Visa felmeddelande
+                return;
+            }
 
             const data = await response.json();
             console.log(data); // Logga svaret från servern
@@ -179,6 +200,10 @@
                 output.innerHTML += char;
                 await new Promise(resolve => setTimeout(resolve, 10)); // Vänta 10 ms innan nästa tecken
             }
+
+            // Visa framgångsmeddelande
+            statusMessage.innerHTML = "Text genererad framgångsrikt!"; // Visa meddelande om lyckat anrop
+            statusMessage.className = "success"; // Ändra färg till grön
         }
 
         // Utlös generering vid tryck på Enter-tangenten
