@@ -39,26 +39,56 @@
 
         function createChart(iqScore) {
             const ctx = document.getElementById('iqChart').getContext('2d');
+            const averageIQ = 100; // Genomsnittlig IQ
+            const dataPoints = [80, 90, 100, 110, 120, 130]; // Exempeldata för genomsnittliga IQ-nivåer
+            const averageData = dataPoints.map(point => ({ x: point, y: 20 })); // Justera för att visualisera medelvärde
+
             new Chart(ctx, {
-                type: 'bar',
+                type: 'line',
                 data: {
-                    labels: ['IQ'],
-                    datasets: [{
-                        label: 'Ditt IQ',
-                        data: [iqScore],
-                        backgroundColor: 'rgba(0, 123, 255, 0.5)',
-                        borderColor: 'blue',
-                        borderWidth: 1,
-                    }]
+                    datasets: [
+                        {
+                            label: 'Genomsnittlig IQ',
+                            data: averageData,
+                            borderColor: 'lightgray',
+                            fill: false,
+                            borderWidth: 2,
+                            pointRadius: 0
+                        },
+                        {
+                            label: 'Ditt IQ',
+                            data: [{ x: iqScore, y: 30 }],
+                            backgroundColor: 'rgba(0, 123, 255, 0.5)',
+                            borderColor: 'blue',
+                            borderWidth: 2,
+                            pointRadius: 5,
+                            showLine: false // Visa inte linjen för detta dataset
+                        }
+                    ]
                 },
                 options: {
                     scales: {
-                        y: {
-                            beginAtZero: true,
-                            max: 150,
+                        x: {
+                            type: 'linear',
+                            position: 'bottom',
                             title: {
                                 display: true,
                                 text: 'IQ'
+                            },
+                            ticks: {
+                                stepSize: 10,
+                                min: 70,
+                                max: 140
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Antal'
+                            },
+                            ticks: {
+                                stepSize: 10
                             }
                         }
                     }
