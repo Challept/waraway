@@ -54,7 +54,7 @@ const questions = [
 let score = 0;
 
 function loadQuiz() {
-    const quizContainer = document.getElementById("quiz-container");
+    const quizContainer = document.getElementById("quiz");
     questions.forEach((q, index) => {
         const questionElement = document.createElement("div");
         questionElement.innerHTML = `
@@ -82,22 +82,38 @@ document.getElementById("submit-btn").addEventListener("click", () => {
 
 function displayResult() {
     const resultContainer = document.getElementById("result");
-    resultContainer.innerHTML = `Din poäng: ${score}/${questions.length}`;
-    createChart();
+    const iqScore = (score / questions.length) * 100; // Beräkna IQ-poäng
+    resultContainer.innerHTML = `Din poäng: ${score}/${questions.length} (IQ: ${iqScore.toFixed(0)})`;
+    createChart(iqScore);
 }
 
-function createChart() {
-    const ctx = document.getElementById('resultChart').getContext('2d');
+function createChart(iqScore) {
+    const ctx = document.getElementById('iqChart').getContext('2d');
     const chart = new Chart(ctx, {
-        type: 'bar',
+        type: 'line',
         data: {
-            labels: ['Poäng', 'Återstående'],
+            labels: ['IQ'],
             datasets: [{
-                label: 'IQ Quiz Resultat',
-                data: [score, questions.length - score],
-                backgroundColor: ['green', 'red'],
+                label: 'Ditt IQ',
+                data: [iqScore],
+                borderColor: 'blue',
+                backgroundColor: 'rgba(173, 216, 230, 0.5)',
+                fill: true,
+                tension: 0.1,
             }]
         },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100,
+                    title: {
+                        display: true,
+                        text: 'IQ'
+                    }
+                }
+            }
+        }
     });
 }
 
