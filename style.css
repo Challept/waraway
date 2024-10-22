@@ -74,23 +74,6 @@ body {
     margin-bottom: 20px;
 }
 
-/* Styling för inputfält */
-input {
-    padding: 10px;
-    margin: 10px 0;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    width: 90%;
-    color: #000000; /* Svart text */
-    background-color: #ffffff; /* Vit bakgrund för inmatningsfält */
-    transition: border-color 0.3s;
-}
-
-input:focus {
-    border-color: #007BFF; /* Blå färg vid fokus */
-}
-
 /* Styling för knappar */
 button {
     padding: 10px 20px;
@@ -125,7 +108,7 @@ canvas {
     .quiz-container {
         width: 100%;
     }
-
+    
     .container {
         flex-direction: column;
         width: 100%;
