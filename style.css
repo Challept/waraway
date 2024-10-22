@@ -1,11 +1,11 @@
 /* Grundläggande styling */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     text-align: center;
     margin: 0;
     padding: 0;
-    background-color: #ADD8E6; /* Ljusblå bakgrund */
-    color: #000000; /* Svart text */
+    background-color: #eaeaea; /* Ljusgrå bakgrund */
+    color: #333; /* Mörk text */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -15,10 +15,10 @@ body {
 
 /* Quiz container */
 .quiz-container {
-    background-color: white;
+    background-color: #ffffff; /* Vit bakgrund för quizcontainern */
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    padding: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    padding: 40px; /* Ökad padding för mer utrymme */
     width: 90%;
     max-width: 600px;
     animation: fadeIn 1s;
@@ -31,6 +31,7 @@ body {
     background-color: #007BFF;
     transition: width 1s linear;
     border-radius: 5px; /* Rundade hörn för timern */
+    margin-bottom: 20px; /* Avstånd under timern */
 }
 
 /* Animation */
@@ -55,12 +56,12 @@ body {
 /* Styling för knappar */
 a, button {
     padding: 10px 20px;
-    font-size: 16px;
+    font-size: 18px; /* Större text för knappar */
     background-color: #007BFF;
     color: white;
     border: none;
     cursor: pointer;
-    border-radius: 4px;
+    border-radius: 5px; /* Rundade hörn på knappar */
     margin-top: 20px;
     text-decoration: none; /* Inga understrykningar för länkar */
     display: inline-block; /* Gör att knappar ser likadana ut */
@@ -74,8 +75,9 @@ a:hover, button:hover {
 
 /* Resultat container */
 #final-score {
-    font-size: 18px;
-    color: #000000; /* Svart text */
+    font-size: 20px; /* Större text för resultatet */
+    color: #333; /* Mörk text */
+    margin-bottom: 20px; /* Utrymme under resultatet */
 }
 
 /* Diagram */
@@ -86,7 +88,7 @@ canvas {
 /* Mobilanpassning */
 @media screen and (max-width: 768px) {
     .quiz-container {
-        width: 100%;
+        width: 95%; /* Justera bredd på mobil */
     }
     
     .container {
@@ -95,6 +97,7 @@ canvas {
     }
 }
 
+/* Specifika stilregler */
 #about-us {
     position: relative;
     margin-top: 50px;
