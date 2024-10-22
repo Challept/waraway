@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IQ Quiz - Fråga 1</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        // Funktion för att spara svaret i localStorage
+        function saveAnswer(answer) {
+            localStorage.setItem('question1', answer);
+        }
+    </script>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Fråga 1</h1>
+        <p>Vad är kvadratroten av 144?</p>
+        <form>
+            <label>
+                <input type="radio" name="answer" value="10" onchange="saveAnswer(10)">
+                10
+            </label><br>
+            <label>
+                <input type="radio" name="answer" value="12" onchange="saveAnswer(12)">
+                12
+            </label><br>
+            <label>
+                <input type="radio" name="answer" value="14" onchange="saveAnswer(14)">
+                14
+            </label><br>
+            <label>
+                <input type="radio" name="answer" value="16" onchange="saveAnswer(16)">
+                16
+            </label><br>
+        </form>
+        <a href="question2.html" id="next-btn">Nästa Fråga</a>
+    </div>
+</body>
+</html>
