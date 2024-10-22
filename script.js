@@ -1,10 +1,54 @@
 const questions = [
     {
-        question: "Vad är 2 + 2?",
-        options: ["3", "4", "5", "6"],
+        question: "Vad är kvadratroten av 144?",
+        options: ["10", "12", "14", "16"],
         answer: 1
     },
-    // Lägg till 9 fler frågor här
+    {
+        question: "Vilken är den mest folkrika staden i världen?",
+        options: ["Tokyo", "Shanghai", "New York", "Delhi"],
+        answer: 0
+    },
+    {
+        question: "Vad är den kemiska beteckningen för guld?",
+        options: ["Ag", "Au", "Pb", "Fe"],
+        answer: 1
+    },
+    {
+        question: "Vilken fysiker formulerade teorin om relativitet?",
+        options: ["Isaac Newton", "Niels Bohr", "Albert Einstein", "Galileo Galilei"],
+        answer: 2
+    },
+    {
+        question: "Vad är huvudstaden i Australien?",
+        options: ["Sydney", "Canberra", "Melbourne", "Brisbane"],
+        answer: 1
+    },
+    {
+        question: "Vilken planet är känd som den röda planeten?",
+        options: ["Mars", "Venus", "Jupiter", "Saturnus"],
+        answer: 0
+    },
+    {
+        question: "Vad är den största arten av haj?",
+        options: ["Tigershaj", "Hammushaj", "Valhaj", "Vithaj"],
+        answer: 2
+    },
+    {
+        question: "I vilket år föll Berlinmuren?",
+        options: ["1987", "1989", "1991", "1993"],
+        answer: 1
+    },
+    {
+        question: "Vad heter det längsta benet i människokroppen?",
+        options: ["Lårbenet", "Skulderbladet", "Vadbenet", "Knäskålen"],
+        answer: 0
+    },
+    {
+        question: "Vilket språk talas i Brasilien?",
+        options: ["Spanska", "Portugisiska", "Engelska", "Franska"],
+        answer: 1
+    }
 ];
 
 let score = 0;
