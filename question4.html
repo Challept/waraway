@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IQ Quiz - Fråga 4</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        function saveAnswer(answer) {
+            localStorage.setItem('question4', answer);
+        }
+    </script>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Fråga 4</h1>
+        <div id="timer" class="timer"></div>
+        <p>Vilken fysiker formulerade teorin om relativitet?</p>
+        <form>
+            <label>
+                <input type="radio" name="answer" value="Isaac Newton" onchange="saveAnswer('Isaac Newton')">
+                Isaac Newton
+            </label><br>
+            <label>
+                <input type="radio" name="answer" value="Niels Bohr" onchange="saveAnswer('Niels Bohr')">
+                Niels Bohr
+            </label><br>
+            <label>
+                <input type="radio" name="answer" value="Albert Einstein" onchange="saveAnswer('Albert Einstein')">
+                Albert Einstein
+            </label><br>
+            <label>
+                <input type="radio" name="answer" value="Galileo Galilei" onchange="saveAnswer('Galileo Galilei')">
+                Galileo Galilei
+            </label><br>
+        </form>
+        <a href="question5.html" id="next-btn">Nästa Fråga</a>
+    </div>
+    <script>
+        const timerDuration = 10; // 10 sekunder
+        startTimer(timerDuration);
+
+        function startTimer(duration) {
+            const timer = document.getElementById("timer");
+            let timeLeft = duration;
+            timer.style.width = "100%"; // Återställ timer till fullt
+
+            const timerInterval = setInterval(() => {
+                timeLeft--;
+                timer.style.width = `${(timeLeft / duration) * 100}%`;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    alert("Tiden gick ut!");
+                    window.location.href = "question5.html"; // Gå till nästa fråga
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
