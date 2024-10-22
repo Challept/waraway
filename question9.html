@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IQ Quiz - Fråga 9</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        function saveAnswer(answer) {
+            localStorage.setItem('question9', answer);
+        }
+    </script>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Fråga 9</h1>
+        <div id="timer" class="timer"></div>
+        <p>Vad heter det längsta benet i människokroppen?</p>
+        <form>
+            <label>
+                <input type="radio" name="answer" value="Lårbenet" onchange="saveAnswer('Lårbenet')">
+                Lårbenet
+            </label><br>
+            <label>
+                <input type="radio" name="answer" value="Skulderbladet" onchange="saveAnswer('Skulderbladet')">
+                Skulderbladet
+            </label><br>
+            <label>
+                <input type="radio" name="answer" value="Vadbenet" onchange="saveAnswer('Vadbenet')">
+                Vadbenet
+            </label><br>
+            <label>
+                <input type="radio" name="answer" value="Knäskålen" onchange="saveAnswer('Knäskålen')">
+                Knäskålen
+            </label><br>
+        </form>
+        <a href="question10.html" id="next-btn">Nästa Fråga</a>
+    </div>
+    <script>
+        const timerDuration = 10; // 10 sekunder
+        startTimer(timerDuration);
+
+        function startTimer(duration) {
+            const timer = document.getElementById("timer");
+            let timeLeft = duration;
+            timer.style.width = "100%"; // Återställ timer till fullt
+
+            const timerInterval = setInterval(() => {
+                timeLeft--;
+                timer.style.width = `${(timeLeft / duration) * 100}%`;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    alert("Tiden gick ut!");
+                    window.location.href = "question10.html"; // Gå till nästa fråga
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
