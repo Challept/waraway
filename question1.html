@@ -6,7 +6,6 @@
     <title>IQ Quiz - Fråga 1</title>
     <link rel="stylesheet" href="styles.css">
     <script>
-        // Funktion för att spara svaret i localStorage
         function saveAnswer(answer) {
             localStorage.setItem('question1', answer);
         }
@@ -15,6 +14,7 @@
 <body>
     <div class="quiz-container">
         <h1>Fråga 1</h1>
+        <div id="timer" class="timer"></div>
         <p>Vad är kvadratroten av 144?</p>
         <form>
             <label>
@@ -36,5 +36,27 @@
         </form>
         <a href="question2.html" id="next-btn">Nästa Fråga</a>
     </div>
+    <script>
+        // Timer
+        const timerDuration = 10; // 10 sekunder
+        startTimer(timerDuration);
+
+        function startTimer(duration) {
+            const timer = document.getElementById("timer");
+            let timeLeft = duration;
+            timer.style.width = "100%"; // Återställ timer till fullt
+
+            const timerInterval = setInterval(() => {
+                timeLeft--;
+                timer.style.width = `${(timeLeft / duration) * 100}%`;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    alert("Tiden gick ut!");
+                    window.location.href = "question2.html"; // Gå till nästa fråga
+                }
+            }, 1000);
+        }
+    </script>
 </body>
 </html>
