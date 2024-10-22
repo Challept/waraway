@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IQ Quiz - Fråga 5</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        function saveAnswer(answer) {
+            localStorage.setItem('question5', answer);
+        }
+    </script>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Fråga 5</h1>
+        <div id="timer" class="timer"></div>
+        <p>Vad är huvudstaden i Australien?</p>
+        <form>
+            <label>
+                <input type="radio" name="answer" value="Sydney" onchange="saveAnswer('Sydney')">
+                Sydney
+            </label><br>
+            <label>
+                <input type="radio" name="answer" value="Canberra" onchange="saveAnswer('Canberra')">
+                Canberra
+            </label><br>
+            <label>
+                <input type="radio" name="answer" value="Melbourne" onchange="saveAnswer('Melbourne')">
+                Melbourne
+            </label><br>
+            <label>
+                <input type="radio" name="answer" value="Brisbane" onchange="saveAnswer('Brisbane')">
+                Brisbane
+            </label><br>
+        </form>
+        <a href="question6.html" id="next-btn">Nästa Fråga</a>
+    </div>
+    <script>
+        const timerDuration = 10; // 10 sekunder
+        startTimer(timerDuration);
+
+        function startTimer(duration) {
+            const timer = document.getElementById("timer");
+            let timeLeft = duration;
+            timer.style.width = "100%"; // Återställ timer till fullt
+
+            const timerInterval = setInterval(() => {
+                timeLeft--;
+                timer.style.width = `${(timeLeft / duration) * 100}%`;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    alert("Tiden gick ut!");
+                    window.location.href = "question6.html"; // Gå till nästa fråga
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
