@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IQ Quiz - Resultat</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        function calculateResults() {
+            let score = 0;
+            const answers = [
+                localStorage.getItem('question1'),
+                localStorage.getItem('question2'),
+                localStorage.getItem('question3'),
+                localStorage.getItem('question4'),
+                localStorage.getItem('question5'),
+                localStorage.getItem('question6'),
+                localStorage.getItem('question7'),
+                localStorage.getItem('question8'),
+                localStorage.getItem('question9'),
+                localStorage.getItem('question10'),
+            ];
+
+            // Korrekt svar för varje fråga
+            const correctAnswers = ['12', 'Tokyo', 'Au', 'Albert Einstein', 'Canberra', 'Mars', 'Valhaj', '1989', 'Lårbenet', 'Portugisiska'];
+
+            // Räkna antal korrekta svar
+            answers.forEach((answer, index) => {
+                if (answer === correctAnswers[index]) score++;
+            });
+
+            // Beräkna IQ
+            const iqScore = Math.round(100 + (score / answers.length) * 20); // Justerar IQ-poäng baserat på rätt svar
+
+            document.getElementById("final-score").innerText = `Du fick ${score} av ${answers.length} poäng! IQ: ${iqScore}`;
+            createChart(iqScore); // Skapa diagram
+        }
+
+        function createChart(iqScore) {
+            const ctx = document.getElementById('iqChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['IQ'],
+                    datasets: [{
+                        label: 'Ditt IQ',
+                        data: [iqScore],
+                        backgroundColor: 'rgba(0, 123, 255, 0.5)',
+                        borderColor: 'blue',
+                        borderWidth: 1,
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 150,
+                            title: {
+                                display: true,
+                                text: 'IQ'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</head>
+<body onload="calculateResults()">
+    <div class="quiz-container">
+        <h1>Resultat</h1>
+        <div id="final-score"></div>
+        <canvas id="iqChart" width="400" height="200"></canvas>
+        <a href="iq_quiz.html" id="restart-btn">Starta Om</a>
+    </div>
+</body>
+</html>
