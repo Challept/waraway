@@ -68,16 +68,16 @@ const timerDuration = 10; // 10 sekunder för varje fråga
 
 // Startar quizet
 document.getElementById("start-btn").addEventListener("click", function() {
-    document.querySelector(".quiz-container").style.display = "none";
-    document.getElementById("quiz-popup").style.display = "flex";
-    loadQuestion();
+    document.querySelector(".quiz-container").style.display = "none"; // Döljer startskärmen
+    document.getElementById("quiz-popup").style.display = "flex"; // Visar quiz-popup
+    loadQuestion(); // Laddar första frågan
 });
 
 // Laddar frågan
 function loadQuestion() {
-    clearInterval(timerInterval); // Stoppa eventuell tidigare timer
-    startTimer(timerDuration); // Starta timer
-    const question = questions[currentQuestionIndex];
+    clearInterval(timerInterval); // Stoppar eventuell tidigare timer
+    startTimer(timerDuration); // Startar timer
+    const question = questions[currentQuestionIndex]; // Hämtar aktuell fråga
     const quizContainer = document.getElementById("quiz");
     quizContainer.innerHTML = `<p>${question.question}</p>`;
     question.options.forEach((option, index) => {
@@ -90,7 +90,7 @@ function loadQuestion() {
     });
 }
 
-// Starta timer
+// Startar timer
 function startTimer(duration) {
     const timer = document.getElementById("timer");
     let timeLeft = duration;
@@ -108,43 +108,43 @@ function startTimer(duration) {
     }, 1000);
 }
 
-// Gå till nästa fråga
+// Går till nästa fråga
 document.getElementById("next-btn").addEventListener("click", nextQuestion);
 
 function nextQuestion() {
     const selectedOption = document.querySelector(`input[name="question${currentQuestionIndex}"]:checked`);
     if (selectedOption && parseInt(selectedOption.value) === questions[currentQuestionIndex].answer) {
-        score++;
+        score++; // Ökar poängen om svaret är rätt
     }
     
     currentQuestionIndex++;
     
     if (currentQuestionIndex < questions.length) {
-        loadQuestion(); // Ladda nästa fråga
+        loadQuestion(); // Laddar nästa fråga
     } else {
-        showResult(); // Visa resultat
+        showResult(); // Visar resultatet
     }
 }
 
-// Visa resultat
+// Visar resultatet
 function showResult() {
-    clearInterval(timerInterval); // Stoppa timer
-    document.getElementById("quiz-popup").style.display = "none";
-    document.getElementById("result-popup").style.display = "flex";
+    clearInterval(timerInterval); // Stoppar timer
+    document.getElementById("quiz-popup").style.display = "none"; // Döljer quiz-popup
+    document.getElementById("result-popup").style.display = "flex"; // Visar resultat-popup
 
-    const iqScore = calculateIQ(); // Beräkna IQ
+    const iqScore = calculateIQ(); // Beräknar IQ
     document.getElementById("final-score").innerHTML = `Du fick ${score}/${questions.length} poäng!<br>IQ: ${iqScore}`;
-    createChart(iqScore); // Skapa diagram
+    createChart(iqScore); // Skapar diagram
 }
 
-// Beräkna IQ baserat på svårighetsgrad
+// Beräknar IQ baserat på svårighetsgrad
 function calculateIQ() {
     const totalDifficulty = questions.reduce((sum, q) => sum + q.difficulty, 0);
     const averageDifficulty = totalDifficulty / questions.length;
-    return Math.round(100 * (score / questions.length) + averageDifficulty * 10); // Justera IQ-poäng baserat på svårighetsgrad
+    return Math.round(100 * (score / questions.length) + averageDifficulty * 10); // Justerar IQ-poäng baserat på svårighetsgrad
 }
 
-// Skapa diagram
+// Skapar diagram
 function createChart(iqScore) {
     const ctx = document.getElementById('iqChart').getContext('2d');
     new Chart(ctx, {
@@ -174,10 +174,10 @@ function createChart(iqScore) {
     });
 }
 
-// Starta om quizet
+// Startar om quizet
 document.getElementById("restart-btn").addEventListener("click", function() {
-    currentQuestionIndex = 0;
-    score = 0;
-    document.getElementById("result-popup").style.display = "none";
-    document.querySelector(".quiz-container").style.display = "block";
+    currentQuestionIndex = 0; // Nollställning av frågaindex
+    score = 0; // Nollställning av poäng
+    document.getElementById("result-popup").style.display = "none"; // Döljer resultat-popup
+    document.querySelector(".quiz-container").style.display = "block"; // Visar startskärm igen
 });
