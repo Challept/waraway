@@ -129,7 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const iqScore = calculateIQ(score, totalDifficulty);
 
         // Flytta användaren till toppen av sidan
-        window.scrollTo(0, 0);
+        window.scrollTo(0, 0); // Se till att användaren startar högst upp på sidan
 
         // Visa resultat och rätt/fel frågor
         let resultsHTML = `<h2>Du fick ${score} poäng av ${totalDifficulty} möjliga!</h2>
