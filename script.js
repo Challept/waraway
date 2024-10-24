@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentQuestion = 0;
     let score = 0;
     let totalDifficulty = 0;
+    let answers = []; // För att lagra användarens svar
     let timerInterval;
 
     const quizModal = document.getElementById("quizModal");
@@ -85,7 +86,12 @@ document.addEventListener("DOMContentLoaded", () => {
     function checkAnswer() {
         const answer = document.querySelector('input[name="answer"]:checked');
         const quiz = quizData[currentQuestion];
-        if (answer && answer.value === quiz.correct) {
+        const userAnswer = answer ? answer.value : null; // Om inget valts, sätt till null
+
+        // Lagra användarens svar för senare analys
+        answers.push({ question: quiz.question, correct: quiz.correct, userAnswer });
+
+        if (userAnswer === quiz.correct) {
             score += quiz.difficulty; // Poäng baserat på svårighetsgrad
         }
         totalDifficulty += quiz.difficulty; // Summerar alla svårighetsgrader
@@ -94,8 +100,20 @@ document.addEventListener("DOMContentLoaded", () => {
     function endQuiz() {
         quizModal.style.display = "none";
         const iqScore = calculateIQ(score, totalDifficulty);
-        document.body.innerHTML = `<h2>Du fick ${score} poäng av ${totalDifficulty} möjliga!</h2>
-                                   <h3>Din IQ-poäng är ${iqScore}!</h3>`;
+
+        // Visa resultat och rätt/fel frågor
+        let resultsHTML = `<h2>Du fick ${score} poäng av ${totalDifficulty} möjliga!</h2>
+                           <h3>Din IQ-poäng är ${iqScore}!</h3>`;
+
+        resultsHTML += "<h4>Frågor och svar:</h4><ul>";
+        answers.forEach((answer, index) => {
+            const isCorrect = answer.userAnswer === answer.correct;
+            const symbol = isCorrect ? "✔️" : "❌";
+            resultsHTML += `<li>${quizData[index].question} - Rätt svar: ${quizData[index][quizData[index].correct]} ${symbol}</li>`;
+        });
+        resultsHTML += "</ul>";
+
+        document.body.innerHTML = resultsHTML;
         showIQChart(iqScore);
         document.body.innerHTML += `<button class="btn" id="reloadButton">Starta Om</button>`;
         document.getElementById("reloadButton").addEventListener("click", () => location.reload());
@@ -121,7 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function showIQChart(userIQ) {
         const canvasContainer = document.createElement("div");
         canvasContainer.style.width = "100%";
-        canvasContainer.style.maxWidth = "600px";  // Maxstorlek på diagrammet
+        canvasContainer.style.maxWidth = "400px";  // Mindre storlek på diagrammet
         canvasContainer.style.margin = "0 auto";  // Centrerar diagrammet
 
         const ctx = document.createElement("canvas");
@@ -129,19 +147,13 @@ document.addEventListener("DOMContentLoaded", () => {
         document.body.appendChild(canvasContainer);
 
         new Chart(ctx, {
-            type: 'line',
+            type: 'bar', // Små staplar istället för linjediagram
             data: {
                 labels: ['70', '85', '100', '115', '130'],
                 datasets: [{
-                    label: 'Genomsnittliga IQ-värden',
-                    data: [70, 85, 100, 115, 130],
-                    borderColor: 'gray',
-                    fill: false
-                }, {
                     label: 'Din IQ',
                     data: [userIQ],
-                    borderColor: 'red',
-                    fill: false
+                    backgroundColor: 'red'
                 }]
             },
             options: {
@@ -149,7 +161,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 maintainAspectRatio: false,  // Låter diagrammet anpassa sig efter behållarens storlek
                 scales: {
                     y: {
-                        beginAtZero: false,
+                        beginAtZero: true,
                         suggestedMin: 50,
                         suggestedMax: 150
                     }
