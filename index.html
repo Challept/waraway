@@ -9,15 +9,20 @@
 <body>
 
     <div class="quiz-container">
-        <h1>IQ Quiz</h1>
-
-        <!-- Text och input-fält för testkod -->
-        <p id="testCodeText">Ange testkoden för att se testresultat:</p>
-        <input type="text" id="testCodeInput" placeholder="Ange testkod här...">
-        
-        <button id="startQuizButton" class="btn">Starta Quiz</button>
-        <p id="omOssText">Detta är ett IQ-quiz där du kan testa din kunskap och få ett resultat. Prova och se hur smart du är!</p>
-    </div>
+    <h1>Välkommen till IQ Quiz!</h1>
+    <p>Välj din åldersgrupp för att anpassa frågorna:</p>
+    <select id="ageGroup">
+        <option value="">Välj åldersgrupp</option>
+        <option value="8-12">8-12 år</option>
+        <option value="13-15">13-15 år</option>
+        <option value="16-20">16-20 år</option>
+    </select>
+    <br><br>
+    <input type="text" id="testCodeInput" placeholder="Testkod (frivillig)">
+    <br><br>
+    <button id="startQuizButton">Starta Quiz</button>
+    <p id="omOssText">Detta är ett IQ-quiz där du kan testa din kunskap och få ett resultat. Prova och se hur smart du är!</p>
+</div>
 
     <!-- Popup modal för frågorna -->
     <div id="quizModal" class="modal">
