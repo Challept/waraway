@@ -3,160 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Huvudmeny - Krigsspel</title>
-    
-    <!-- Lägga till favicon -->
-    <link rel="icon" href="faviconmn.png" type="image/png">
-
+    <title>IQ Quiz</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        /* Styling for the page */
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #1E90FF, #D3D3D3); /* Blue to grey gradient */
-            text-align: center;
-            margin: 0;
-            padding-bottom: 100px; /* Padding for footer */
-        }
-
-        #title {
-            margin: 20px 0;
-            color: #fff; /* White text for better contrast on gradient */
-        }
-
-        /* Button styling */
-        .top-button {
-            padding: 10px 20px;
-            font-size: 16px;
-            color: white;
-            background-color: #007BFF;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .top-button:hover {
-            background-color: #0056b3;
-        }
-
-        /* Game card styling */
-        .spel-meny {
-            display: flex;
-            flex-wrap: wrap; /* Allows items to wrap to the next line */
-            justify-content: center; /* Centers items in the middle */
-            gap: 20px;
-            margin-top: 40px;
-        }
-
-        /* Ensures that extra game cards on new rows are centered if there's an odd number of them */
-        .spel-meny > a:nth-child(odd):nth-last-child(1) {
-            justify-content: center;
-            width: 100%;
-        }
-
-        .spel-val {
-            width: 200px;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-            text-decoration: none; /* Ensures no underline */
-            color: inherit; /* Ensures text color stays consistent */
-        }
-
-        .spel-val:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-        }
-
-        .spel-val p {
-            font-size: 14px;
-            color: #666;
-        }
-
-        /* Styling for the "Om oss" section */
-        #about-us {
-            position: fixed;
-            bottom: 60px; /* Keep above the footer */
-            left: 0;
-            width: 100%;
-            padding: 20px;
-            background-color: #007BFF;
-            color: white;
-            text-align: center;
-            font-size: 14px;
-        }
-
-        #about-us .blue-text {
-            color: #00BFFF;
-        }
-
-        #about-us .green-text {
-            color: #32CD32;
-        }
-
-        /* Styling for the footer */
-        footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 10px 0;
-            font-size: 12px;
-            letter-spacing: 1px;
-        }
-
-        footer span {
-            font-weight: bold;
-            color: #FFD700; /* Cool gold color for company name */
-        }
-
-        /* Footer hover effect */
-        footer span:hover {
-            color: #FFF;
-        }
-    </style>
 </head>
 <body>
-    <h1 id="title">Välj spel och andra verktyg!</h1>
 
-    <!-- Scrollable options for different games -->
-    <div class="spel-meny">
-         <!-- First Game Option -->
-        <a href="iq_quiz.html" class="spel-val">
-            <div>
-                <h3>IQ Quiz</h3>
-                <p>Prova och se vad du har för IQ!</p>
-            </div>
-        </a>
-        
-        <!-- First Game Option -->
-        <a href="1v1krig.html" class="spel-val">
-            <div>
-                <h3>1v1 Krig</h3>
-                <p>Välj två länder och se vilket som vinner!</p>
-            </div>
-        </a>
+    <div class="quiz-container">
+        <h1>IQ Quiz</h1>
+        <button id="startQuizButton">Starta Quiz</button>
+    </div>
 
-        <a href="2v2krig.html" class="spel-val">
-            <div>
-                <h3>2v2 Krig</h3>
-                <p>Välj 4 länder och se vilket som vinner!</p>
-            </div>
-        </a>
+    <!-- Popup modal för frågorna -->
+    <div id="quizModal" class="modal">
+        <div class="modal-content">
+            <h2 id="questionText"></h2>
+            <div id="answerOptions"></div>
+            <p>Tid kvar: <span id="timer">10</span> sekunder</p>
+            <button id="nextQuestionButton">Nästa</button>
+        </div>
+    </div>
 
-        <!-- Second Game Option (More games can be added here) -->
-        <a href="#" class="spel-val">
-            <div>
-                <h3>Kommande Spel</h3>
-                <p>Fler spännande spel på väg!</p>
-            </div>
-        </a>
+    <!-- Inkludera Chart.js via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
     
     <!-- Footer section -->
     <footer>
