@@ -1,3 +1,4 @@
+/* Grundläggande layout */
 body {
     font-family: Arial, sans-serif;
     background: linear-gradient(135deg, #ffffff, #d3d3d3, #1e90ff);
@@ -6,10 +7,22 @@ body {
     justify-content: center;
     align-items: center;
     margin: 0;
+    padding: 0;
+    overflow: hidden;
 }
 
 .quiz-container {
     text-align: center;
+    width: 90%;
+    max-width: 500px;
+    margin: auto;
+}
+
+/* Responsiv layout */
+@media (max-width: 768px) {
+    .quiz-container {
+        width: 100%;
+    }
 }
 
 h1 {
@@ -55,7 +68,7 @@ p {
     padding: 20px;
     border-radius: 8px;
     text-align: center;
-    width: 80%;
+    width: 90%;
     max-width: 500px;
     animation: fadeInUp 0.5s ease;
 }
