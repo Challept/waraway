@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => { 
     const quizData = [
         { question: "Vad är 5 + 7?", a: "10", b: "12", c: "11", d: "13", correct: "b", difficulty: 1 }, // Lätt
         { question: "Vilken är huvudstaden i Sverige?", a: "Malmö", b: "Göteborg", c: "Stockholm", d: "Uppsala", correct: "c", difficulty: 1 }, // Lätt
@@ -127,6 +127,9 @@ document.addEventListener("DOMContentLoaded", () => {
     function endQuiz() {
         quizModal.style.display = "none";
         const iqScore = calculateIQ(score, totalDifficulty);
+
+        // Flytta användaren till toppen av sidan
+        window.scrollTo(0, 0);
 
         // Visa resultat och rätt/fel frågor
         let resultsHTML = `<h2>Du fick ${score} poäng av ${totalDifficulty} möjliga!</h2>
