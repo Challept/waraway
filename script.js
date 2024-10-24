@@ -176,16 +176,22 @@ document.addEventListener("DOMContentLoaded", () => {
     function calculateIQ(correctPoints, maxPoints) {
         const percentage = (correctPoints / maxPoints) * 100;
         let iq;
-        if (percentage >= 90) {
+        if (percentage >= 100) {
             iq = 130;
-        } else if (percentage >= 75) {
+        } else if (percentage >= 90) {
             iq = 115;
-        } else if (percentage >= 50) {
+        } else if (percentage >= 80) {
             iq = 100;
-        } else if (percentage >= 25) {
+        } else if (percentage >= 60) {
             iq = 85;
-        } else {
+        } else if (percentage >= 50) {
             iq = 70;
+        } else if (percentage >= 30) {
+            iq = 50;
+        } else if (percentage >= 10) {
+            iq = 30;
+        } else {
+            iq = 0;
         }
         return iq;
     }
