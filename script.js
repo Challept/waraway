@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const quizData = [
         { question: "Vad är 5 + 7?", a: "10", b: "12", c: "11", d: "13", correct: "b" },
         { question: "Vilken är huvudstaden i Sverige?", a: "Malmö", b: "Göteborg", c: "Stockholm", d: "Uppsala", correct: "c" },
-        // Lägg till fler frågor
+        // Lägg till fler frågor här...
     ];
 
     let currentQuestion = 0;
@@ -20,8 +20,8 @@ document.addEventListener("DOMContentLoaded", () => {
     function startQuiz() {
         document.getElementById("startQuizButton").style.display = "none"; // Göm startknappen
         document.getElementById("omOssText").style.display = "none"; // Göm om oss-texten
-        showQuestion();
         quizModal.style.display = "flex"; // Visa popup
+        showQuestion();
     }
 
     function showQuestion() {
@@ -78,8 +78,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function endQuiz() {
         quizModal.style.display = "none";
-        document.body.innerHTML = `<h2>Din IQ-poäng är ${score * 10}!</h2>`;
-        showIQChart(score * 10);
+        const iqScore = calculateIQ(score, quizData.length);
+        document.body.innerHTML = `<h2>Du fick ${score} av ${quizData.length} rätt!</h2>
+                                   <h3>Din IQ-poäng är ${iqScore}!</h3>`;
+        showIQChart(iqScore);
+        document.body.innerHTML += `<button class="btn" id="reloadButton">Starta Om</button>`;
+        document.getElementById("reloadButton").addEventListener("click", () => location.reload());
+    }
+
+    function calculateIQ(correctAnswers, totalQuestions) {
+        const percentage = (correctAnswers / totalQuestions) * 100;
+        let iq;
+        if (percentage >= 90) {
+            iq = 130;
+        } else if (percentage >= 75) {
+            iq = 115;
+        } else if (percentage >= 50) {
+            iq = 100;
+        } else if (percentage >= 25) {
+            iq = 85;
+        } else {
+            iq = 70;
+        }
+        return iq;
     }
 
     function showIQChart(userIQ) {
@@ -89,10 +110,10 @@ document.addEventListener("DOMContentLoaded", () => {
         new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['70', '90', '100', '110', '130'],
+                labels: ['70', '85', '100', '115', '130'],
                 datasets: [{
                     label: 'Genomsnittliga IQ-värden',
-                    data: [70, 90, 100, 110, 130],
+                    data: [70, 85, 100, 115, 130],
                     borderColor: 'gray',
                     fill: false
                 }, {
