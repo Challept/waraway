@@ -119,8 +119,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function showIQChart(userIQ) {
+        const canvasContainer = document.createElement("div");
+        canvasContainer.style.width = "100%";
+        canvasContainer.style.maxWidth = "600px";  // Maxstorlek på diagrammet
+        canvasContainer.style.margin = "0 auto";  // Centrerar diagrammet
+
         const ctx = document.createElement("canvas");
-        document.body.appendChild(ctx);
+        canvasContainer.appendChild(ctx);
+        document.body.appendChild(canvasContainer);
 
         new Chart(ctx, {
             type: 'line',
@@ -139,7 +145,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 }]
             },
             options: {
-                responsive: true
+                responsive: true,
+                maintainAspectRatio: false,  // Låter diagrammet anpassa sig efter behållarens storlek
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        suggestedMin: 50,
+                        suggestedMax: 150
+                    }
+                }
             }
         });
     }
