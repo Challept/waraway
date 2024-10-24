@@ -29,13 +29,49 @@ document.addEventListener("DOMContentLoaded", () => {
     const timerDisplay = document.getElementById("timer");
     const nextQuestionButton = document.getElementById("nextQuestionButton");
 
+    // Lägger till input-fält för testkod
+    const testCodeInput = document.createElement("input");
+    testCodeInput.setAttribute("type", "text");
+    testCodeInput.setAttribute("placeholder", "Ange testkod här...");
+    document.body.insertBefore(testCodeInput, document.getElementById("startQuizButton"));
+
+    const testCodeButton = document.createElement("button");
+    testCodeButton.innerText = "Testresultat";
+    document.body.insertBefore(testCodeButton, document.getElementById("startQuizButton"));
+
+    testCodeButton.addEventListener("click", () => {
+        if (testCodeInput.value === "Sse201107") {
+            showTestResults(); // Visa testresultat med 13 rätt
+        } else {
+            alert("Fel kod. Försök igen.");
+        }
+    });
+
     document.getElementById("startQuizButton").addEventListener("click", startQuiz);
 
     function startQuiz() {
         document.getElementById("startQuizButton").style.display = "none"; // Göm startknappen
         document.getElementById("omOssText").style.display = "none"; // Göm om oss-texten
+        testCodeInput.style.display = "none"; // Göm testkodsinput
+        testCodeButton.style.display = "none"; // Göm testkodsknapp
         quizModal.style.display = "flex"; // Visa popup
         showQuestion();
+    }
+
+    function showTestResults() {
+        score = 13; // Simulerar att användaren fick 13 rätt av 15
+        totalDifficulty = 15; // Maximal svårighetsgrad
+
+        // Skapa en lista med 13 rätta och 2 felaktiga svar för simulering
+        answers = quizData.map((quiz, index) => {
+            return {
+                question: quiz.question,
+                correct: quiz.correct,
+                userAnswer: index < 13 ? quiz.correct : null // 13 rätt, resten fel
+            };
+        });
+
+        endQuiz(); // Visa resultatsidan direkt
     }
 
     function showQuestion() {
