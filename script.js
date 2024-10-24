@@ -29,31 +29,22 @@ document.addEventListener("DOMContentLoaded", () => {
     const timerDisplay = document.getElementById("timer");
     const nextQuestionButton = document.getElementById("nextQuestionButton");
 
-    // Lägger till input-fält för testkod
-    const testCodeInput = document.createElement("input");
-    testCodeInput.setAttribute("type", "text");
-    testCodeInput.setAttribute("placeholder", "Ange testkod här...");
-    document.body.insertBefore(testCodeInput, document.getElementById("startQuizButton"));
+    // Hämta input och knappen
+    const testCodeInput = document.getElementById("testCodeInput");
 
-    const testCodeButton = document.createElement("button");
-    testCodeButton.innerText = "Testresultat";
-    document.body.insertBefore(testCodeButton, document.getElementById("startQuizButton"));
-
-    testCodeButton.addEventListener("click", () => {
-        if (testCodeInput.value === "Sse201107") {
-            showTestResults(); // Visa testresultat med 13 rätt
+    document.getElementById("startQuizButton").addEventListener("click", () => {
+        const testCode = testCodeInput.value.trim();
+        if (testCode === "Sse201107") {
+            showTestResults(); // Visa testresultat med 13 rätt om koden är korrekt
         } else {
-            alert("Fel kod. Försök igen.");
+            startQuiz(); // Annars starta quizet normalt
         }
     });
-
-    document.getElementById("startQuizButton").addEventListener("click", startQuiz);
 
     function startQuiz() {
         document.getElementById("startQuizButton").style.display = "none"; // Göm startknappen
         document.getElementById("omOssText").style.display = "none"; // Göm om oss-texten
         testCodeInput.style.display = "none"; // Göm testkodsinput
-        testCodeButton.style.display = "none"; // Göm testkodsknapp
         quizModal.style.display = "flex"; // Visa popup
         showQuestion();
     }
