@@ -109,7 +109,8 @@ document.addEventListener("DOMContentLoaded", () => {
         answers.forEach((answer, index) => {
             const isCorrect = answer.userAnswer === answer.correct;
             const symbol = isCorrect ? "✔️" : "❌";
-            resultsHTML += `<li>${quizData[index].question} - Rätt svar: ${quizData[index][quizData[index].correct]} ${symbol}</li>`;
+            const correctAnswerText = quizData[index][quizData[index].correct];
+            resultsHTML += `<li>${quizData[index].question} - Rätt svar: ${correctAnswerText} ${symbol}</li>`;
         });
         resultsHTML += "</ul>";
 
