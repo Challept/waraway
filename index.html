@@ -8,7 +8,7 @@
 </head>
 <body>
 
-    <div class="quiz-container">
+<div class="quiz-container">
     <h1>Välkommen till IQ Quiz!</h1>
     <p>Välj din åldersgrupp för att anpassa frågorna:</p>
     <select id="ageGroup">
@@ -24,15 +24,15 @@
     <p id="omOssText">Detta är ett IQ-quiz där du kan testa din kunskap och få ett resultat. Prova och se hur smart du är!</p>
 </div>
 
-    <!-- Popup modal för frågorna -->
-    <div id="quizModal" class="modal">
-        <div class="modal-content animated fadeIn">
-            <h2 id="questionText"></h2>
-            <div id="answerOptions"></div>
-            <p>Tid kvar: <span id="timer">20</span> sekunder</p>
-            <button id="nextQuestionButton" class="btn">Nästa</button>
-        </div>
+<div class="modal" id="quizModal">
+    <div class="modal-content">
+        <h3 id="questionText"></h3>
+        <div id="imageContainer"></div> <!-- Här kommer bilderna för formfrågor -->
+        <div id="answerOptions"></div>
+        <p id="timer"></p>
+        <button class="btn" id="nextQuestionButton">Nästa</button>
     </div>
+</div>
 
     <!-- Inkludera Chart.js via CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
