@@ -6,6 +6,8 @@ document.addEventListener("DOMContentLoaded", () => {
             { question: "Vad heter planeten närmast solen?", a: "Venus", b: "Mars", c: "Merkurius", d: "Jorden", correct: "c", difficulty: 1 },
             { question: "Vad är 10 * 5?", a: "50", b: "100", c: "30", d: "70", correct: "a", difficulty: 1 },
             { question: "Hur många månader har 28 dagar?", a: "1", b: "12", c: "6", d: "4", correct: "b", difficulty: 1 },
+            { question: "Vilken form passar in i denna sekvens?", image: "https://i.imgur.com/6LTQXK4.png", a: "Bild A", b: "Bild B", c: "Bild C", d: "Bild D", correct: "a", difficulty: 1 }, 
+            { question: "Vilken form passar in i denna sekvens?", image: "https://i.imgur.com/rfD2omV.png", a: "Bild A", b: "Bild B", c: "Bild C", d: "Bild D", correct: "b", difficulty: 1 } 
         ],
         '13-15': [
             { question: "Vad är 12 * 9?", a: "81", b: "108", c: "96", d: "72", correct: "b", difficulty: 2 },
@@ -15,31 +17,30 @@ document.addEventListener("DOMContentLoaded", () => {
             { question: "Vilket år grundades FN?", a: "1920", b: "1945", c: "1950", d: "1960", correct: "b", difficulty: 2 },
             { question: "Hur många kontinenter finns det?", a: "5", b: "6", c: "7", d: "8", correct: "c", difficulty: 2 },
             { question: "Vem skrev 'Hamlet'?", a: "Mark Twain", b: "William Shakespeare", c: "Charles Dickens", d: "Oscar Wilde", correct: "b", difficulty: 2 },
-            { question: "Vilket år landade den första människan på månen?", a: "1965", b: "1969", c: "1971", d: "1973", correct: "b", difficulty: 2 },
+            { question: "Vilket ämne har den kemiska beteckningen O?", a: "Syre", b: "Väte", c: "Kväve", d: "Kol", correct: "a", difficulty: 2 },
             { question: "Vad är Pi (π) avrundat till två decimaler?", a: "3.12", b: "3.14", c: "3.16", d: "3.18", correct: "b", difficulty: 2 },
             { question: "Vad står DNA för?", a: "Deoxyribonukleinsyra", b: "Dinukleinsyra", c: "Dioxidnukleinsyra", d: "Deoxitribonsyra", correct: "a", difficulty: 3 },
             { question: "Vad är största sjön i Sverige?", a: "Mälaren", b: "Vänern", c: "Vättern", d: "Hjälmaren", correct: "b", difficulty: 2 },
-            { question: "Vad heter Sveriges nationaldag?", a: "Gustafsdagen", b: "Valborg", c: "Sveriges Dag", d: "Svenska Flaggan Dag", correct: "d", difficulty: 2 },
+            { question: "Vilken form passar in i denna sekvens?", image: "https://i.imgur.com/ZUifvhJ.png", a: "Bild A", b: "Bild B", c: "Bild C", d: "Bild D", correct: "c", difficulty: 2 }, 
+            { question: "Vilken form passar in i denna sekvens?", image: "https://i.imgur.com/uRbyF8L.png", a: "Bild A", b: "Bild B", c: "Bild C", d: "Bild D", correct: "d", difficulty: 2 },
             { question: "Vilken är världens största ö?", a: "Grönland", b: "Australien", c: "Island", d: "Borneo", correct: "a", difficulty: 2 },
-            { question: "Hur många ben har en människa?", a: "200", b: "206", c: "210", d: "212", correct: "b", difficulty: 2 },
-            { question: "Vad heter den största havet på jorden?", a: "Stilla havet", b: "Atlanten", c: "Indiska oceanen", d: "Sydkinesiska havet", correct: "a", difficulty: 2 },
+            { question: "Vad heter den största havet på jorden?", a: "Stilla havet", b: "Atlanten", c: "Indiska oceanen", d: "Sydkinesiska havet", correct: "a", difficulty: 2 }
         ],
         '16-20': [
             { question: "Vilken av följande är ett primtal?", a: "21", b: "23", c: "25", d: "27", correct: "b", difficulty: 3 },
             { question: "Vad är namnet på Albert Einsteins teori?", a: "Allmän relativitetsteori", b: "Evolutionsteori", c: "Big Bang-teorin", d: "Platons idévärld", correct: "a", difficulty: 3 },
             { question: "Vad är kvadratroten av 169?", a: "12", b: "13", c: "14", d: "15", correct: "b", difficulty: 3 },
             { question: "Vem skrev 'Brott och straff'?", a: "Fjodor Dostojevskij", b: "Leo Tolstoj", c: "Anton Tjechov", d: "Franz Kafka", correct: "a", difficulty: 3 },
-            { question: "Vad heter den kemiska beteckningen för vatten?", a: "H2", b: "H2O", c: "O2", d: "HO", correct: "b", difficulty: 2 },
             { question: "Vad är värdet på Avogadros tal?", a: "6.02 x 10^23", b: "3.14 x 10^23", c: "9.81 x 10^23", d: "2.71 x 10^23", correct: "a", difficulty: 3 },
-            { question: "Vilken är huvudstaden i Japan?", a: "Osaka", b: "Kyoto", c: "Tokyo", d: "Hiroshima", correct: "c", difficulty: 2 },
-            { question: "Vilken är den största planeten i vårt solsystem?", a: "Jupiter", b: "Saturnus", c: "Neptunus", d: "Mars", correct: "a", difficulty: 2 },
-            { question: "Vem skrev 'Iliaden' och 'Odysséen'?", a: "Platon", b: "Aristoteles", c: "Homeros", d: "Sokrates", correct: "c", difficulty: 3 },
+            { question: "Vilken form passar in i denna sekvens?", image: "https://i.imgur.com/YY6b5Oz.png", a: "Bild A", b: "Bild B", c: "Bild C", d: "Bild D", correct: "b", difficulty: 3 }, 
+            { question: "Vilken form passar in i denna sekvens?", image: "https://i.imgur.com/v3WjONR.png", a: "Bild A", b: "Bild B", c: "Bild C", d: "Bild D", correct: "a", difficulty: 3 },
             { question: "Vad är värdet på den matematiska konstanten e?", a: "2.71", b: "3.14", c: "1.62", d: "0.69", correct: "a", difficulty: 3 },
             { question: "Vad står HTML för?", a: "Hyperlinks and Text Markup Language", b: "Hyper Text Markup Language", c: "Home Tool Markup Language", d: "Hyper Tool Markup Language", correct: "b", difficulty: 2 },
             { question: "Vilken gas dominerar i jordens atmosfär?", a: "Syre", b: "Kväve", c: "Väte", d: "Argon", correct: "b", difficulty: 2 },
             { question: "Vad heter universums snabbaste hastighet?", a: "Ljudhastigheten", b: "Ljushastigheten", c: "Gravitationshastigheten", d: "Neutronspeed", correct: "b", difficulty: 3 },
             { question: "Hur lång är en maraton?", a: "42.2 km", b: "40.5 km", c: "42.195 km", d: "41.9 km", correct: "c", difficulty: 2 },
             { question: "Vad står VPN för?", a: "Virtual Protection Network", b: "Virtual Private Network", c: "Virtual Protocol Network", d: "Virtual Proxy Network", correct: "b", difficulty: 3 },
+            { question: "Vad heter den kemiska beteckningen för vatten?", a: "H2", b: "H2O", c: "O2", d: "HO", correct: "b", difficulty: 2 }
         ]
     };
 
@@ -53,6 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const quizModal = document.getElementById("quizModal");
     const questionText = document.getElementById("questionText");
     const answerOptions = document.getElementById("answerOptions");
+    const imageContainer = document.getElementById("imageContainer");
     const timerDisplay = document.getElementById("timer");
     const nextQuestionButton = document.getElementById("nextQuestionButton");
 
@@ -83,25 +85,16 @@ document.addEventListener("DOMContentLoaded", () => {
         showQuestion();
     }
 
-    function showTestResults() {
-        score = 13; 
-        totalDifficulty = 15; 
-
-        answers = quizData[selectedAgeGroup].map((quiz, index) => {
-            return {
-                question: quiz.question,
-                correct: quiz.correct,
-                userAnswer: index < 13 ? quiz.correct : null 
-            };
-        });
-
-        endQuiz(); 
-    }
-
     function showQuestion() {
         resetTimer();
         const quiz = quizData[selectedAgeGroup][currentQuestion];
         questionText.textContent = quiz.question;
+
+        if (quiz.image) {
+            imageContainer.innerHTML = `<img src="${quiz.image}" alt="Fråga om former" style="max-width: 100%; height: auto;">`;
+        } else {
+            imageContainer.innerHTML = ''; 
+        }
 
         answerOptions.innerHTML = `
             <label><input type="radio" name="answer" value="a"> ${quiz.a}</label><br>
