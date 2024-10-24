@@ -10,6 +10,11 @@
 
     <div class="quiz-container">
         <h1>IQ Quiz</h1>
+        
+        <!-- Lägger till input-fält för testkod -->
+        <input type="text" id="testCodeInput" placeholder="Ange testkod här...">
+        <button id="testCodeButton" class="btn">Testresultat</button>
+        
         <button id="startQuizButton" class="btn">Starta Quiz</button>
         <p id="omOssText">Om oss: Detta är ett IQ-quiz där du kan testa din kunskap och få ett resultat. Prova och se hur smart du är!</p>
     </div>
@@ -19,7 +24,7 @@
         <div class="modal-content animated fadeIn">
             <h2 id="questionText"></h2>
             <div id="answerOptions"></div>
-            <p>Tid kvar: <span id="timer">10</span> sekunder</p>
+            <p>Tid kvar: <span id="timer">20</span> sekunder</p>
             <button id="nextQuestionButton" class="btn">Nästa</button>
         </div>
     </div>
