@@ -106,7 +106,7 @@ select:focus {
     height: 100%;
     background: linear-gradient(90deg, #00c853 0%, #00e676 50%, #00c853 100%);
     border-radius: 15px;
-    width: 0%; /* Börjar vid 0 bredd */
+    width: 0%; /* Startar vid 0 bredd */
     position: absolute;
     top: 0;
     left: 0;
