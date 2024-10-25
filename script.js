@@ -142,24 +142,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const answer = document.querySelector('input[name="answer"]:checked');
         const quiz = quizData[selectedAgeGroup][currentQuestion];
         const userAnswer = answer ? answer.value : null;
-        const timeLeft = parseInt(timerDisplay.textContent);
 
         answers.push({ question: quiz.question, correct: quiz.correct, userAnswer });
 
         if (userAnswer === quiz.correct) {
-            score += calculateQuestionScore(timeLeft, quiz.difficulty);
+            score += quiz.difficulty;
         }
-        totalScorePossible += quiz.difficulty * 100;
-    }
-
-    function calculateQuestionScore(timeLeft, difficulty) {
-        let baseScore;
-        if (difficulty === 1) baseScore = 100;
-        else if (difficulty === 2) baseScore = 150;
-        else baseScore = 200;
-
-        const timeBonus = (timeLeft / (difficulty === 1 ? 20 : difficulty === 2 ? 30 : 40)) * baseScore;
-        return Math.min(baseScore + timeBonus, baseScore); // Begränsa poängen så att den inte överskrider baseScore
+        totalScorePossible += quiz.difficulty;
     }
 
     function endQuiz() {
@@ -168,7 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         window.scrollTo(0, 0);
 
-        let resultsHTML = `<h2>Du fick ${score.toFixed(2)} poäng av ${totalScorePossible} möjliga!</h2>
+        let resultsHTML = `<h2>Du fick ${score} poäng av ${totalScorePossible} möjliga!</h2>
                            <h3>Din IQ-poäng är ${iqScore.toFixed(0)}!</h3>`;
 
         resultsHTML += "<h4>Frågor och svar:</h4><ul>";
