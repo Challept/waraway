@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const timerContainer = document.createElement("div");
         timerContainer.className = "timer-container";
-        quizModal.prepend(timerContainer);
+        nextQuestionButton.insertAdjacentElement("beforebegin", timerContainer);
 
         const timerFill = document.createElement("div");
         timerFill.className = "timer-fill";
