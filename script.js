@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let selectedAgeGroup = '';
     let currentQuestion = 0;
     let score = 0;
-    let totalDifficulty = 0;
+    let totalScorePossible = 0;
     let answers = []; 
     let timerInterval;
 
@@ -129,23 +129,34 @@ document.addEventListener("DOMContentLoaded", () => {
         const answer = document.querySelector('input[name="answer"]:checked');
         const quiz = quizData[selectedAgeGroup][currentQuestion];
         const userAnswer = answer ? answer.value : null;
+        const timeLeft = parseInt(timerDisplay.textContent);
 
         answers.push({ question: quiz.question, correct: quiz.correct, userAnswer });
 
         if (userAnswer === quiz.correct) {
-            score += quiz.difficulty;
+            score += calculateQuestionScore(timeLeft, quiz.difficulty);
         }
-        totalDifficulty += quiz.difficulty;
+        totalScorePossible += quiz.difficulty * 100;
+    }
+
+    function calculateQuestionScore(timeLeft, difficulty) {
+        let baseScore;
+        if (difficulty === 1) baseScore = 100;
+        else if (difficulty === 2) baseScore = 150;
+        else baseScore = 200;
+
+        const timeBonus = (timeLeft / (difficulty === 1 ? 20 : difficulty === 2 ? 30 : 40)) * baseScore;
+        return baseScore + timeBonus;
     }
 
     function endQuiz() {
         quizModal.style.display = "none";
-        const iqScore = calculateIQ(score, totalDifficulty);
+        const iqScore = calculateIQ(score, totalScorePossible);
 
         window.scrollTo(0, 0);
 
-        let resultsHTML = `<h2>Du fick ${score} poäng av ${totalDifficulty} möjliga!</h2>
-                           <h3>Din IQ-poäng är ${iqScore}!</h3>`;
+        let resultsHTML = `<h2>Du fick ${score.toFixed(2)} poäng av ${totalScorePossible} möjliga!</h2>
+                           <h3>Din IQ-poäng är ${iqScore.toFixed(0)}!</h3>`;
 
         resultsHTML += "<h4>Frågor och svar:</h4><ul>";
         answers.forEach((answer, index) => {
@@ -162,8 +173,8 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("reloadButton").addEventListener("click", () => location.reload());
     }
 
-    function calculateIQ(correctPoints, maxPoints) {
-        const percentage = (correctPoints / maxPoints) * 100;
+    function calculateIQ(currentScore, maxScore) {
+        const percentage = (currentScore / maxScore) * 100;
         let iq;
         if (percentage >= 90) {
             iq = 130;
