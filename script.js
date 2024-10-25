@@ -41,6 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const answerOptions = document.getElementById("answerOptions");
     const imageContainer = document.getElementById("imageContainer");
     const timerDisplay = document.getElementById("timer");
+    const timerFill = document.getElementById("timerFill"); // För progress-bar
     const nextQuestionButton = document.getElementById("nextQuestionButton");
 
     document.getElementById("startQuizButton").addEventListener("click", () => {
@@ -91,10 +92,13 @@ document.addEventListener("DOMContentLoaded", () => {
         else if (difficulty === 2) timeLeft = 30;
         else timeLeft = 40;
 
-        timerDisplay.textContent = timeLeft;
+        timerFill.style.transitionDuration = `${timeLeft}s`;
+        timerFill.style.width = "100%"; // Starta progress-baren full
+
         timerInterval = setInterval(() => {
             timeLeft--;
-            timerDisplay.textContent = timeLeft;
+            timerFill.style.width = `${(timeLeft / (difficulty === 1 ? 20 : difficulty === 2 ? 30 : 40)) * 100}%`; // Justera bredden
+
             if (timeLeft <= 0) {
                 clearInterval(timerInterval);
                 goToNextQuestion();
@@ -104,6 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function resetTimer() {
         clearInterval(timerInterval);
+        timerFill.style.width = "0%"; // Återställ progress-baren
     }
 
     nextQuestionButton.addEventListener("click", goToNextQuestion);
