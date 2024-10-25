@@ -41,7 +41,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const answerOptions = document.getElementById("answerOptions");
     const imageContainer = document.getElementById("imageContainer");
     const timerDisplay = document.getElementById("timer");
-    const timerFill = document.getElementById("timerFill"); // För progress-bar
     const nextQuestionButton = document.getElementById("nextQuestionButton");
 
     document.getElementById("startQuizButton").addEventListener("click", () => {
@@ -92,12 +91,28 @@ document.addEventListener("DOMContentLoaded", () => {
         else if (difficulty === 2) timeLeft = 30;
         else timeLeft = 40;
 
-        timerFill.style.transitionDuration = `${timeLeft}s`;
-        timerFill.style.width = "100%"; // Starta progress-baren full
+        // Ny timer-styling
+        const progressBar = document.createElement("div");
+        progressBar.style.width = "100%";
+        progressBar.style.backgroundColor = "#ccc";
+        progressBar.style.height = "30px";
+        progressBar.style.position = "relative";
+        progressBar.style.borderRadius = "15px";
+        quizModal.insertBefore(progressBar, timerDisplay);
+
+        const timerFill = document.createElement("div");
+        timerFill.style.height = "100%";
+        timerFill.style.width = "0%";
+        timerFill.style.backgroundColor = "green";
+        timerFill.style.borderRadius = "15px";
+        progressBar.appendChild(timerFill);
+
+        timerFill.style.transition = "width 1s linear";
 
         timerInterval = setInterval(() => {
             timeLeft--;
-            timerFill.style.width = `${(timeLeft / (difficulty === 1 ? 20 : difficulty === 2 ? 30 : 40)) * 100}%`; // Justera bredden
+            const percentage = (timeLeft / (difficulty === 1 ? 20 : difficulty === 2 ? 30 : 40)) * 100;
+            timerFill.style.width = `${percentage}%`;
 
             if (timeLeft <= 0) {
                 clearInterval(timerInterval);
@@ -108,7 +123,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function resetTimer() {
         clearInterval(timerInterval);
-        timerFill.style.width = "0%"; // Återställ progress-baren
     }
 
     nextQuestionButton.addEventListener("click", goToNextQuestion);
