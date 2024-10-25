@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
         else if (difficulty === 2) timeLeft = 30;
         else timeLeft = 40;
 
-        // Ny timer-styling
+        // New timer styling
         const progressBar = document.createElement("div");
         progressBar.style.width = "100%";
         progressBar.style.backgroundColor = "#ccc";
@@ -122,7 +122,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function resetTimer() {
-        clearInterval(timerInterval);
+        if (timerInterval) {
+            clearInterval(timerInterval);
+        }
     }
 
     nextQuestionButton.addEventListener("click", goToNextQuestion);
