@@ -43,29 +43,23 @@ document.addEventListener("DOMContentLoaded", () => {
     const timerDisplay = document.getElementById("timer");
     const nextQuestionButton = document.getElementById("nextQuestionButton");
 
-    const testCodeInput = document.getElementById("testCodeInput");
-
     document.getElementById("startQuizButton").addEventListener("click", () => {
-        const testCode = testCodeInput.value.trim();
         const ageGroupSelect = document.getElementById("ageGroup");
-        selectedAgeGroup = ageGroupSelect.value;
-
-        if (!selectedAgeGroup) {
-            alert('Vänligen välj en åldersgrupp!');
-            return;
-        }
-
-        if (testCode === "Sse201107") {
-            showTestResults(); 
+        if (ageGroupSelect) {
+            selectedAgeGroup = ageGroupSelect.value;
+            if (!selectedAgeGroup) {
+                alert('Vänligen välj en åldersgrupp!');
+                return;
+            }
+            startQuiz();
         } else {
-            startQuiz(); 
+            console.error("Elementet 'ageGroup' hittades inte!");
         }
     });
 
     function startQuiz() {
         document.getElementById("startQuizButton").style.display = "none"; 
-        document.getElementById("omOssText").style.display = "none"; 
-        document.getElementById("testCodeInput").style.display = "none"; 
+        document.getElementById("omOssText").style.display = "none";
         quizModal.style.display = "flex"; 
         showQuestion();
     }
