@@ -140,7 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
         else baseScore = 200;
 
         const timeBonus = (timeLeft / (difficulty === 1 ? 20 : difficulty === 2 ? 30 : 40)) * baseScore;
-        return baseScore + timeBonus;
+        return Math.min(baseScore + timeBonus, baseScore); // Begränsa poängen så att den inte överskrider baseScore
     }
 
     function endQuiz() {
