@@ -8,34 +8,35 @@
 </head>
 <body>
 
-<div class="quiz-container">
+<div class="quiz-container fade-in">
     <h1>Välkommen till IQ Quiz!</h1>
-    <p>Välj din åldersgrupp för att anpassa frågorna:</p>
-    <select id="ageGroup">
-        <option value="">Välj åldersgrupp</option>
-        <option value="8-12">8-12 år</option>
-        <option value="13-15">13-15 år</option>
-        <option value="16-20">16-20 år</option>
-    </select>
-    <br><br>
-    <input type="text" id="testCodeInput" placeholder="Testkod (frivillig)">
-    <br><br>
-    <button id="startQuizButton">Starta Quiz</button>
-    <p id="omOssText">Detta är ett IQ-quiz där du kan testa din kunskap och få ett resultat. Prova och se hur smart du är!</p>
+    <p class="animated-text">Välj din åldersgrupp för att anpassa frågorna:</p>
+    
+    <div class="dropdown">
+        <select id="ageGroup" class="scale-in">
+            <option value="">Välj åldersgrupp</option>
+            <option value="8-12">8-12 år</option>
+            <option value="13-15">13-15 år</option>
+            <option value="16-20">16-20 år</option>
+        </select>
+    </div>
+    
+    <br>
+    <button id="startQuizButton" class="btn pulse">Starta Quiz</button>
+    <p id="omOssText" class="slide-up">Detta är ett IQ-quiz där du kan testa din kunskap och få ett resultat. Prova och se hur smart du är!</p>
 </div>
 
 <div class="modal" id="quizModal">
-    <div class="modal-content">
+    <div class="modal-content bounce-in">
         <h3 id="questionText"></h3>
-        <div id="imageContainer"></div> <!-- Här kommer bilderna för formfrågor -->
+        <div id="imageContainer"></div>
         <div id="answerOptions"></div>
         <p id="timer"></p>
         <button class="btn" id="nextQuestionButton">Nästa</button>
     </div>
 </div>
 
-    <!-- Inkludera Chart.js via CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
