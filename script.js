@@ -1,46 +1,31 @@
-document.addEventListener("DOMContentLoaded", () => { 
+document.addEventListener("DOMContentLoaded", () => {
     const quizData = {
         '8-12': [
-            { question: "Vad är 5 + 7?", a: "10", b: "12", c: "11", d: "13", correct: "b", difficulty: 1 }, 
-            { question: "Vilken är huvudstaden i Sverige?", a: "Malmö", b: "Göteborg", c: "Stockholm", d: "Uppsala", correct: "c", difficulty: 1 },
-            { question: "Vad heter planeten närmast solen?", a: "Venus", b: "Mars", c: "Merkurius", d: "Jorden", correct: "c", difficulty: 1 },
-            { question: "Vad är 10 * 5?", a: "50", b: "100", c: "30", d: "70", correct: "a", difficulty: 1 },
-            { question: "Hur många månader har 28 dagar?", a: "1", b: "12", c: "6", d: "4", correct: "b", difficulty: 1 },
-            { question: "Vilken form passar in i denna sekvens?", image: "https://i.imgur.com/6LTQXK4.png", a: "Bild A", b: "Bild B", c: "Bild C", d: "Bild D", correct: "a", difficulty: 1 }, 
-            { question: "Vilken form passar in i denna sekvens?", image: "https://i.imgur.com/rfD2omV.png", a: "Bild A", b: "Bild B", c: "Bild C", d: "Bild D", correct: "b", difficulty: 1 } 
+            { question: "Om en buss rymmer 50 personer och 20 går av, hur många personer finns kvar på bussen om den var full från början?", a: "30", b: "20", c: "50", d: "40", correct: "a", difficulty: 1 },
+            { question: "Du har 3 äpplen och får 4 till av en vän. Hur många äpplen har du nu?", a: "5", b: "7", c: "4", d: "6", correct: "b", difficulty: 1 },
+            { question: "Om ett paket godis väger 250 gram, hur mycket väger fyra sådana paket?", a: "1000g", b: "750g", c: "1200g", d: "1250g", correct: "a", difficulty: 1 },
+            { question: "En bonde har 20 får, men 5 rymmer. Hur många får är kvar på gården?", a: "25", b: "15", c: "20", d: "10", correct: "b", difficulty: 1 },
+            { question: "Om ett ljus brinner i 3 timmar, hur länge brinner 3 sådana ljus sammanlagt?", a: "9 timmar", b: "6 timmar", c: "3 timmar", d: "12 timmar", correct: "a", difficulty: 1 },
+            { question: "En cyklist cyklar 5 kilometer på 15 minuter. Hur långt kommer han på en timme i samma tempo?", a: "15 km", b: "20 km", c: "30 km", d: "25 km", correct: "c", difficulty: 2 },
+            { question: "Du har 100 kr och köper en dricka för 25 kr. Hur mycket pengar har du kvar?", a: "50 kr", b: "75 kr", c: "60 kr", d: "25 kr", correct: "b", difficulty: 2 }
         ],
         '13-15': [
-            { question: "Vad är 12 * 9?", a: "81", b: "108", c: "96", d: "72", correct: "b", difficulty: 2 },
-            { question: "Vilket år startade andra världskriget?", a: "1939", b: "1941", c: "1914", d: "1945", correct: "a", difficulty: 2 },
-            { question: "Vad är kvadratroten av 144?", a: "10", b: "12", c: "14", d: "16", correct: "b", difficulty: 2 },
-            { question: "Vad är 100 delat med 4?", a: "20", b: "25", c: "40", d: "50", correct: "b", difficulty: 2 },
-            { question: "Vilket år grundades FN?", a: "1920", b: "1945", c: "1950", d: "1960", correct: "b", difficulty: 2 },
-            { question: "Hur många kontinenter finns det?", a: "5", b: "6", c: "7", d: "8", correct: "c", difficulty: 2 },
-            { question: "Vem skrev 'Hamlet'?", a: "Mark Twain", b: "William Shakespeare", c: "Charles Dickens", d: "Oscar Wilde", correct: "b", difficulty: 2 },
-            { question: "Vilket ämne har den kemiska beteckningen O?", a: "Syre", b: "Väte", c: "Kväve", d: "Kol", correct: "a", difficulty: 2 },
-            { question: "Vad är Pi (π) avrundat till två decimaler?", a: "3.12", b: "3.14", c: "3.16", d: "3.18", correct: "b", difficulty: 2 },
-            { question: "Vad står DNA för?", a: "Deoxyribonukleinsyra", b: "Dinukleinsyra", c: "Dioxidnukleinsyra", d: "Deoxitribonsyra", correct: "a", difficulty: 3 },
-            { question: "Vad är största sjön i Sverige?", a: "Mälaren", b: "Vänern", c: "Vättern", d: "Hjälmaren", correct: "b", difficulty: 2 },
-            { question: "Vilken form passar in i denna sekvens?", image: "https://i.imgur.com/ZUifvhJ.png", a: "Bild A", b: "Bild B", c: "Bild C", d: "Bild D", correct: "c", difficulty: 2 }, 
-            { question: "Vilken form passar in i denna sekvens?", image: "https://i.imgur.com/uRbyF8L.png", a: "Bild A", b: "Bild B", c: "Bild C", d: "Bild D", correct: "d", difficulty: 2 },
-            { question: "Vilken är världens största ö?", a: "Grönland", b: "Australien", c: "Island", d: "Borneo", correct: "a", difficulty: 2 },
-            { question: "Vad heter den största havet på jorden?", a: "Stilla havet", b: "Atlanten", c: "Indiska oceanen", d: "Sydkinesiska havet", correct: "a", difficulty: 2 }
+            { question: "Om en bil kör 90 km/h, hur långt kommer den på en halv timme?", a: "45 km", b: "30 km", c: "60 km", d: "90 km", correct: "a", difficulty: 2 },
+            { question: "Du köper 3 pennor för 10 kr/st och en sudd för 5 kr. Hur mycket betalar du totalt?", a: "35 kr", b: "30 kr", c: "40 kr", d: "25 kr", correct: "b", difficulty: 2 },
+            { question: "En tank rymmer 40 liter, och du fyller på 10 liter. Hur många liter saknas för att den ska bli full?", a: "20 liter", b: "30 liter", c: "10 liter", d: "40 liter", correct: "b", difficulty: 2 },
+            { question: "En hund sover 8 timmar per dag. Hur många timmar sover den på en vecka?", a: "40 timmar", b: "48 timmar", c: "56 timmar", d: "60 timmar", correct: "c", difficulty: 2 },
+            { question: "Om en maskin producerar 150 varor per dag, hur många varor producerar den på 4 dagar?", a: "450", b: "500", c: "600", d: "550", correct: "c", difficulty: 2 },
+            { question: "En bokklubb består av 36 personer, och varje möte kräver att minst en tredjedel är närvarande. Hur många personer behövs för att mötet ska vara giltigt?", a: "10", b: "12", c: "18", d: "9", correct: "b", difficulty: 2 },
+            { question: "Om temperaturen stiger från -5 °C till 15 °C, hur stor är temperaturförändringen?", a: "15 °C", b: "20 °C", c: "10 °C", d: "25 °C", correct: "b", difficulty: 2 }
         ],
         '16-20': [
-            { question: "Vilken av följande är ett primtal?", a: "21", b: "23", c: "25", d: "27", correct: "b", difficulty: 3 },
-            { question: "Vad är namnet på Albert Einsteins teori?", a: "Allmän relativitetsteori", b: "Evolutionsteori", c: "Big Bang-teorin", d: "Platons idévärld", correct: "a", difficulty: 3 },
-            { question: "Vad är kvadratroten av 169?", a: "12", b: "13", c: "14", d: "15", correct: "b", difficulty: 3 },
-            { question: "Vem skrev 'Brott och straff'?", a: "Fjodor Dostojevskij", b: "Leo Tolstoj", c: "Anton Tjechov", d: "Franz Kafka", correct: "a", difficulty: 3 },
-            { question: "Vad är värdet på Avogadros tal?", a: "6.02 x 10^23", b: "3.14 x 10^23", c: "9.81 x 10^23", d: "2.71 x 10^23", correct: "a", difficulty: 3 },
-            { question: "Vilken form passar in i denna sekvens?", image: "https://i.imgur.com/YY6b5Oz.png", a: "Bild A", b: "Bild B", c: "Bild C", d: "Bild D", correct: "b", difficulty: 3 }, 
-            { question: "Vilken form passar in i denna sekvens?", image: "https://i.imgur.com/v3WjONR.png", a: "Bild A", b: "Bild B", c: "Bild C", d: "Bild D", correct: "a", difficulty: 3 },
-            { question: "Vad är värdet på den matematiska konstanten e?", a: "2.71", b: "3.14", c: "1.62", d: "0.69", correct: "a", difficulty: 3 },
-            { question: "Vad står HTML för?", a: "Hyperlinks and Text Markup Language", b: "Hyper Text Markup Language", c: "Home Tool Markup Language", d: "Hyper Tool Markup Language", correct: "b", difficulty: 2 },
-            { question: "Vilken gas dominerar i jordens atmosfär?", a: "Syre", b: "Kväve", c: "Väte", d: "Argon", correct: "b", difficulty: 2 },
-            { question: "Vad heter universums snabbaste hastighet?", a: "Ljudhastigheten", b: "Ljushastigheten", c: "Gravitationshastigheten", d: "Neutronspeed", correct: "b", difficulty: 3 },
-            { question: "Hur lång är en maraton?", a: "42.2 km", b: "40.5 km", c: "42.195 km", d: "41.9 km", correct: "c", difficulty: 2 },
-            { question: "Vad står VPN för?", a: "Virtual Protection Network", b: "Virtual Private Network", c: "Virtual Protocol Network", d: "Virtual Proxy Network", correct: "b", difficulty: 3 },
-            { question: "Vad heter den kemiska beteckningen för vatten?", a: "H2", b: "H2O", c: "O2", d: "HO", correct: "b", difficulty: 2 }
+            { question: "En skogsarbetare hugger ner 12 träd på 4 timmar. Hur många träd hugger han ner på 7 timmar i samma takt?", a: "18", b: "20", c: "21", d: "22", correct: "c", difficulty: 3 },
+            { question: "En resa är 450 kilometer lång. Om du har rest ⅔ av sträckan, hur många kilometer har du kvar?", a: "100 km", b: "150 km", c: "200 km", d: "150 km", correct: "d", difficulty: 3 },
+            { question: "En möbelbutik ger 25 % rabatt på alla varor. Om ett bord kostar 2,000 kr, vad blir priset efter rabatten?", a: "1500 kr", b: "1800 kr", c: "1600 kr", d: "1200 kr", correct: "c", difficulty: 3 },
+            { question: "En matematiker har tre gånger så många böcker som hans kollega, som har 24 böcker. Hur många böcker har matematikern?", a: "60", b: "72", c: "80", d: "84", correct: "b", difficulty: 3 },
+            { question: "Om ett gympass bränner 300 kalorier per timme och du tränar i 1,5 timmar, hur många kalorier bränner du?", a: "350", b: "450", c: "400", d: "500", correct: "b", difficulty: 3 },
+            { question: "Om du har en rektangel som är 4 meter bred och 8 meter lång, vad är dess omkrets?", a: "12 m", b: "24 m", c: "16 m", d: "32 m", correct: "b", difficulty: 3 },
+            { question: "En skola har 4 klasser med 20 elever i varje klass. Hur många elever finns totalt?", a: "60", b: "70", c: "80", d: "90", correct: "c", difficulty: 3 }
         ]
     };
 
@@ -103,11 +88,15 @@ document.addEventListener("DOMContentLoaded", () => {
             <label><input type="radio" name="answer" value="d"> ${quiz.d}</label>
         `;
 
-        startTimer();
+        startTimer(quiz.difficulty);
     }
 
-    function startTimer() {
-        let timeLeft = 20; 
+    function startTimer(difficulty) {
+        let timeLeft;
+        if (difficulty === 1) timeLeft = 20;
+        else if (difficulty === 2) timeLeft = 30;
+        else timeLeft = 40;
+
         timerDisplay.textContent = timeLeft;
         timerInterval = setInterval(() => {
             timeLeft--;
@@ -139,21 +128,21 @@ document.addEventListener("DOMContentLoaded", () => {
     function checkAnswer() {
         const answer = document.querySelector('input[name="answer"]:checked');
         const quiz = quizData[selectedAgeGroup][currentQuestion];
-        const userAnswer = answer ? answer.value : null; 
+        const userAnswer = answer ? answer.value : null;
 
         answers.push({ question: quiz.question, correct: quiz.correct, userAnswer });
 
         if (userAnswer === quiz.correct) {
-            score += quiz.difficulty; 
+            score += quiz.difficulty;
         }
-        totalDifficulty += quiz.difficulty; 
+        totalDifficulty += quiz.difficulty;
     }
 
     function endQuiz() {
         quizModal.style.display = "none";
         const iqScore = calculateIQ(score, totalDifficulty);
 
-        window.scrollTo(0, 0); 
+        window.scrollTo(0, 0);
 
         let resultsHTML = `<h2>Du fick ${score} poäng av ${totalDifficulty} möjliga!</h2>
                            <h3>Din IQ-poäng är ${iqScore}!</h3>`;
@@ -176,22 +165,16 @@ document.addEventListener("DOMContentLoaded", () => {
     function calculateIQ(correctPoints, maxPoints) {
         const percentage = (correctPoints / maxPoints) * 100;
         let iq;
-        if (percentage >= 100) {
+        if (percentage >= 90) {
             iq = 130;
-        } else if (percentage >= 90) {
+        } else if (percentage >= 75) {
             iq = 115;
-        } else if (percentage >= 80) {
-            iq = 100;
-        } else if (percentage >= 60) {
-            iq = 85;
         } else if (percentage >= 50) {
-            iq = 70;
-        } else if (percentage >= 30) {
-            iq = 50;
-        } else if (percentage >= 10) {
-            iq = 30;
+            iq = 100;
+        } else if (percentage >= 25) {
+            iq = 85;
         } else {
-            iq = 0;
+            iq = 70;
         }
         return iq;
     }
@@ -199,15 +182,15 @@ document.addEventListener("DOMContentLoaded", () => {
     function showIQChart(userIQ) {
         const canvasContainer = document.createElement("div");
         canvasContainer.style.width = "100%";
-        canvasContainer.style.maxWidth = "400px"; 
-        canvasContainer.style.margin = "0 auto"; 
+        canvasContainer.style.maxWidth = "400px";
+        canvasContainer.style.margin = "0 auto";
 
         const ctx = document.createElement("canvas");
         canvasContainer.appendChild(ctx);
         document.body.appendChild(canvasContainer);
 
         new Chart(ctx, {
-            type: 'bar', 
+            type: 'bar',
             data: {
                 labels: ['70', '85', '100', '115', '130'],
                 datasets: [{
@@ -218,7 +201,7 @@ document.addEventListener("DOMContentLoaded", () => {
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: false, 
+                maintainAspectRatio: false,
                 scales: {
                     y: {
                         beginAtZero: true,
