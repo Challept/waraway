@@ -91,27 +91,33 @@ document.addEventListener("DOMContentLoaded", () => {
         else if (difficulty === 2) timeLeft = 30;
         else timeLeft = 40;
 
+        // Clear any previous timer if it exists
+        const existingProgressBar = document.getElementById("progressBar");
+        if (existingProgressBar) {
+            existingProgressBar.remove();
+        }
+
         // New timer styling
         const progressBar = document.createElement("div");
+        progressBar.id = "progressBar";
         progressBar.style.width = "100%";
         progressBar.style.backgroundColor = "#ccc";
         progressBar.style.height = "30px";
         progressBar.style.position = "relative";
         progressBar.style.borderRadius = "15px";
-        quizModal.insertBefore(progressBar, timerDisplay);
+        quizModal.prepend(progressBar);
 
         const timerFill = document.createElement("div");
         timerFill.style.height = "100%";
-        timerFill.style.width = "0%";
+        timerFill.style.width = "100%";
         timerFill.style.backgroundColor = "green";
         timerFill.style.borderRadius = "15px";
         progressBar.appendChild(timerFill);
 
-        timerFill.style.transition = "width 1s linear";
-
+        const totalTime = timeLeft;
         timerInterval = setInterval(() => {
             timeLeft--;
-            const percentage = (timeLeft / (difficulty === 1 ? 20 : difficulty === 2 ? 30 : 40)) * 100;
+            const percentage = (timeLeft / totalTime) * 100;
             timerFill.style.width = `${percentage}%`;
 
             if (timeLeft <= 0) {
