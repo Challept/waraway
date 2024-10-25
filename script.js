@@ -40,7 +40,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const questionText = document.getElementById("questionText");
     const answerOptions = document.getElementById("answerOptions");
     const imageContainer = document.getElementById("imageContainer");
-    const timerDisplay = document.getElementById("timer");
     const nextQuestionButton = document.getElementById("nextQuestionButton");
 
     document.getElementById("startQuizButton").addEventListener("click", () => {
@@ -91,28 +90,18 @@ document.addEventListener("DOMContentLoaded", () => {
         else if (difficulty === 2) timeLeft = 30;
         else timeLeft = 40;
 
-        // Clear any previous timer if it exists
-        const existingProgressBar = document.getElementById("progressBar");
-        if (existingProgressBar) {
-            existingProgressBar.remove();
+        const existingTimerContainer = document.querySelector(".timer-container");
+        if (existingTimerContainer) {
+            existingTimerContainer.remove();
         }
 
-        // New timer styling
-        const progressBar = document.createElement("div");
-        progressBar.id = "progressBar";
-        progressBar.style.width = "100%";
-        progressBar.style.backgroundColor = "#ccc";
-        progressBar.style.height = "30px";
-        progressBar.style.position = "relative";
-        progressBar.style.borderRadius = "15px";
-        quizModal.prepend(progressBar);
+        const timerContainer = document.createElement("div");
+        timerContainer.className = "timer-container";
+        quizModal.prepend(timerContainer);
 
         const timerFill = document.createElement("div");
-        timerFill.style.height = "100%";
-        timerFill.style.width = "100%";
-        timerFill.style.backgroundColor = "green";
-        timerFill.style.borderRadius = "15px";
-        progressBar.appendChild(timerFill);
+        timerFill.className = "timer-fill";
+        timerContainer.appendChild(timerFill);
 
         const totalTime = timeLeft;
         timerInterval = setInterval(() => {
